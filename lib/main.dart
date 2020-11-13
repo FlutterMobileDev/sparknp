@@ -15,13 +15,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(),
-        drawer: MyDrawer(),
-        body: Home(),
-      ),
+      title: 'Flutter Demo',
+      home: Home(),
       onGenerateRoute: Routing.generateRoute,
       initialRoute: home,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
     );
   }
 }

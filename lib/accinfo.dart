@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
 class AccInfo extends StatefulWidget {
   @override
@@ -23,9 +22,9 @@ class _AccInfoState extends State<AccInfo> {
                 elevation: 0,
                 child: ListTile(
                   title: Text('Name'),
-                  trailing: Text('Ayush Bajrcharya'),
+                  trailing: Text(myController.text),
                   onTap: () {
-                    print('Name');
+                    _name(context);
                   },
                 ),
               ),
@@ -87,6 +86,52 @@ class _AccInfoState extends State<AccInfo> {
           ),
         ),
       ),
+    );
+  }
+
+  final _formKey = GlobalKey<FormState>();
+
+  final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
+  }
+
+  void _name(context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext bc) {
+        return Padding(
+          padding: MediaQuery.of(context).viewInsets,
+          child: Container(
+            child: Form(
+              child: Wrap(
+                children: [
+                  ListTile(
+                    title: TextFormField(
+                      controller: myController,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Enter Name';
+                        }
+                        return null;
+                      },
+                    ),
+                    subtitle: ElevatedButton(
+                      child: Text('Save'),
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
