@@ -18,7 +18,9 @@ class Recomends extends StatelessWidget {
             title: "Samantha",
             country: "Russia",
             price: 440,
-            press: () {print("pressed");},
+            press: () {
+              print("pressed");
+            },
           ),
           RecomendCard(
             image: "assets/1568889151top2.jpg",
@@ -70,7 +72,7 @@ class RecomendCard extends StatelessWidget {
           children: <Widget>[
             Container(
               height: 225,
-              child : Image.asset(image.toString()),
+              child: Image.asset(image.toString()),
             ),
             Container(
               padding: EdgeInsets.all(kDefaultPadding / 2),
@@ -116,7 +118,6 @@ class RecomendCard extends StatelessWidget {
                 ],
               ),
             ),
-
           ],
         ),
       ),

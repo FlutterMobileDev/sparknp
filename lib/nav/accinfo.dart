@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+// final _formKey = GlobalKey<FormState>();
+
+final myController = TextEditingController();
+String gen = 'Unspecified';
+DateTime selectedDate = DateTime.now();
+
 class AccInfo extends StatefulWidget {
   @override
   _AccInfoState createState() => _AccInfoState();
@@ -89,16 +95,7 @@ class _AccInfoState extends State<AccInfo> {
     );
   }
 
-  final _formKey = GlobalKey<FormState>();
-
-  final myController = TextEditingController();
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    myController.dispose();
-    super.dispose();
-  }
+//TODO: Connect settings
 
   void _name(context) {
     showModalBottomSheet(
@@ -135,8 +132,6 @@ class _AccInfoState extends State<AccInfo> {
     );
   }
 
-  String gen = 'Unspecified';
-
   void _gender(context) {
     showModalBottomSheet(
         context: context,
@@ -171,8 +166,6 @@ class _AccInfoState extends State<AccInfo> {
         });
   }
 
-  DateTime selectedDate = DateTime.now();
-
   void _dob(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
@@ -190,5 +183,11 @@ class _AccInfoState extends State<AccInfo> {
       setState(() {
         selectedDate = picked;
       });
+  }
+
+  @override
+  void dispose() {
+    myController.dispose();
+    super.dispose();
   }
 }

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'drawer.dart';
-import 'homecomponent/body.dart';
+import 'package:sparknp/nav/drawer.dart';
+import 'package:sparknp/homecomponent/body.dart';
 
-class Home extends StatelessWidget {
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      drawer: MyDrawer(),
+      drawer: MainDrawer(),
       body: Body(),
     );
   }

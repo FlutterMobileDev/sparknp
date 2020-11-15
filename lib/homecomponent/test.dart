@@ -43,7 +43,7 @@ class IconBtnWithCounter extends StatelessWidget {
                     border: Border.all(width: 1.5, color: Colors.white)),
                 child: Center(
                   child: Text(
-                    '${numOfitem}',
+                    '$numOfitem',
                     style:
                         TextStyle(fontSize: 10, height: 1, color: Colors.white),
                   ),

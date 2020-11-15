@@ -34,6 +34,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  progress_dialog: ^1.2.4
+  google_fonts: ^0.3.9
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

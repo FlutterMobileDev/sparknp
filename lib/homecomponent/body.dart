@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'banners_ecommerce.dart';
-import 'featured.dart';
-import 'recommended.dart';
-import 'sectiontitle.dart';
-import 'test.dart';
 
-import 'constraints.dart';
+import 'package:sparknp/nav/router.dart';
+
+import 'package:sparknp/homecomponent/banners_ecommerce.dart';
+import 'package:sparknp/homecomponent/featured.dart';
+import 'package:sparknp/homecomponent/recommended.dart';
+import 'package:sparknp/homecomponent/sectiontitle.dart';
+import 'package:sparknp/homecomponent/test.dart';
+import 'package:sparknp/homecomponent/constraints.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -63,7 +65,8 @@ class Body extends StatelessWidget {
                   IconBtnWithCounter(
                       svgSrc: "assets/Cart Icon.svg",
                       press: () {
-                        print("pressed");
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, myOrders, (home) => true);
                       }),
                   IconBtnWithCounter(
                       svgSrc: "assets/Heart Icon.svg",

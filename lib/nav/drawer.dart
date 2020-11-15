@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'router.dart';
+import 'package:sparknp/nav/router.dart';
 
-// navigateToPage(BuildContext context, String page) {
-//   Navigator.of(context)
-//       .pushNamedAndRemoveUntil(page, (Route<dynamic> route) => true);
-// }
-
-class MyDrawer extends StatefulWidget {
+class MainDrawer extends StatefulWidget {
   @override
-  _DrawerState createState() => _DrawerState();
+  _MainDrawerState createState() => _MainDrawerState();
 }
 
-class _DrawerState extends State<MyDrawer> {
+class _MainDrawerState extends State<MainDrawer> {
   int myIndex;
   PageController _controller;
 
@@ -94,20 +89,23 @@ class MyWidget extends StatelessWidget {
             ListTile(
                 title: Text('Home'),
                 onTap: () {
+                  Navigator.of(context).pop();
                   Navigator.pushNamedAndRemoveUntil(
-                      context, home, (route) => false);
+                      context, home, (home) => false);
                 }),
             ListTile(
                 title: Text('Your Orders'),
                 onTap: () {
+                  Navigator.of(context).pop();
                   Navigator.pushNamedAndRemoveUntil(
-                      context, myOrders, (route) => true);
+                      context, myOrders, (home) => true);
                 }),
             ListTile(
                 title: Text('Your Account'),
                 onTap: () {
+                  Navigator.of(context).pop();
                   Navigator.pushNamedAndRemoveUntil(
-                      context, myAccount, (route) => true);
+                      context, myAccount, (home) => true);
                 }),
             ListTile(
               title: Text('Shop by Categories'),
@@ -121,14 +119,21 @@ class MyWidget extends StatelessWidget {
             ListTile(
                 title: Text('Customer Service'),
                 onTap: () {
+                  Navigator.of(context).pop();
                   Navigator.pushNamedAndRemoveUntil(
-                      context, custService, (route) => true);
+                      context, custService, (home) => true);
+                }),
+            ListTile(
+                title: Text('Sign In'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, login, (home) => true);
                 }),
             const Divider(
               color: Colors.grey,
               thickness: 1,
             ),
-            //More Stuff
             ListTile(
               title: Text('Settings'),
               trailing: const Icon(Icons.arrow_forward_ios),
@@ -238,12 +243,25 @@ class MyExploreAll extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.masks_rounded),
               title: Text(
-                'Fashion',
+                "Men's Fashion",
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, categories, (route) => true,
-                    arguments: 'Fashion');
+                    context, categories, (home) => true,
+                    arguments: "Men's Fashion");
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.wallet_travel_rounded),
+              title: Text(
+                "Women's Fashion",
+              ),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.pushNamedAndRemoveUntil(
+                    context, categories, (home) => true,
+                    arguments: "Women's Fashion");
               },
             ),
             ListTile(
@@ -252,8 +270,9 @@ class MyExploreAll extends StatelessWidget {
                 'Electronic Devices',
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, categories, (route) => true,
+                    context, categories, (home) => true,
                     arguments: 'Electronic Devices');
               },
             ),
@@ -263,8 +282,9 @@ class MyExploreAll extends StatelessWidget {
                 'Electronic Accessories',
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, categories, (route) => true,
+                    context, categories, (home) => true,
                     arguments: 'Electronic Accessories');
               },
             ),
@@ -274,8 +294,9 @@ class MyExploreAll extends StatelessWidget {
                 'Camera & Photo',
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, categories, (route) => true,
+                    context, categories, (home) => true,
                     arguments: 'Camera & Photo');
               },
             ),
@@ -285,8 +306,9 @@ class MyExploreAll extends StatelessWidget {
                 'Sport & Outdoor',
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, categories, (route) => true,
+                    context, categories, (home) => true,
                     arguments: 'Sport & Outdoor');
               },
             ),
@@ -296,8 +318,9 @@ class MyExploreAll extends StatelessWidget {
                 'Health & Beauty',
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, categories, (route) => true,
+                    context, categories, (home) => true,
                     arguments: 'Health & Beauty');
               },
             ),
@@ -307,8 +330,9 @@ class MyExploreAll extends StatelessWidget {
                 'Watches & Accessories',
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, categories, (route) => true,
+                    context, categories, (home) => true,
                     arguments: 'Watches & Accessories');
               },
             ),
@@ -318,8 +342,9 @@ class MyExploreAll extends StatelessWidget {
                 'Books & Office',
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, categories, (route) => true,
+                    context, categories, (home) => true,
                     arguments: 'Books & Office');
               },
             ),
@@ -329,8 +354,9 @@ class MyExploreAll extends StatelessWidget {
                 'Baby & Toys',
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, categories, (route) => true,
+                    context, categories, (home) => true,
                     arguments: 'Baby & Toys');
               },
             ),
@@ -340,8 +366,9 @@ class MyExploreAll extends StatelessWidget {
                 'Automobile & Motorcycles',
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, categories, (route) => true,
+                    context, categories, (home) => true,
                     arguments: 'Automobile & Motorcycles');
               },
             ),
@@ -351,8 +378,9 @@ class MyExploreAll extends StatelessWidget {
                 'Home, Lifestyle, decoration & Appliances',
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, categories, (route) => true,
+                    context, categories, (home) => true,
                     arguments: 'Home, Lifestyle, decoration & Appliances');
               },
             ),
@@ -362,8 +390,9 @@ class MyExploreAll extends StatelessWidget {
                 'Groceries & Pets',
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, categories, (route) => true,
+                    context, categories, (home) => true,
                     arguments: 'Groceries & Pets');
               },
             ),
@@ -373,8 +402,9 @@ class MyExploreAll extends StatelessWidget {
                 'Portable & Personal',
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, categories, (route) => true,
+                    context, categories, (home) => true,
                     arguments: 'Portable & Personal');
               },
             ),
@@ -384,8 +414,9 @@ class MyExploreAll extends StatelessWidget {
                 'Electronics Outdoor',
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, categories, (route) => true,
+                    context, categories, (home) => true,
                     arguments: 'Electronics Outdoor');
               },
             ),
@@ -395,8 +426,9 @@ class MyExploreAll extends StatelessWidget {
                 'Recreation & Fitness Musical',
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, categories, (route) => true,
+                    context, categories, (home) => true,
                     arguments: 'Recreation & Fitness Musical');
               },
             ),
@@ -406,8 +438,9 @@ class MyExploreAll extends StatelessWidget {
                 'Musical Instruments',
               ),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pushNamedAndRemoveUntil(
-                    context, categories, (route) => true,
+                    context, categories, (home) => true,
                     arguments: 'Musical Instruments');
               },
             ),

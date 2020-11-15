@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'router.dart';
+import 'package:sparknp/nav/router.dart';
 
 class MyAccount extends StatefulWidget {
   @override
