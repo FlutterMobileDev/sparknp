@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sparknp/constants.dart';
 
 class IconBtnWithCounter extends StatelessWidget {
   const IconBtnWithCounter({
@@ -26,10 +27,14 @@ class IconBtnWithCounter extends StatelessWidget {
             height: 40,
             width: 45,
             decoration: BoxDecoration(
-                color: Color(0xFF979797).withOpacity(0.1),
+                color: LightColor.primaryColor.withOpacity(0.1),
                 shape: BoxShape.circle,
-                border: Border.all(width: 1.5, color: Colors.white)),
-            child: SvgPicture.asset(svgSrc),
+                border:
+                    Border.all(width: 1.5, color: LightColor.textLightColor)),
+            child: SvgPicture.asset(
+              svgSrc,
+              color: LightColor.textLightColor,
+            ),
           ),
           if (numOfitem != 0)
             Positioned(
@@ -38,14 +43,15 @@ class IconBtnWithCounter extends StatelessWidget {
                 height: 20,
                 width: 22,
                 decoration: BoxDecoration(
-                    color: Colors.blue[900],
+                    color: LightColor.orange,
                     shape: BoxShape.circle,
-                    border: Border.all(width: 1.5, color: Colors.white)),
+                    border:
+                        Border.all(width: 1.5, color: LightColor.background)),
                 child: Center(
                   child: Text(
                     '$numOfitem',
-                    style:
-                        TextStyle(fontSize: 10, height: 1, color: Colors.white),
+                    style: TextStyle(
+                        fontSize: 10, height: 1, color: LightColor.background),
                   ),
                 ),
               ),

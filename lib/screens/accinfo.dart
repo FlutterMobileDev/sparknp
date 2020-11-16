@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sparknp/widgets/appbar/appbar.dart';
+
 // final _formKey = GlobalKey<FormState>();
 
 final myController = TextEditingController();
@@ -15,9 +17,7 @@ class _AccInfoState extends State<AccInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Account Information'),
-      ),
+      appBar: buildAppBar(context),
       body: SizedBox.expand(
         child: Container(
           color: Colors.grey[200],

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'package:sparknp/router.dart';
+//TODO: Check if okay wit team
+// import 'package:sparknp/router.dart';
 
 import 'package:sparknp/screens/home/homecomponent/banners_ecommerce.dart';
 import 'package:sparknp/screens/home/homecomponent/featured.dart';
 import 'package:sparknp/screens/home/homecomponent/recommended.dart';
 import 'package:sparknp/screens/home/homecomponent/sectiontitle.dart';
-import 'package:sparknp/screens/home/homecomponent/test.dart';
-import 'package:sparknp/constants.dart';
+// import 'package:sparknp/widgets/barbutton.dart';
+// import 'package:sparknp/constants.dart';
 
-class Body extends StatelessWidget {
+class HomeBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -33,50 +34,50 @@ class Body extends StatelessWidget {
         ),
         Column(
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 5,
-                horizontal: 13,
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 270,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: LightColor.primaryColor.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          hintText: "What are you looking for",
-                          prefixIcon: Icon(Icons.search),
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 5,
-                            vertical: 5,
-                          )),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  IconBtnWithCounter(
-                      svgSrc: "assets/Cart Icon.svg",
-                      press: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, myOrders, (home) => true);
-                      }),
-                  IconBtnWithCounter(
-                      svgSrc: "assets/Heart Icon.svg",
-                      numOfitem: 5,
-                      press: () {
-                        print("pressed");
-                      })
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(
+            //     vertical: 5,
+            //     horizontal: 13,
+            //   ),
+            //   child: Row(
+            //     children: [
+            //       Container(
+            //         width: 270,
+            //         height: 40,
+            //         decoration: BoxDecoration(
+            //           color: LightColor.primaryColor.withOpacity(0.1),
+            //           borderRadius: BorderRadius.circular(15),
+            //         ),
+            //         child: TextField(
+            //           decoration: InputDecoration(
+            //               enabledBorder: InputBorder.none,
+            //               focusedBorder: InputBorder.none,
+            //               hintText: "What are you looking for",
+            //               prefixIcon: Icon(Icons.search),
+            //               contentPadding: EdgeInsets.symmetric(
+            //                 horizontal: 5,
+            //                 vertical: 5,
+            //               )),
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         width: 5,
+            //       ),
+            //       IconBtnWithCounter(
+            //           svgSrc: "assets/Cart Icon.svg",
+            //           press: () {
+            //             Navigator.pushNamedAndRemoveUntil(
+            //                 context, cart, (home) => true);
+            //           }),
+            //       IconBtnWithCounter(
+            //           svgSrc: "assets/Heart Icon.svg",
+            //           numOfitem: 5,
+            //           press: () {
+            //             print("pressed");
+            //           })
+            //     ],
+            //   ),
+            // ),
             Container(
               // height: 90,
               margin: EdgeInsets.all(14),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:sparknp/screens/login/login.dart';
-import 'package:sparknp/screens/login/registration.dart';
 
 import 'package:sparknp/screens/home/home.dart';
 import 'package:sparknp/screens/myorders.dart';
@@ -10,10 +9,10 @@ import 'package:sparknp/screens/accinfo.dart';
 import 'package:sparknp/screens/custservice.dart';
 import 'package:sparknp/screens/categories/categories.dart';
 
-import 'package:sparknp/screens/details/details_screen.dart';
-import 'package:sparknp/model/product.dart';
+import 'package:sparknp/screens/details/shopdetail.dart';
+// import 'package:sparknp/model/product.dart';
 
-// import 'package:sparknp/screens/shopping_cart.dart';
+import 'package:sparknp/screens/cart/cart.dart';
 
 const String home = '/';
 const String login = '/login';
@@ -24,7 +23,7 @@ const String accInfo = '/accinfo';
 const String custService = '/custservice';
 const String categories = '/categories';
 const String details = '/details';
-// const String cart = '/cart';
+const String cart = '/cart';
 
 //TODO: when logged in route pages
 
@@ -33,8 +32,8 @@ class Routing {
     switch (screen.name) {
       case login:
         return MaterialPageRoute(builder: (_) => LoginScreen());
-      case register:
-        return MaterialPageRoute(builder: (_) => RegistrationScreen());
+      // case register:
+      //   return MaterialPageRoute(builder: (_) => RegistrationScreen());
       case home:
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case myOrders:
@@ -45,18 +44,18 @@ class Routing {
         return MaterialPageRoute(builder: (_) => AccInfo());
       case custService:
         return MaterialPageRoute(builder: (_) => CustService());
-      // case cart:
-      //   return MaterialPageRoute(builder: (_) => ShoppingCartPage());
+      case cart:
+        return MaterialPageRoute(builder: (_) => CartScreen());
       case details:
-        return MaterialPageRoute(
-          builder: (_) => DetailsScreen(product: products[0]),
-        );
+        return MaterialPageRoute(builder: (_) => DetailScreen()
+            //DetailsScreen(product: products[0]),
+            );
       case categories:
-        print(screen.arguments);
-
         return MaterialPageRoute(
           builder: (_) => Categories(category: screen.arguments),
         );
+      default:
+        return null;
     }
   }
 }

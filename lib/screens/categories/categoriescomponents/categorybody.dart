@@ -6,8 +6,8 @@ import 'package:sparknp/constants.dart';
 
 import 'package:sparknp/model/product.dart';
 
-import 'package:sparknp/screens/categories/components/swipebar.dart';
-import 'package:sparknp/screens/categories/components/item_card.dart';
+import 'package:sparknp/screens/categories/categoriescomponents/swipebar.dart';
+import 'package:sparknp/screens/categories/categoriescomponents/item_card.dart';
 
 class CategoryBody extends StatelessWidget {
   final Category category;

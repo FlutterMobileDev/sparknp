@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:sparknp/constants.dart';
+
+import 'package:sparknp/widgets/appbar/appbar.dart';
+import 'package:sparknp/widgets/drawer/drawer.dart';
 import 'package:sparknp/model/category.dart';
-import 'package:sparknp/screens/categories/components/categorybody.dart';
+import 'package:sparknp/screens/categories/categoriescomponents/categorybody.dart';
+
+//TODO: stop multiple category routing
 
 class Categories extends StatelessWidget {
   final Category category;
@@ -12,36 +15,9 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: buildAppBar(context),
+      drawer: MainDrawer(),
       body: CategoryBody(category: category),
-    );
-  }
-
-  AppBar buildAppBar() {
-    return AppBar(
-      backgroundColor: Colors.white,
-      elevation: 0,
-      leading: IconButton(
-        icon: SvgPicture.asset("assets/icons/back.svg"),
-        onPressed: () {},
-      ),
-      actions: <Widget>[
-        IconButton(
-          icon: SvgPicture.asset(
-            "assets/icons/search.svg",
-            color: LightColor.textColor,
-          ),
-          onPressed: () {},
-        ),
-        IconButton(
-          icon: SvgPicture.asset(
-            "assets/icons/cart.svg",
-            color: LightColor.textColor,
-          ),
-          onPressed: () {},
-        ),
-        SizedBox(width: defaultPadding / 2)
-      ],
     );
   }
 }

@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 
 final hintTextStyle = TextStyle(
-  color: Colors.white54,
+  color: LightColor.textColor,
   fontFamily: 'OpenSans',
 );
 
 final labelStyle = TextStyle(
-  color: Colors.white,
+  color: LightColor.background,
   fontWeight: FontWeight.bold,
   fontFamily: 'OpenSans',
 );
 
 final boxDecorationStyle = BoxDecoration(
-  color: Color(0xFF6CA8F1),
+  color: LightColor.lightBlue,
   borderRadius: BorderRadius.circular(10.0),
   boxShadow: [
     BoxShadow(
@@ -62,7 +62,7 @@ class LightColor {
   static const Color darkgrey = Color(0xff747F8F);
 
   static const Color iconColor = Color(0xffa8a09b);
-  static const Color yellowColor = Color(0xfffbba01);
+  static const Color yellow = Color(0xfffbba01);
 
   static const Color black = Color(0xff20262C);
   static const Color lightblack = Color(0xff5F5F60);
@@ -107,7 +107,7 @@ class AppTheme {
 
   static List<BoxShadow> shadow = <BoxShadow>[
     BoxShadow(
-      color: Color(0xfff8f8f8),
+      color: LightColor.background,
       blurRadius: 10,
       spreadRadius: 15,
     ),

@@ -1,18 +1,16 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-
 import 'package:sparknp/constants.dart';
 
-import 'package:progress_dialog/progress_dialog.dart';
+import 'dart:ui';
 
-class RegistrationScreen extends StatefulWidget {
+class CreateScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _RegistrationScreenState();
+  State<StatefulWidget> createState() => _CreateScreenState(); //this
+//or State<StatefulWidget> createState(){  return _LoginScreenState(); }its same
+
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
-  ProgressDialog progressDialog;
+class _CreateScreenState extends State<CreateScreen> {
   String _email, _password, _confirmpwd, _name;
   bool _obscureText = true;
   bool _obscureText1 = true;
@@ -48,7 +46,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
-                Icons.email,
+                Icons.person,
                 color: Colors.white,
               ),
               hintText: 'Enter your Name',
@@ -95,6 +93,92 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 color: Colors.white,
               ),
               hintText: 'Enter your Email',
+              hintStyle: hintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPhoneTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Phone Number',
+          style: labelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: boxDecorationStyle,
+          height: 60.0,
+          child: TextFormField(
+            keyboardType: TextInputType.emailAddress,
+            validator: (value) {
+              if (value.isEmpty) {
+                String a = 'Phone Number is required';
+                return a;
+              }
+              return null;
+            },
+            onSaved: (input) => _email = input,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.phone,
+                color: Colors.white,
+              ),
+              hintText: 'Enter your Phone Number',
+              hintStyle: hintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAddressTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Address',
+          style: labelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: boxDecorationStyle,
+          height: 60.0,
+          child: TextFormField(
+            keyboardType: TextInputType.emailAddress,
+            validator: (value) {
+              if (value.isEmpty) {
+                String a = 'Address is required';
+                return a;
+              }
+              return null;
+            },
+            onSaved: (input) => _email = input,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.add_location,
+                color: Colors.white,
+              ),
+              hintText: 'Enter your Address',
               hintStyle: hintTextStyle,
             ),
           ),
@@ -217,10 +301,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () {
-          print('register');
-        },
-        // => createUserWithEmailAndPassword(context),
+        onPressed: () {},
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -242,9 +323,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
-        backgroundColor: Color(0xfff2f3f7),
+        backgroundColor: Colors.blue,
         appBar: AppBar(
           title: Text('Create Account'),
         ),
@@ -295,12 +375,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       SizedBox(
                         height: 30.0,
                       ),
+                      _buildPhoneTF(),
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      _buildAddressTF(),
+                      SizedBox(
+                        height: 30.0,
+                      ),
                       _buildPasswordTF(),
                       SizedBox(
-                        height: 20,
+                        height: 30,
                       ),
                       _buildConfirmtPasswordBtn(),
-                      // _buildRegisterBtn(context),
+                      _buildRegisterBtn(context),
                     ],
                   ),
                 ),
@@ -309,50 +397,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ],
         ));
   }
-
-  //TODO: connect
-
-  // Future<void> createUserWithEmailAndPassword(BuildContext context) async {
-  //   progressDialog = ProgressDialog(context, type: ProgressDialogType.Normal);
-  //   progressDialog.style(
-  //     message: 'Creating Account...',
-  //   );
-  //   if (_formkey1.currentState.validate()) {
-  //     _formkey1.currentState.save();
-  //     if (_password == _confirmpwd) {
-  //       try {
-  //         final currentUser =
-  //             await FirebaseAuth.instance.createUserWithEmailAndPassword(
-  //           email: _email,
-  //           password: _password,
-  //         );
-  //         DocumentReference reference = await Firestore.instance
-  //             .collection("User")
-  //             .document(currentUser.user.uid)
-  //             .setData({
-  //           'Your Name': _name,
-  //           'Your Email': _email,
-  //         }).then((_) {
-  //           print("upload successfull");
-  //           return null;
-  //         });
-  //         if (currentUser.user.uid != null) {
-  //           progressDialog.show();
-  //           await currentUser.user.sendEmailVerification();
-
-  //           progressDialog.hide();
-  //           Navigator.pushReplacement(context,
-  //               MaterialPageRoute(builder: (context) => LoginScreen()));
-  //         }
-  //       } catch (e) {
-  //         print(e.message);
-  //       }
-  //     } else {
-  //       showAlertDialog(context, 'Password Error', 'Password mismatched');
-  //       print('Password not matched');
-  //     }
-  //   }
-  // }
 
   showAlertDialog(BuildContext context, String txt1, String txt2) {
     // set up the button
@@ -379,10 +423,5 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         return alert;
       },
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }

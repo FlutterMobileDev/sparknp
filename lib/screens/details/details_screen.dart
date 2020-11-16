@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/model/product.dart';
-import 'package:sparknp/screens/details/components/body.dart';
+import 'package:sparknp/screens/details/detailscomponents/body.dart';
 
 class DetailsScreen extends StatelessWidget {
   final Product product;

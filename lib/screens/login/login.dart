@@ -1,12 +1,8 @@
-// import 'accountsandpost/createaccn.dart';
-// import 'accountsandpost/forgetpwd.dart';
 import 'package:flutter/material.dart';
-import 'package:progress_dialog/progress_dialog.dart';
-import 'package:sparknp/router.dart';
-
 import 'package:sparknp/constants.dart';
-import 'package:sparknp/drawer.dart';
-// import 'router.dart';
+import 'package:sparknp/screens/login/createacc.dart';
+import 'package:sparknp/screens/login/forgetpw.dart';
+import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -18,10 +14,10 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   int i = 0;
 
-  ProgressDialog progressDialog;
   String _email, _password;
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   bool _obscureText = true;
+  bool _isLogged = false;
 
   Widget _buildEmailTF() {
     return Column(
@@ -118,15 +114,13 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  //TODO: anon routing
   Widget _buildForgotPasswordBtn(BuildContext context) {
     return Container(
       alignment: Alignment.centerRight,
       child: FlatButton(
-        onPressed: () {
-          print("forgotpass");
-        },
-        // => Navigator.of(context)
-        //     .push(MaterialPageRoute(builder: (context) => ForgetPwdScreen())),
+        onPressed: () => Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => ForgetPwdScreen())),
         padding: EdgeInsets.only(right: 0.0),
         child: Text(
           'Forgot Password?',
@@ -142,17 +136,14 @@ class _LoginScreenState extends State<LoginScreen> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () {
-          print('login');
-        },
-        // => signInWithEmailAndPassword(context),
+        onPressed: () {},
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
         color: Colors.white,
         child: Text(
-          'SIGN IN',
+          'LOGIN',
           style: TextStyle(
             color: Color(0xFF527DAA),
             letterSpacing: 1.5,
@@ -165,15 +156,35 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Widget _buildFBLoginBtn(BuildContext context) {
+    return Container(
+      child: _isLogged
+          ? null
+          : FacebookSignInButton(
+              onPressed: () {},
+            ),
+    );
+  }
+
+  Widget _buildGoogleLoginBtn(BuildContext context) {
+    return Container(
+      child: _isLogged
+          ? null
+          : GoogleSignInButton(
+              onPressed: () {},
+            ),
+    );
+  }
+
+  //TODO: anon routing
   Widget _buildSignupBtn(BuildContext context) {
     return Container(
       alignment: Alignment.center,
       child: FlatButton(
-        onPressed: () {
-          Navigator.pushNamedAndRemoveUntil(context, register, (login) => true);
-        },
+        onPressed: () => Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => CreateScreen())),
         padding: EdgeInsets.only(right: 0.0),
-        child: Text("Don't have an Account? Sign up",
+        child: Text("Don't have an account? Sign up",
             style: TextStyle(
               color: Colors.white,
               fontSize: 20,
@@ -185,11 +196,10 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xfff2f3f7),
         appBar: AppBar(
-          title: Text('Sign In'),
+          backgroundColor: Colors.blue,
+          title: Text('Login'),
         ),
-        drawer: MainDrawer(),
         body: Stack(
           children: <Widget>[
             Container(
@@ -238,6 +248,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       _buildPasswordTF(),
                       _buildForgotPasswordBtn(context),
                       _buildLoginBtn(context),
+                      _buildFBLoginBtn(context),
+                      SizedBox(height: 10.0),
+                      _buildGoogleLoginBtn(context),
                       _buildSignupBtn(context),
                     ],
                   ),
