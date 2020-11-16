@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:sparknp/nav/router.dart';
-import 'package:sparknp/home.dart';
-// import 'drawer.dart';
-// import 'myaccount.dart';
-// import 'accsettings.dart';
+import 'package:sparknp/router.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +12,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: HomeScreen(),
       onGenerateRoute: Routing.generateRoute,
       initialRoute: home,
       theme: ThemeData(

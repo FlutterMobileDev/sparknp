@@ -117,7 +117,7 @@ packages:
     source: hosted
     version: "1.8.8"
   google_fonts:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: google_fonts
       url: "https://pub.dartlang.org"
@@ -250,7 +250,7 @@ packages:
     source: hosted
     version: "3.0.13"
   progress_dialog:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: progress_dialog
       url: "https://pub.dartlang.org"
