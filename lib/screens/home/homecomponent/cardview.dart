@@ -29,7 +29,9 @@ class FeatureCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage(image.toString()),
+            image: NetworkImage(
+              image.toString(),
+            ),
           ),
         ),
       ),

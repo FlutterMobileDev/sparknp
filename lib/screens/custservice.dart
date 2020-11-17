@@ -12,6 +12,10 @@ class _CustServiceState extends State<CustService> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
+      body: Container(
+        child: Image.network(
+            "https://sparknp.com/assets/images/thumbnails/1600602463RFaru9gh.jpg"),
+      ),
     );
   }
 }

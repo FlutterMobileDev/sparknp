@@ -1,13 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-class ImageSlideScreen extends StatefulWidget{
 
+class ImageSlideScreen extends StatefulWidget {
   @override
   _ImageSlideScreenState createState() => _ImageSlideScreenState();
 }
 
 class _ImageSlideScreenState extends State<ImageSlideScreen> {
- 
   int _current = 0;
   List imgList = [
     'https://images.unsplash.com/photo-1502117859338-fd9daa518a9a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
@@ -33,29 +32,30 @@ class _ImageSlideScreenState extends State<ImageSlideScreen> {
           CarouselSlider(
             initialPage: 0,
             height: 300,
-            onPageChanged: (index){
+            onPageChanged: (index) {
               setState(() {
                 _current = index;
               });
-              },
-            items: imgList.map((imageUrl){
+            },
+            items: imgList.map((imageUrl) {
               return Builder(
-                  builder: (BuildContext context ){
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.symmetric(horizontal: 1.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.green,
-                      ),
-                      child: Image.network(imageUrl.toString(),fit: BoxFit.fill,),
-                    );
-                  } ,
+                builder: (BuildContext context) {
+                  return Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.symmetric(horizontal: 1.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.green,
+                    ),
+                    child: Image.network(
+                      imageUrl.toString(),
+                      fit: BoxFit.fill,
+                    ),
+                  );
+                },
               );
-
             }).toList(),
           ),
-
           Padding(
             padding: EdgeInsets.fromLTRB(0, 275, 0, 0),
             child: Row(
@@ -75,7 +75,6 @@ class _ImageSlideScreenState extends State<ImageSlideScreen> {
           ),
         ],
       ),
-
     );
   }
 }
