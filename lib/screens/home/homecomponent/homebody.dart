@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:sparknp/router.dart';
 
 import 'package:sparknp/screens/home/homecomponent/banners_ecommerce.dart';
-import 'package:sparknp/screens/home/homecomponent/featured.dart';
+import 'package:sparknp/screens/home/homecomponent/cardview.dart';
 import 'package:sparknp/screens/home/homecomponent/recommended.dart';
 import 'package:sparknp/screens/home/homecomponent/sectiontitle.dart';
 
@@ -52,7 +52,7 @@ class HomeBody extends StatelessWidget {
                   print("pressed");
                 },
               ),
-              FeaturedProduct(),
+              FeatureCard(),
               BannerScreen(),
               TitleWithMoreBtn(
                 title: "Recommended",
@@ -67,7 +67,7 @@ class HomeBody extends StatelessWidget {
                   print("pressed");
                 },
               ),
-              FeaturedProduct(),
+              FeatureCard(),
             ],
           ),
         ),
