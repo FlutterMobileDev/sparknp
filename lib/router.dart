@@ -9,7 +9,7 @@ import 'package:sparknp/screens/accinfo.dart';
 import 'package:sparknp/screens/custservice.dart';
 import 'package:sparknp/screens/categories/categories.dart';
 
-import 'package:sparknp/screens/details/shopdetail.dart';
+import 'package:sparknp/screens/details/details.dart';
 // import 'package:sparknp/model/product.dart';
 
 import 'package:sparknp/screens/cart/cart.dart';
@@ -32,8 +32,6 @@ class Routing {
     switch (screen.name) {
       case login:
         return MaterialPageRoute(builder: (_) => LoginScreen());
-      // case register:
-      //   return MaterialPageRoute(builder: (_) => RegistrationScreen());
       case home:
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case myOrders:
@@ -47,7 +45,7 @@ class Routing {
       case cart:
         return MaterialPageRoute(builder: (_) => CartScreen());
       case details:
-        return MaterialPageRoute(builder: (_) => DetailScreen()
+        return MaterialPageRoute(builder: (_) => DetailsScreen()
             //DetailsScreen(product: products[0]),
             );
       case categories:

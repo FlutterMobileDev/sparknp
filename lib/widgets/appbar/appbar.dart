@@ -39,13 +39,20 @@ AppBar buildAppBar(context) {
             svgSrc: "assets/Cart Icon.svg",
             numOfitem: 1,
             press: () {
-              Navigator.pushNamedAndRemoveUntil(context, cart, (home) => true);
+              Navigator.pushNamed(
+                context,
+                cart,
+              );
             }),
+        // TODO: wish list
         IconBtnWithCounter(
             svgSrc: "assets/Heart Icon.svg",
             numOfitem: 5,
             press: () {
-              print("pressed");
+              Navigator.pushNamed(
+                context,
+                cart,
+              );
             }),
         SizedBox(width: defaultPadding / 2)
       ])

@@ -1,33 +1,32 @@
 import 'package:flutter/material.dart';
 
 import 'package:sparknp/constants.dart';
-
-// We need satefull widget for our categories
+import 'package:sparknp/model/category.dart';
 
 class SwipeBar extends StatefulWidget {
+  final Category category;
+
+  const SwipeBar({Key key, this.category}) : super(key: key);
+
   @override
   _SwipeBarState createState() => _SwipeBarState();
 }
 
 class _SwipeBarState extends State<SwipeBar> {
-  List<String> categories = ["Hand bag", "Jewellery", "Footwear", "Dresses"];
-  // By default our first item will be selected
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-      child: SizedBox(
-        height: 25,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: categories.length,
-          itemBuilder: (context, index) => buildCategory(index),
-        ),
+    return SizedBox(
+      height: 25,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: widget.category.subcat.length,
+        itemBuilder: (context, index) => buildCategory(index),
       ),
     );
   }
 
+// TODO: route to diff subcat
   Widget buildCategory(int index) {
     return GestureDetector(
       onTap: () {
@@ -41,7 +40,7 @@ class _SwipeBarState extends State<SwipeBar> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              categories[index],
+              widget.category.subcat[index],
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: selectedIndex == index

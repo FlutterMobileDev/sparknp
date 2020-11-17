@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:sparknp/widgets/drawer/drawer.dart';
-import 'package:sparknp/widgets/appbar/appbar.dart';
+
+import 'package:sparknp/router.dart';
+
+import 'package:sparknp/constants.dart';
 import 'package:sparknp/screens/cart/cartcomponents/cartbody.dart';
+import 'package:sparknp/widgets/appbar/barbutton.dart';
 
 class CartScreen extends StatelessWidget {
   @override
@@ -13,4 +17,13 @@ class CartScreen extends StatelessWidget {
       body: CartBody(),
     );
   }
+}
+
+AppBar buildAppBar(context) {
+  return AppBar(
+      backgroundColor: LightColor.mainColor,
+      elevation: 0,
+      iconTheme: IconThemeData(color: LightColor.textLightColor),
+      centerTitle: true,
+      title: Text("CART"));
 }

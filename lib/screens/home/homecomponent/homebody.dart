@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
-//TODO: Check if okay wit team
 // import 'package:sparknp/router.dart';
 
 import 'package:sparknp/screens/home/homecomponent/banners_ecommerce.dart';
 import 'package:sparknp/screens/home/homecomponent/featured.dart';
 import 'package:sparknp/screens/home/homecomponent/recommended.dart';
 import 'package:sparknp/screens/home/homecomponent/sectiontitle.dart';
-// import 'package:sparknp/widgets/barbutton.dart';
-// import 'package:sparknp/constants.dart';
 
 class HomeBody extends StatelessWidget {
   @override

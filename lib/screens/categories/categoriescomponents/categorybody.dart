@@ -20,7 +20,7 @@ class CategoryBody extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+          padding: const EdgeInsets.all(defaultPadding),
           child: Text(
             category.name,
             style: Theme.of(context)
@@ -29,7 +29,7 @@ class CategoryBody extends StatelessWidget {
                 .copyWith(fontWeight: FontWeight.bold),
           ),
         ),
-        SwipeBar(),
+        SwipeBar(category: category),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
