@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
-// import 'package:sparknp/router.dart';
+import 'package:sparknp/constants.dart';
 
 import 'package:sparknp/screens/home/homecomponent/banners_ecommerce.dart';
-import 'package:sparknp/screens/home/homecomponent/cardview.dart';
-import 'package:sparknp/screens/home/homecomponent/recommended.dart';
+import 'package:sparknp/screens/home/homecomponent/featuredcard.dart';
+import 'package:sparknp/screens/home/homecomponent/detailimagecard.dart';
 import 'package:sparknp/screens/home/homecomponent/sectiontitle.dart';
 
 class HomeBody extends StatelessWidget {
@@ -21,10 +20,10 @@ class HomeBody extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFFEEEEEE),
-              Color(0xFFEEEEEE),
-              Color(0xFFEEEEEE),
-              Color(0xFFEEEEEE),
+              LightColor.background,
+              LightColor.background,
+              LightColor.background,
+              LightColor.background,
             ],
             stops: [0.1, 0.4, 0.7, 0.9],
           )),
@@ -52,7 +51,7 @@ class HomeBody extends StatelessWidget {
                   print("pressed");
                 },
               ),
-              FeatureCard(),
+              ImageCard(name: "featureProduct"),
               BannerScreen(),
               TitleWithMoreBtn(
                 title: "Recommended",
@@ -60,14 +59,14 @@ class HomeBody extends StatelessWidget {
                   print("pressed");
                 },
               ),
-              Recomends(),
+              DetailImageCard(),
               TitleWithMoreBtn(
                 title: "Top Sale",
                 press: () {
                   print("pressed");
                 },
               ),
-              FeatureCard(),
+              ImageCard(name: "saleProduct"),
             ],
           ),
         ),

@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final welcome = welcomeFromJson(jsonString);
+//     final apiFront = apiFrontFromJson(jsonString);
 
 import 'dart:convert';
 
-Welcome welcomeFromJson(String str) => Welcome.fromJson(json.decode(str));
+ApiFront apiFrontFromJson(String str) => ApiFront.fromJson(json.decode(str));
 
-String welcomeToJson(Welcome data) => json.encode(data.toJson());
+String apiFrontToJson(ApiFront data) => json.encode(data.toJson());
 
-class Welcome {
-  Welcome({
+class ApiFront {
+  ApiFront({
     this.status,
     this.generalSettings,
     this.categories,
@@ -49,7 +49,7 @@ class Welcome {
   List<HotProductElement> trendingProducts;
   List<HotProductElement> saleProducts;
 
-  factory Welcome.fromJson(Map<String, dynamic> json) => Welcome(
+  factory ApiFront.fromJson(Map<String, dynamic> json) => ApiFront(
         status: json["status"],
         generalSettings: Map.from(json["general_settings"])
             .map((k, v) => MapEntry<String, String>(k, v)),
