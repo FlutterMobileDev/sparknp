@@ -6,15 +6,12 @@ import 'package:sparknp/model/frontjson.dart';
 class Services {
   static Future<ApiFront> fetch() async {
     try {
-      final response = await http.get(
-        'https://sparknp.com/api/front-data',
-        // headers: {HttpHeaders.authorizationHeader: token.toString()}
-      );
+      final response = await http.get('https://www.sparknp.com/api/front-data');
       if (response.statusCode == 200) {
-        final ApiFront front = apiFrontFromJson(response.body);
-        return front;
+        final ApiFront frontdata = apiFrontFromJson(response.body);
+        return frontdata;
       } else {
-        throw Exception('Error !200');
+        throw Exception('error hero');
       }
     } catch (e) {
       throw Exception('There was a problem connectting to the internet');

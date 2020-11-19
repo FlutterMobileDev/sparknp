@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:sparknp/router.dart';
+
 import 'package:sparknp/constants.dart';
-import 'package:sparknp/APIservices.dart';
-import 'package:sparknp/model/frontjson.dart';
+import 'package:sparknp/services/frontservice.dart';
 
 class ImageCard extends StatefulWidget {
   final String name;
@@ -25,13 +26,21 @@ class _ImageCardState extends State<ImageCard> {
     _loading = true;
     Services.fetch().then(
       (front) {
-        if (widget.name == "featureProduct") {
+        if (widget.name == "featureProducts") {
           setState(() {
             _productList = front.featureProducts;
           });
-        } else if (widget.name == "saleProduct") {
+        } else if (widget.name == "saleProducts") {
           setState(() {
             _productList = front.saleProducts;
+          });
+        } else if (widget.name == "latestProducts") {
+          setState(() {
+            _productList = front.latestProducts;
+          });
+        } else if (widget.name == "hotProducts") {
+          setState(() {
+            _productList = front.hotProducts;
           });
         }
         _loading = false;
@@ -64,7 +73,7 @@ class _ImageCardState extends State<ImageCard> {
                 dynamic product = _productList[index];
                 return GestureDetector(
                   onTap: () {
-                    print("Details");
+                    Navigator.pushNamed(context, details, arguments: product);
                   },
                   child: Container(
                     width: size.width * 0.8,

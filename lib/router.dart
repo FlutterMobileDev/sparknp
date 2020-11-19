@@ -37,7 +37,7 @@ class Routing {
       case myOrders:
         return MaterialPageRoute(builder: (_) => MyOrders());
       case myAccount:
-        return MaterialPageRoute(builder: (_) => MyAccount());
+        return MaterialPageRoute(builder: (_) => ProfilePage());
       case accInfo:
         return MaterialPageRoute(builder: (_) => AccInfo());
       case custService:
@@ -45,7 +45,7 @@ class Routing {
       case cart:
         return MaterialPageRoute(builder: (_) => CartScreen());
       case details:
-        return MaterialPageRoute(builder: (_) => DetailsScreen()
+        return MaterialPageRoute(builder: (_) => DetailsScreen(screen.arguments)
             //DetailsScreen(product: products[0]),
             );
       case categories:

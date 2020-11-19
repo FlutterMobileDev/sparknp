@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+
 import 'package:sparknp/constants.dart';
 
-import 'package:sparknp/screens/home/homecomponent/banners_ecommerce.dart';
-import 'package:sparknp/screens/home/homecomponent/featuredcard.dart';
+import 'package:sparknp/screens/home/homecomponent/banners.dart';
+import 'package:sparknp/screens/home/homecomponent/imagecard.dart';
 import 'package:sparknp/screens/home/homecomponent/detailimagecard.dart';
-import 'package:sparknp/screens/home/homecomponent/grid_view.dart';
+import 'package:sparknp/screens/home/homecomponent/gridview.dart';
 import 'package:sparknp/screens/home/homecomponent/sectiontitle.dart';
 
 class HomeBody extends StatelessWidget {
@@ -39,7 +40,7 @@ class HomeBody extends StatelessWidget {
                   print("pressed");
                 },
               ),
-              ImageCard(name: "featureProduct"),
+              ImageCard(name: "featureProducts"),
               BannerScreen(),
               TitleWithMoreBtn(
                 title: "Trending Products",
@@ -48,8 +49,9 @@ class HomeBody extends StatelessWidget {
                 },
               ),
               DetailImageCard(name: "trendingProducts"),
-              SizedBox(height: 4,),
-
+              SizedBox(
+                height: 4,
+              ),
               BannerScreen(),
               TitleWithMoreBtn(
                 title: "Top Sale",
@@ -57,21 +59,46 @@ class HomeBody extends StatelessWidget {
                   print("pressed");
                 },
               ),
-              ImageCard(name: "saleProduct"),
+              ImageCard(name: "saleProducts"),
               TitleWithMoreBtn(
-                title: "Best Product",
+                title: "Best Products",
                 press: () {
                   print("pressed");
                 },
               ),
-              DetailImageCard(name: "best_products"),
+              DetailImageCard(name: "bestProducts"),
               TitleWithMoreBtn(
-                title: "Big Product",
+                title: "Big Products",
                 press: () {
                   print("pressed");
                 },
               ),
-              GridProduct(name: "big_products",),
+              GridProduct(
+                name: "bigProducts",
+              ),
+              TitleWithMoreBtn(
+                title: "Latest Products",
+                press: () {
+                  print("pressed");
+                },
+              ),
+              ImageCard(name: "latestProducts"),
+              TitleWithMoreBtn(
+                title: "Top Products",
+                press: () {
+                  print("pressed");
+                },
+              ),
+              GridProduct(
+                name: "topProducts",
+              ),
+              TitleWithMoreBtn(
+                title: "Hot Products",
+                press: () {
+                  print("pressed");
+                },
+              ),
+              DetailImageCard(name: "hotProducts"),
             ],
           ),
         ),

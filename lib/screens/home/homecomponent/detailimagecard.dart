@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:sparknp/APIservices.dart';
+import 'package:sparknp/router.dart';
+import 'package:sparknp/services/frontservice.dart';
 import 'package:sparknp/constants.dart';
-import 'package:sparknp/model/frontjson.dart';
 
 class DetailImageCard extends StatefulWidget {
   final String name;
@@ -23,20 +23,24 @@ class _DetailImageCardState extends State<DetailImageCard> {
   void initState() {
     super.initState();
     _loading = true;
-    Services.fetch().then((front) {
-      if (widget.name == "trendingProducts") {
-        setState(() {
-          _productList = front.trendingProducts;
-          _loading = false;
-        });
-      }
-      if (widget.name == "best_products") {
-        setState(() {
-          _productList = front.bestProducts;
-          _loading = false;
-        });
-      }
-    });
+    Services.fetch().then(
+      (front) {
+        if (widget.name == "trendingProducts") {
+          setState(() {
+            _productList = front.trendingProducts;
+          });
+        } else if (widget.name == "bestProducts") {
+          setState(() {
+            _productList = front.bestProducts;
+          });
+        } else if (widget.name == "hotProducts") {
+          setState(() {
+            _productList = front.hotProducts;
+          });
+        }
+        _loading = false;
+      },
+    );
   }
 
   @override
@@ -64,7 +68,7 @@ class _DetailImageCardState extends State<DetailImageCard> {
                 dynamic product = _productList[index];
                 return GestureDetector(
                   onTap: () {
-                    print("product");
+                    Navigator.pushNamed(context, details, arguments: product);
                   },
                   child: Column(
                     children: <Widget>[
@@ -85,7 +89,7 @@ class _DetailImageCardState extends State<DetailImageCard> {
                           height: 50,
                           padding: EdgeInsets.all(defaultPadding / 2),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: LightColor.background,
                             borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(10),
                               bottomRight: Radius.circular(10),
