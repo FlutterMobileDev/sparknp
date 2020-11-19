@@ -1,3 +1,3 @@
 # sparknp
 
-An ecommecrce mobile application.
+An e-commerce mobile application.
