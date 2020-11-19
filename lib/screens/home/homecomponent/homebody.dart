@@ -4,6 +4,7 @@ import 'package:sparknp/constants.dart';
 import 'package:sparknp/screens/home/homecomponent/banners_ecommerce.dart';
 import 'package:sparknp/screens/home/homecomponent/featuredcard.dart';
 import 'package:sparknp/screens/home/homecomponent/detailimagecard.dart';
+import 'package:sparknp/screens/home/homecomponent/grid_view.dart';
 import 'package:sparknp/screens/home/homecomponent/sectiontitle.dart';
 
 class HomeBody extends StatelessWidget {
@@ -31,20 +32,7 @@ class HomeBody extends StatelessWidget {
         Container(
           child: Column(
             children: [
-              Container(
-                margin: EdgeInsets.all(14),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 36,
-                  vertical: 75,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  image: new DecorationImage(
-                    image: ExactAssetImage('assets/1568889151top2.jpg'),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
+              BannerScreen(),
               TitleWithMoreBtn(
                 title: "Featured",
                 press: () {
@@ -54,12 +42,15 @@ class HomeBody extends StatelessWidget {
               ImageCard(name: "featureProduct"),
               BannerScreen(),
               TitleWithMoreBtn(
-                title: "Recommended",
+                title: "Trending Products",
                 press: () {
                   print("pressed");
                 },
               ),
-              DetailImageCard(),
+              DetailImageCard(name: "trendingProducts"),
+              SizedBox(height: 4,),
+
+              BannerScreen(),
               TitleWithMoreBtn(
                 title: "Top Sale",
                 press: () {
@@ -67,6 +58,20 @@ class HomeBody extends StatelessWidget {
                 },
               ),
               ImageCard(name: "saleProduct"),
+              TitleWithMoreBtn(
+                title: "Best Product",
+                press: () {
+                  print("pressed");
+                },
+              ),
+              DetailImageCard(name: "best_products"),
+              TitleWithMoreBtn(
+                title: "Big Product",
+                press: () {
+                  print("pressed");
+                },
+              ),
+              GridProduct(name: "big_products",),
             ],
           ),
         ),

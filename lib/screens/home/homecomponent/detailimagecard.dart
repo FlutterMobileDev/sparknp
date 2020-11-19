@@ -5,6 +5,9 @@ import 'package:sparknp/constants.dart';
 import 'package:sparknp/model/frontjson.dart';
 
 class DetailImageCard extends StatefulWidget {
+  final String name;
+
+  const DetailImageCard({Key key, this.name}) : super(key: key);
   @override
   _DetailImageCardState createState() => _DetailImageCardState();
 }
@@ -21,10 +24,18 @@ class _DetailImageCardState extends State<DetailImageCard> {
     super.initState();
     _loading = true;
     Services.fetch().then((front) {
-      setState(() {
-        _productList = front.trendingProducts;
-        _loading = false;
-      });
+      if(widget.name == "trendingProducts") {
+        setState(() {
+          _productList = front.trendingProducts;
+          _loading = false;
+        });
+      }
+      if(widget.name == "best_products") {
+        setState(() {
+          _productList = front.bestProducts;
+          _loading = false;
+        });
+      }
     });
   }
 
@@ -58,8 +69,8 @@ class _DetailImageCardState extends State<DetailImageCard> {
                   child: Column(
                     children: <Widget>[
                       Container(
-                        width: size.width * 0.9,
-                        height: 225,
+                        width: 240,
+                        height: 215,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(
@@ -70,7 +81,8 @@ class _DetailImageCardState extends State<DetailImageCard> {
                       ),
                       Flexible(
                         child: Container(
-                          width: size.width * 0.9,
+                          width: 240,
+                          height: 240,
                           padding: EdgeInsets.all(defaultPadding / 2),
                           decoration: BoxDecoration(
                             color: Colors.white,
