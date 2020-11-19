@@ -24,13 +24,13 @@ class _DetailImageCardState extends State<DetailImageCard> {
     super.initState();
     _loading = true;
     Services.fetch().then((front) {
-      if(widget.name == "trendingProducts") {
+      if (widget.name == "trendingProducts") {
         setState(() {
           _productList = front.trendingProducts;
           _loading = false;
         });
       }
-      if(widget.name == "best_products") {
+      if (widget.name == "best_products") {
         setState(() {
           _productList = front.bestProducts;
           _loading = false;
@@ -55,7 +55,7 @@ class _DetailImageCardState extends State<DetailImageCard> {
           )
         : Container(
             width: size.width,
-            height: 350,
+            height: 200,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
             child: ListView.separated(
               itemCount: _productList.length >= 5 ? 5 : _productList.length,
@@ -70,7 +70,7 @@ class _DetailImageCardState extends State<DetailImageCard> {
                     children: <Widget>[
                       Container(
                         width: 240,
-                        height: 215,
+                        height: 150,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(
@@ -82,7 +82,7 @@ class _DetailImageCardState extends State<DetailImageCard> {
                       Flexible(
                         child: Container(
                           width: 240,
-                          height: 240,
+                          height: 50,
                           padding: EdgeInsets.all(defaultPadding / 2),
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -102,6 +102,8 @@ class _DetailImageCardState extends State<DetailImageCard> {
                           child: Row(children: <Widget>[
                             Expanded(
                               child: RichText(
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 text: TextSpan(children: [
                                   TextSpan(
                                       text: product.name.toUpperCase(),
@@ -113,6 +115,7 @@ class _DetailImageCardState extends State<DetailImageCard> {
                             Spacer(),
                             Text(
                               product.price,
+                              overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
                                   .button
