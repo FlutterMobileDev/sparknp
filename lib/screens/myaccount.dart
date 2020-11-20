@@ -41,7 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     width: 20,
                   ),
                   Text(
-                    "Name: ${_name}",
+                    "Name: $_name",
                     style: TextStyle(color: Colors.white),
                   ),
                   SizedBox(

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:sparknp/model/frontjson.dart';
 
 import 'package:sparknp/router.dart';
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/widgets/drawer/catdrawer.dart';
 
 class MainDrawer extends StatefulWidget {
+  final ApiFront front;
+  const MainDrawer({Key key, this.front}) : super(key: key);
   @override
   _MainDrawerState createState() => _MainDrawerState();
 }
@@ -21,9 +24,7 @@ class _MainDrawerState extends State<MainDrawer> {
 
   //The Logic where you change the pages
   _onChangePage(int index) {
-    if (index != 0)
-      setState(() => myIndex =
-          index); //change myIndex if you're Selecting between Settings and Explore
+    if (index != 0) setState(() => myIndex = index);
     _controller.animateToPage(index.clamp(0, 1),
         duration: const Duration(milliseconds: 250), curve: Curves.linear);
   }
@@ -39,8 +40,7 @@ class _MainDrawerState extends State<MainDrawer> {
     return Drawer(
         child: PageView.builder(
       controller: _controller,
-      physics:
-          NeverScrollableScrollPhysics(), //so the user can not move between pages
+      physics: NeverScrollableScrollPhysics(),
       itemCount: 2,
       itemBuilder: (context, index) {
         // Original Drawer
@@ -52,7 +52,10 @@ class _MainDrawerState extends State<MainDrawer> {
         //Second Drawer form the PageView
         switch (myIndex) {
           case 1:
-            return MyExploreAll(goBack: () => _onChangePage(0));
+            return MyExploreAll(
+              goBack: () => _onChangePage(0),
+              front: widget.front,
+            );
           case 2:
           default:
             return MySettings(goBack: () => _onChangePage(0));

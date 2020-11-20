@@ -45,9 +45,9 @@ class Routing {
       case cart:
         return MaterialPageRoute(builder: (_) => CartScreen());
       case details:
-        return MaterialPageRoute(builder: (_) => DetailsScreen(screen.arguments)
-            //DetailsScreen(product: products[0]),
-            );
+        return MaterialPageRoute(
+          builder: (_) => DetailsScreen(screen.arguments),
+        );
       case categories:
         return MaterialPageRoute(
           builder: (_) => Categories(category: screen.arguments),

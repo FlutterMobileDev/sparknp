@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 
 import 'package:sparknp/widgets/drawer/drawer.dart';
 
-import 'package:sparknp/router.dart';
-
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/screens/cart/cartcomponents/cartbody.dart';
-import 'package:sparknp/widgets/appbar/barbutton.dart';
 
+// TODO: Cartpage
 class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
       drawer: MainDrawer(),
-      body: CartBody(),
+      // body: CartBody(),
     );
   }
 }

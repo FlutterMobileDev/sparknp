@@ -176,7 +176,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  //TODO: anon routing
   Widget _buildSignupBtn(BuildContext context) {
     return Container(
       alignment: Alignment.center,
