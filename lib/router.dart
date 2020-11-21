@@ -55,9 +55,8 @@ class Routing {
           builder: (_) => DetailsScreen(screen.arguments),
         );
       case categories:
-        ScreenArguments args = screen.arguments;
         return MaterialPageRoute(
-          builder: (_) => Categories(category: args.category),
+          builder: (_) => Categories(category: screen.arguments),
         );
       default:
         return null;
