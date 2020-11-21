@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
+import 'package:sparknp/router.dart';
 import 'package:sparknp/constants.dart';
+import 'package:sparknp/model/frontjson.dart';
+import 'package:sparknp/model/screenarguments.dart';
 
 class TitleWithMoreBtn extends StatelessWidget {
   const TitleWithMoreBtn({
     Key key,
-    this.title,
-    this.press,
+    this.name,
+    this.front,
   }) : super(key: key);
-  final String title;
-  final Function press;
+  final String name;
+  final ApiFront front;
 
   @override
   Widget build(BuildContext context) {
@@ -17,20 +20,25 @@ class TitleWithMoreBtn extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
       child: Row(
         children: <Widget>[
-          TitleWithCustomUnderline(text: title),
+          TitleWithCustomUnderline(text: name),
           Spacer(),
-          if (press != null)
-            FlatButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              color: LightColor.primaryColor,
-              onPressed: press,
-              child: Text(
-                "More",
-                style: TextStyle(color: Colors.white),
-              ),
+          FlatButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
             ),
+            color: LightColor.primaryColor,
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                more,
+                arguments: ScreenArguments(name: name, front: front),
+              );
+            },
+            child: Text(
+              "More",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
         ],
       ),
     );

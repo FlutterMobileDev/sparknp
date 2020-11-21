@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-
-import 'package:sparknp/router.dart';
-import 'package:sparknp/constants.dart';
-
 import 'package:sparknp/model/frontjson.dart';
 
-class GridProduct extends StatefulWidget {
-  final String name;
-  final String scale;
-  final ApiFront front;
+import 'package:sparknp/constants.dart';
+import 'package:sparknp/router.dart';
 
-  const GridProduct({Key key, this.name, this.scale, this.front})
-      : super(key: key);
+class ItemCard extends StatefulWidget {
+  final String name;
+  final ApiFront front;
+  const ItemCard({
+    Key key,
+    this.name,
+    this.front,
+  }) : super(key: key);
+
   @override
-  _GridProductState createState() => _GridProductState();
+  _ItemCardState createState() => _ItemCardState();
 }
 
-class _GridProductState extends State<GridProduct> {
+class _ItemCardState extends State<ItemCard> {
   String imgpath = "https://sparknp.com/assets/images/thumbnails/";
 
   String thumbnail;
@@ -26,19 +26,44 @@ class _GridProductState extends State<GridProduct> {
   @override
   void initState() {
     super.initState();
-    if (widget.name == "bigProducts") {
+    if (widget.name == "Featured Products") {
       setState(() {
-        _productList = widget.front.bigProducts;
+        _productList = widget.front.featureProducts;
       });
     }
-    if (widget.name == "bestProducts") {
+    if (widget.name == "Trending Products") {
+      setState(() {
+        _productList = widget.front.trendingProducts;
+      });
+    }
+    if (widget.name == "Sale Products") {
+      setState(() {
+        _productList = widget.front.saleProducts;
+      });
+    }
+    if (widget.name == "Best Products") {
       setState(() {
         _productList = widget.front.bestProducts;
       });
     }
-    if (widget.name == "topProducts") {
+    if (widget.name == "Big Products") {
+      setState(() {
+        _productList = widget.front.bigProducts;
+      });
+    }
+    if (widget.name == "Latest Products") {
+      setState(() {
+        _productList = widget.front.latestProducts;
+      });
+    }
+    if (widget.name == "Top Products") {
       setState(() {
         _productList = widget.front.topProducts;
+      });
+    }
+    if (widget.name == "Hot Products") {
+      setState(() {
+        _productList = widget.front.hotProducts;
       });
     }
   }
@@ -48,13 +73,15 @@ class _GridProductState extends State<GridProduct> {
     Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      height: 400,
+      height: size.height,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-      child: GridView.builder(
+      child:
+          // Center(child: Text(subcat.name)),
+          GridView.builder(
         physics: ScrollPhysics(),
         gridDelegate:
             SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        itemCount: 4,
+        itemCount: _productList.length,
         itemBuilder: (context, index) {
           dynamic product = _productList[index];
           return GestureDetector(

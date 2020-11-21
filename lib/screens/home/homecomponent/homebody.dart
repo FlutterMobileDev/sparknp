@@ -45,10 +45,8 @@ class _HomeBodyState extends State<HomeBody> {
             children: [
               BannerCard(front: widget.front),
               TitleWithMoreBtn(
-                title: "Featured",
-                press: () {
-                  print("pressed");
-                },
+                name: "Featured Products",
+                front: widget.front,
               ),
               ImageCard(
                 name: "featureProducts",
@@ -56,10 +54,8 @@ class _HomeBodyState extends State<HomeBody> {
               ),
               BannerCard(front: widget.front),
               TitleWithMoreBtn(
-                title: "Trending Products",
-                press: () {
-                  print("pressed");
-                },
+                name: "Trending Products",
+                front: widget.front,
               ),
               DetailImageCard(
                 name: "trendingProducts",
@@ -70,60 +66,48 @@ class _HomeBodyState extends State<HomeBody> {
               ),
               BannerCard(front: widget.front),
               TitleWithMoreBtn(
-                title: "Top Sale",
-                press: () {
-                  print("pressed");
-                },
+                name: "Sale Products",
+                front: widget.front,
               ),
               ImageCard(
                 name: "saleProducts",
                 front: widget.front,
               ),
               TitleWithMoreBtn(
-                title: "Best Products",
-                press: () {
-                  print("pressed");
-                },
+                name: "Best Products",
+                front: widget.front,
               ),
               DetailImageCard(
                 name: "bestProducts",
                 front: widget.front,
               ),
               TitleWithMoreBtn(
-                title: "Big Products",
-                press: () {
-                  print("pressed");
-                },
+                name: "Big Products",
+                front: widget.front,
               ),
               GridProduct(
                 name: "bigProducts",
                 front: widget.front,
               ),
               TitleWithMoreBtn(
-                title: "Latest Products",
-                press: () {
-                  print("pressed");
-                },
+                name: "Latest Products",
+                front: widget.front,
               ),
               ImageCard(
                 name: "latestProducts",
                 front: widget.front,
               ),
               TitleWithMoreBtn(
-                title: "Top Products",
-                press: () {
-                  print("pressed");
-                },
+                name: "Top Products",
+                front: widget.front,
               ),
               GridProduct(
                 name: "topProducts",
                 front: widget.front,
               ),
               TitleWithMoreBtn(
-                title: "Hot Products",
-                press: () {
-                  print("pressed");
-                },
+                name: "Hot Products",
+                front: widget.front,
               ),
               DetailImageCard(
                 name: "hotProducts",

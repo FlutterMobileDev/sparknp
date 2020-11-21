@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'package:sparknp/screens/login/login.dart';
+import 'package:sparknp/model/screenarguments.dart';
 
+import 'package:sparknp/screens/login/login.dart';
 import 'package:sparknp/screens/home/home.dart';
 import 'package:sparknp/screens/myorders.dart';
 import 'package:sparknp/screens/myaccount.dart';
 import 'package:sparknp/screens/accinfo.dart';
 import 'package:sparknp/screens/custservice.dart';
 import 'package:sparknp/screens/categories/categories.dart';
-
+import 'package:sparknp/screens/more.dart';
 import 'package:sparknp/screens/details/details.dart';
-// import 'package:sparknp/model/product.dart';
 
 import 'package:sparknp/screens/cart/cart.dart';
 
@@ -24,6 +24,7 @@ const String custService = '/custservice';
 const String categories = '/categories';
 const String details = '/details';
 const String cart = '/cart';
+const String more = '/more';
 
 //TODO: when logged in route pages
 
@@ -34,6 +35,11 @@ class Routing {
         return MaterialPageRoute(builder: (_) => LoginScreen());
       case home:
         return MaterialPageRoute(builder: (_) => HomeScreen());
+      case more:
+        ScreenArguments args = screen.arguments;
+        return MaterialPageRoute(
+          builder: (_) => MoreScreen(name: args.name, front: args.front),
+        );
       case myOrders:
         return MaterialPageRoute(builder: (_) => MyOrders());
       case myAccount:
@@ -49,8 +55,9 @@ class Routing {
           builder: (_) => DetailsScreen(screen.arguments),
         );
       case categories:
+        ScreenArguments args = screen.arguments;
         return MaterialPageRoute(
-          builder: (_) => Categories(category: screen.arguments),
+          builder: (_) => Categories(category: args.category),
         );
       default:
         return null;

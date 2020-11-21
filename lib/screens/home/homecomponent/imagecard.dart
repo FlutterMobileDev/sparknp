@@ -27,13 +27,29 @@ class _ImageCardState extends State<ImageCard> {
       setState(() {
         _productList = widget.front.featureProducts;
       });
+    } else if (widget.name == "trendingProducts") {
+      setState(() {
+        _productList = widget.front.trendingProducts;
+      });
     } else if (widget.name == "saleProducts") {
       setState(() {
         _productList = widget.front.saleProducts;
       });
+    } else if (widget.name == "bestProducts") {
+      setState(() {
+        _productList = widget.front.bestProducts;
+      });
+    } else if (widget.name == "bigProducts") {
+      setState(() {
+        _productList = widget.front.bigProducts;
+      });
     } else if (widget.name == "latestProducts") {
       setState(() {
         _productList = widget.front.latestProducts;
+      });
+    } else if (widget.name == "topProducts") {
+      setState(() {
+        _productList = widget.front.topProducts;
       });
     } else if (widget.name == "hotProducts") {
       setState(() {

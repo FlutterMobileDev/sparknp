@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/model/frontjson.dart';
-import 'package:sparknp/screens/categories/categoriescomponents/item_card.dart';
+import 'package:sparknp/screens/categories/categoriescomponents/itemcard.dart';
 
 class SwipeBar extends StatefulWidget {
   final Category category;
@@ -62,7 +62,7 @@ class _SwipeBarState extends State<SwipeBar> {
               },
             ),
           ),
-          ItemCard(subcat: widget.category.subs[selectedIndex]),
+          // ItemCard(subcat: widget.category.subs[selectedIndex]),
         ],
       ),
     );
