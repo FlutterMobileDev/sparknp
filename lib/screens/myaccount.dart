@@ -53,29 +53,6 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(
                 height: 40,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "My Wishlist",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  SizedBox(
-                    width: 50,
-                  ),
-                  Text(
-                    "Followed Stores",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  SizedBox(
-                    width: 50,
-                  ),
-                  Text(
-                    "Vouchers",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
             ],
           ),
         ),

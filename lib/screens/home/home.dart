@@ -13,16 +13,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool _loading;
-  ApiFront data;
+  ApiFront front;
 
   @override
   void initState() {
     super.initState();
     _loading = true;
 
-    Services.fetch().then((front) {
+    FrontService.fetch().then((data) {
       setState(() {
-        data = front;
+        front = data;
         _loading = false;
       });
     });
@@ -32,10 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
-      drawer: MainDrawer(front: data),
+      drawer: MainDrawer(front: front),
       body: (_loading)
           ? Center(child: CircularProgressIndicator())
-          : HomeBody(front: data),
+          : HomeBody(front: front),
     );
   }
 }

@@ -1,160 +1,142 @@
-// import 'package:flutter/material.dart';
-// import 'package:sparknp/model/data.dart';
-// import 'package:sparknp/model/product.dart';
-// import 'package:sparknp/constants.dart';
-// import 'package:sparknp/screens/cart/cartcomponents/title_text.dart';
+import 'package:flutter/material.dart';
 
-// class CartBody extends StatefulWidget {
-//   @override
-//   _CartBodyState createState() => _CartBodyState();
-// }
+import 'package:sparknp/router.dart';
 
-// //TODO: Remove button
+import 'package:sparknp/constants.dart';
+import 'package:sparknp/model/cartmodel.dart';
+import 'package:sparknp/screens/cart/cartcomponents/title_text.dart';
 
-// class _CartBodyState extends State<CartBody> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       padding: AppTheme.padding,
-//       child: SingleChildScrollView(
-//         child: Column(
-//           children: <Widget>[
-//             _cartItems(),
-//             Divider(
-//               thickness: 1,
-//               height: 70,
-//             ),
-//             _price(),
-//             SizedBox(height: 30),
-//             _submitButton(context),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
+class CartBody extends StatefulWidget {
+  final Cart cart;
+  const CartBody({Key key, this.cart}) : super(key: key);
 
-//   Widget _cartItems() {
-//     return Column(children: AppData.cartList.map((x) => _item(x)).toList());
-//   }
+  @override
+  _CartBodyState createState() => _CartBodyState();
+}
 
-//   Widget _item(Product model) {
-//     return Container(
-//       height: 80,
-//       child: Row(
-//         children: <Widget>[
-//           AspectRatio(
-//             aspectRatio: 1.2,
-//             child: Stack(
-//               children: <Widget>[
-//                 Align(
-//                   alignment: Alignment.bottomLeft,
-//                   child: Container(
-//                     height: 70,
-//                     width: 70,
-//                     child: Stack(
-//                       children: <Widget>[
-//                         Align(
-//                           alignment: Alignment.bottomLeft,
-//                           child: Container(
-//                             decoration: BoxDecoration(
-//                                 color: LightColor.lightGrey,
-//                                 borderRadius: BorderRadius.circular(10)),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//                 Positioned(
-//                   left: -20,
-//                   bottom: -20,
-//                   child: Image.asset(model.image),
-//                 )
-//               ],
-//             ),
-//           ),
-//           Expanded(
-//               child: ListTile(
-//                   title: TitleText(
-//                     text: model.name,
-//                     fontSize: 15,
-//                     fontWeight: FontWeight.w700,
-//                   ),
-//                   subtitle: Row(
-//                     children: <Widget>[
-//                       TitleText(
-//                         text: '\$ ',
-//                         color: LightColor.red,
-//                         fontSize: 12,
-//                       ),
-//                       TitleText(
-//                         text: model.price.toString(),
-//                         fontSize: 14,
-//                       ),
-//                     ],
-//                   ),
-//                   trailing: Container(
-//                     width: 35,
-//                     height: 35,
-//                     alignment: Alignment.center,
-//                     decoration: BoxDecoration(
-//                         color: LightColor.lightGrey.withAlpha(150),
-//                         borderRadius: BorderRadius.circular(10)),
-//                     child: TitleText(
-//                       text: 'x${model.id}',
-//                       fontSize: 12,
-//                     ),
-//                   )))
-//         ],
-//       ),
-//     );
-//   }
+class _CartBodyState extends State<CartBody> {
+  List _cartList;
 
-//   Widget _price() {
-//     return Row(
-//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//       children: <Widget>[
-//         TitleText(
-//           text: '${AppData.cartList.length} Items',
-//           color: LightColor.grey,
-//           fontSize: 14,
-//           fontWeight: FontWeight.w500,
-//         ),
-//         TitleText(
-//           text: '\$${getPrice()}',
-//           fontSize: 18,
-//         ),
-//       ],
-//     );
-//   }
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _cartList = widget.cart.carts;
+    });
+  }
 
-//   Widget _submitButton(BuildContext context) {
-//     return FlatButton(
-//         onPressed: () {},
-//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-//         color: LightColor.orange,
-//         child: Container(
-//           alignment: Alignment.center,
-//           padding: EdgeInsets.symmetric(vertical: 12),
-//           width: AppTheme.fullWidth(context) * .7,
-//           child: TitleText(
-//             text: 'Next',
-//             color: LightColor.background,
-//             fontWeight: FontWeight.w500,
-//           ),
-//         ));
-//   }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: AppTheme.padding,
+      child: SingleChildScrollView(
+        child: (widget.cart.carts.length == 0)
+            ? Center(
+                child: Text("No Items in Cart"),
+              )
+            : Column(
+                children: <Widget>[
+                  _item(widget.cart),
+                  Divider(
+                    thickness: 1,
+                    height: 70,
+                  ),
+                  _price(),
+                  SizedBox(height: 30),
+                  _submitButton(context),
+                ],
+              ),
+      ),
+    );
+  }
 
-//   double getPrice() {
-//     double price = 0;
-//     AppData.cartList.forEach((x) {
-//       price += x.price * x.id;
-//     });
-//     return price;
-//   }
+  Widget _item(Cart model) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      width: size.width,
+      height: 80,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+      child: ListView.separated(
+        itemCount: _cartList.length,
+        itemBuilder: (context, index) {
+          dynamic product = _cartList[index];
+          return GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, details, arguments: product);
+              },
+              child: Container(
+                width: size.width * 0.8,
+                height: 80,
+                child: Column(children: [
+                  Expanded(
+                    child: ListTile(
+                      title: TitleText(
+                        text: "Product ID : ${product.productId}",
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      subtitle: Row(children: <Widget>[
+                        TitleText(
+                          text: '\Rs ',
+                          color: LightColor.red,
+                          fontSize: 12,
+                        ),
+                        TitleText(
+                          text: product.price.toString(),
+                          fontSize: 14,
+                        ),
+                      ]),
+                    ),
+                  ),
+                ]),
+              ));
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(
+            width: 10,
+          );
+        },
+      ),
+    );
+  }
 
-//   @override
-//   void dispose() {
-//     super.dispose();
-//   }
-// }
+  Widget _price() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        TitleText(
+          text: '${widget.cart.carts.length} Items',
+          color: LightColor.grey,
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+        ),
+        TitleText(
+          text: "Rs${widget.cart.totalPrice}",
+          fontSize: 18,
+        ),
+      ],
+    );
+  }
+
+  Widget _submitButton(BuildContext context) {
+    return FlatButton(
+        onPressed: () {},
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        color: LightColor.orange,
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.symmetric(vertical: 12),
+          width: AppTheme.fullWidth(context) * .7,
+          child: TitleText(
+            text: 'Next',
+            color: LightColor.background,
+            fontWeight: FontWeight.w500,
+          ),
+        ));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+}
