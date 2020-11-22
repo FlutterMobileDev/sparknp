@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sparknp/constants.dart';
+
 import 'package:sparknp/widgets/appbar/appbar.dart';
 
 // final _formKey = GlobalKey<FormState>();
@@ -20,7 +22,7 @@ class _AccInfoState extends State<AccInfo> {
       appBar: buildAppBar(context),
       body: SizedBox.expand(
         child: Container(
-          color: Colors.grey[200],
+          color: LightColor.lightGrey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -30,7 +32,8 @@ class _AccInfoState extends State<AccInfo> {
                   title: Text('Name'),
                   trailing: Text(myController.text),
                   onTap: () {
-                    _name(context);
+                    print('Name');
+                    // _name(context);
                   },
                 ),
               ),

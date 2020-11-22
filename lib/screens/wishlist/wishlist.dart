@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 
 import 'package:sparknp/constants.dart';
 
-import 'package:sparknp/model/cartmodel.dart';
-import 'package:sparknp/services/cartservice.dart';
-import 'package:sparknp/screens/cart/cartcomponents/cartbody.dart';
+import 'package:sparknp/model/wishlistmodel.dart';
+import 'package:sparknp/services/wishlistservice.dart';
+import 'package:sparknp/screens/wishlist/wishlistcomponents/wishlistbody.dart';
 
-class CartScreen extends StatefulWidget {
+class WishlistScreen extends StatefulWidget {
   @override
-  _CartScreenState createState() => _CartScreenState();
+  _WishlistScreenState createState() => _WishlistScreenState();
 }
 
-class _CartScreenState extends State<CartScreen> {
-  Cart cart;
+class _WishlistScreenState extends State<WishlistScreen> {
+  Wishlist wishlist;
   bool _loading = true;
   @override
   void initState() {
     super.initState();
-    CartService.list().then((data) {
+    WishlistService.list().then((data) {
       setState(() {
-        cart = data;
+        wishlist = data;
         _loading = false;
       });
     });
@@ -31,7 +31,7 @@ class _CartScreenState extends State<CartScreen> {
       appBar: buildAppBar(context),
       body: (_loading)
           ? Center(child: CircularProgressIndicator())
-          : CartBody(cart: cart),
+          : WishlistBody(wishlist: wishlist),
     );
   }
 }
@@ -42,5 +42,5 @@ AppBar buildAppBar(context) {
       elevation: 0,
       iconTheme: IconThemeData(color: LightColor.textLightColor),
       centerTitle: true,
-      title: Text("CART"));
+      title: Text("wishlist"));
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:sparknp/constants.dart';
+import 'package:sparknp/router.dart';
+
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -15,7 +18,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget _blueColors() {
     return Positioned(
       child: Container(
-        color: Colors.indigo[900],
+        color: LightColor.mainColor,
         height: 230,
         width: MediaQuery.of(context).size.width,
       ),
@@ -88,13 +91,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 18,
                       child: FlatButton(
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        color: Colors.indigo[900],
+                        color: LightColor.mainColor,
                         onPressed: () {},
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0)),
                         child: Text(
                           'View All >',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: LightColor.background),
                         ),
                       ),
                     ),
@@ -185,7 +188,7 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Container(
         height: 170,
         width: MediaQuery.of(context).size.width * 1.0,
-        decoration: BoxDecoration(color: Colors.white),
+        decoration: BoxDecoration(color: LightColor.background),
         child: Container(
           padding: const EdgeInsets.all(10),
           child: Column(
@@ -197,7 +200,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Text(
                     "My Services",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: LightColor.black,
                     ),
                   ),
                 ],
@@ -264,10 +267,11 @@ class _ProfilePageState extends State<ProfilePage> {
         brightness: Brightness.light,
         title: Text(
           "My Account",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: LightColor.background, fontWeight: FontWeight.bold),
         ),
         elevation: 0,
-        backgroundColor: Colors.indigo[900],
+        backgroundColor: LightColor.mainColor,
         centerTitle: true,
         leading: IconButton(
           icon: Icon(
@@ -282,7 +286,9 @@ class _ProfilePageState extends State<ProfilePage> {
               Icons.settings,
               size: 30,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, accInfo);
+            },
           ),
         ],
       ),

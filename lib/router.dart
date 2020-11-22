@@ -5,14 +5,15 @@ import 'package:sparknp/model/screenarguments.dart';
 import 'package:sparknp/screens/login/login.dart';
 import 'package:sparknp/screens/home/home.dart';
 import 'package:sparknp/screens/myorders.dart';
-import 'package:sparknp/screens/myaccount.dart';
-import 'package:sparknp/screens/accinfo.dart';
+import 'package:sparknp/screens/account/myaccount.dart';
+import 'package:sparknp/screens/account/accinfo.dart';
 import 'package:sparknp/screens/custservice.dart';
 import 'package:sparknp/screens/categories/categories.dart';
-import 'package:sparknp/screens/more.dart';
+import 'package:sparknp/screens/home/homecomponent/more.dart';
 import 'package:sparknp/screens/details/details.dart';
 
 import 'package:sparknp/screens/cart/cart.dart';
+import 'package:sparknp/screens/wishlist/wishlist.dart';
 
 const String home = '/';
 const String login = '/login';
@@ -24,6 +25,7 @@ const String custService = '/custservice';
 const String categories = '/categories';
 const String details = '/details';
 const String cart = '/cart';
+const String wishlist = '/wishlist';
 const String more = '/more';
 
 //TODO: when logged in route pages
@@ -48,6 +50,8 @@ class Routing {
         return MaterialPageRoute(builder: (_) => AccInfo());
       case custService:
         return MaterialPageRoute(builder: (_) => CustService());
+      case wishlist:
+        return MaterialPageRoute(builder: (_) => WishlistScreen());
       case cart:
         return MaterialPageRoute(builder: (_) => CartScreen());
       case details:

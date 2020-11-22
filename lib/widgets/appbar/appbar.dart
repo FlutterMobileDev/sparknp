@@ -44,14 +44,13 @@ AppBar buildAppBar(context) {
                 cart,
               );
             }),
-        // TODO: wish list
         IconBtnWithCounter(
             svgSrc: "assets/Heart Icon.svg",
             numOfitem: 5,
             press: () {
               Navigator.pushNamed(
                 context,
-                cart,
+                wishlist,
               );
             }),
         SizedBox(width: defaultPadding / 2)

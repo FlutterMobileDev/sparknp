@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/model/frontjson.dart';
-import 'package:sparknp/screens/categories/categoriescomponents/itemcard.dart';
 
 class SwipeBar extends StatefulWidget {
   final Category category;
