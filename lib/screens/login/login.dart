@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:convert' as JSON;
 
 import 'package:flutter/material.dart';
 import 'package:sparknp/constants.dart';
@@ -6,6 +7,9 @@ import 'package:sparknp/screens/login/createacc.dart';
 import 'package:sparknp/screens/login/forgetpw.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:sparknp/services/api.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:sparknp/router.dart';
 
@@ -16,12 +20,18 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   int i = 0;
+  GoogleSignIn _googleSignIn = GoogleSignIn(
+      clientId:
+          "1061048219242-8knfc4bbji43lt7a6msslsqhco4i5qnf.apps.googleusercontent.com");
 
   String _email, _password;
+  GoogleSignInAccount _currentUser;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  Map userProfile;
+  final facebookLogin = FacebookLogin();
   bool _obscureText = true;
   bool _isLogged = false;
 
@@ -172,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: _isLogged
           ? null
           : FacebookSignInButton(
-              onPressed: () {},
+              onPressed: _loginWithFB,
             ),
     );
   }
@@ -182,7 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: _isLogged
           ? null
           : GoogleSignInButton(
-              onPressed: () {},
+              onPressed: _handleSignIn,
             ),
     );
   }
@@ -292,6 +302,53 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       showAlertDialog(context, "Incorrect e-mail or password",
           "Please check email and password");
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
+      setState(() {
+        _currentUser = account;
+      });
+    });
+    _googleSignIn.signInSilently();
+  }
+
+  void _handleSignIn() async {
+    await _googleSignIn.signOut(); //optional
+    GoogleSignInAccount user = await _googleSignIn.signIn();
+    if (user == null) {
+      print('Sign In Failed ');
+    } else {
+      Navigator.pushReplacementNamed(context, '/');
+    }
+  }
+
+  void _loginWithFB() async {
+    final result = await facebookLogin.logInWithReadPermissions(['email']);
+
+    switch (result.status) {
+      case FacebookLoginStatus.loggedIn:
+        final token = result.accessToken.token;
+        final graphResponse = await http.get(
+            'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=$token');
+        final profile = JSON.jsonDecode(graphResponse.body);
+        print(profile);
+        setState(() {
+          userProfile = profile;
+          _isLogged = true;
+        });
+        break;
+
+      case FacebookLoginStatus.cancelledByUser:
+        setState(() => _isLogged = false);
+        break;
+      case FacebookLoginStatus.error:
+        setState(() => _isLogged = false);
+        break;
     }
   }
 
