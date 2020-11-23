@@ -37,7 +37,7 @@ AppBar buildAppBar(context) {
         ),
         IconBtnWithCounter(
             svgSrc: "assets/Cart Icon.svg",
-            numOfitem: 1,
+            // numOfitem: cart.carts,
             press: () {
               Navigator.pushNamed(
                 context,
@@ -46,7 +46,7 @@ AppBar buildAppBar(context) {
             }),
         IconBtnWithCounter(
             svgSrc: "assets/Heart Icon.svg",
-            numOfitem: 5,
+            // numOfitem: 5,
             press: () {
               Navigator.pushNamed(
                 context,

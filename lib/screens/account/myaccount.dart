@@ -273,13 +273,6 @@ class _ProfilePageState extends State<ProfilePage> {
         elevation: 0,
         backgroundColor: LightColor.mainColor,
         centerTitle: true,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            size: 30,
-          ),
-          onPressed: () {},
-        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(

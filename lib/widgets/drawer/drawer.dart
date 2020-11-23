@@ -122,13 +122,6 @@ class MyWidget extends StatelessWidget {
               thickness: 1,
             ),
             ListTile(
-                title: Text('Customer Service'),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, custService, (home) => true);
-                }),
-            ListTile(
                 title: Text('Sign In'),
                 onTap: () {
                   Navigator.of(context).pop();
@@ -139,14 +132,14 @@ class MyWidget extends StatelessWidget {
               color: Colors.grey,
               thickness: 1,
             ),
-            ListTile(
-              title: Text('Settings'),
-              trailing: const Icon(
-                Icons.arrow_forward_ios,
-                color: LightColor.iconColor,
-              ),
-              onTap: settings,
-            ),
+            // ListTile(
+            //   title: Text('Settings'),
+            //   trailing: const Icon(
+            //     Icons.arrow_forward_ios,
+            //     color: LightColor.iconColor,
+            //   ),
+            //   onTap: settings,
+            // ),
           ]))
         ],
       ),

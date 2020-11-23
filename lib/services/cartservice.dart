@@ -25,4 +25,43 @@ class CartService {
       throw Exception('There was a problem connecting to the internet');
     }
   }
+
+  static Future add(id) async {
+    try {
+      final response = await http.post(
+        'https://www.sparknp.com/api/carts/store',
+        headers: {"Authorization": "Bearer $token"},
+        body: {"id": "$id"},
+      ).timeout(
+        Duration(
+          seconds: 15,
+        ),
+      );
+      if (response.statusCode == 200) {
+      } else {
+        throw Exception('error here');
+      }
+    } catch (e) {
+      throw Exception('There was a problem connecting to the internet');
+    }
+  }
+
+  static Future remove(id) async {
+    try {
+      final response = await http.get(
+        'https://www.sparknp.com/api/carts/reduce/$id',
+        headers: {"Authorization": "Bearer $token"},
+      ).timeout(
+        Duration(
+          seconds: 15,
+        ),
+      );
+      if (response.statusCode == 200) {
+      } else {
+        throw Exception('error here');
+      }
+    } catch (e) {
+      throw Exception('There was a problem connecting to the internet');
+    }
+  }
 }

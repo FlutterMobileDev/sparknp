@@ -1,15 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sparknp/screens/details/detailscomponents/imageslider.dart';
+import 'package:sparknp/constants.dart';
+import 'package:sparknp/services/wishlistservice.dart';
 
-class DetailsBody extends StatelessWidget {
+class DetailsBody extends StatefulWidget {
+  final dynamic product;
+  const DetailsBody(this.product);
+  @override
+  _DetailsBodyState createState() => _DetailsBodyState();
+}
+
+class _DetailsBodyState extends State<DetailsBody> {
   double rating = 3.5;
+
   @override
   Widget build(BuildContext context) {
+    String imgpath = "https://sparknp.com/assets/images/thumbnails/";
     return SingleChildScrollView(
       child: Column(
         children: [
-          ImageSlideScreen(),
+          Container(
+            height: 250,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(imgpath + widget.product.thumbnail),
+              ),
+            ),
+          ),
+          // ImageSlideScreen(widget.product.thumbnail),
           SizedBox(
             height: 0.1,
           ),
@@ -17,27 +35,29 @@ class DetailsBody extends StatelessWidget {
               child: ListTile(
             title: ListTile(
               title: Text(
-                "RS 1600",
+                "Rs. ${widget.product.price}",
               ),
               subtitle: Row(
                 children: [
                   Text(
-                    "RS 1700",
+                    "Rs. ${widget.product.previousPrice}",
                     style: TextStyle(decoration: TextDecoration.lineThrough),
                   ),
-                  Text(" -34%")
                 ],
               ),
               trailing: IconButton(
                   icon: Icon(CupertinoIcons.heart),
+                  color: LightColor.orange,
                   onPressed: () {
-                    print("wishlist");
+                    WishlistService.add(widget.product.id).then((added) {
+                      _showDialog(context);
+                    });
                   }),
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("White Peak Trekking Jacket"),
+                Text(widget.product.name),
                 StarRating(
                   rating: rating,
                   onRatingChanged: (rating) => this.rating = rating,
@@ -93,4 +113,15 @@ class StarRating extends StatelessWidget {
         children:
             new List.generate(starCount, (index) => buildStar(context, index)));
   }
+}
+
+Future<void> _showDialog(context) async {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Added to wishlist'),
+      );
+    },
+  );
 }

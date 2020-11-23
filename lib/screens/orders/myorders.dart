@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 
 import 'package:sparknp/constants.dart';
 
-import 'package:sparknp/model/wishlistmodel.dart';
-import 'package:sparknp/services/wishlistservice.dart';
-import 'package:sparknp/screens/wishlist/wishlistcomponents/wishlistbody.dart';
+import 'package:sparknp/model/ordersmodel.dart';
+import 'package:sparknp/services/ordersservice.dart';
+import 'package:sparknp/screens/orders/orderscomponents/ordersbody.dart';
 
-class WishlistScreen extends StatefulWidget {
+class OrdersScreen extends StatefulWidget {
   @override
-  _WishlistScreenState createState() => _WishlistScreenState();
+  _OrdersScreenState createState() => _OrdersScreenState();
 }
 
-class _WishlistScreenState extends State<WishlistScreen> {
-  Wishlist wishlist;
+class _OrdersScreenState extends State<OrdersScreen> {
+  Orders orders;
   bool _loading = true;
   @override
   void initState() {
     super.initState();
-    WishlistService.list().then((data) {
+    OrdersService.list().then((data) {
       setState(() {
-        wishlist = data;
+        orders = data;
         _loading = false;
       });
     });
@@ -31,7 +31,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
       appBar: buildAppBar(context),
       body: (_loading)
           ? Center(child: CircularProgressIndicator())
-          : WishlistBody(wishlist: wishlist),
+          : OrdersBody(orders: orders),
     );
   }
 }
@@ -42,5 +42,5 @@ AppBar buildAppBar(context) {
       elevation: 0,
       iconTheme: IconThemeData(color: LightColor.textLightColor),
       centerTitle: true,
-      title: Text("Wishlist"));
+      title: Text("My Orders"));
 }

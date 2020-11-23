@@ -4,8 +4,6 @@ import 'package:sparknp/constants.dart';
 
 import 'package:sparknp/widgets/appbar/appbar.dart';
 
-// final _formKey = GlobalKey<FormState>();
-
 final myController = TextEditingController();
 String gen = 'Unspecified';
 DateTime selectedDate = DateTime.now();

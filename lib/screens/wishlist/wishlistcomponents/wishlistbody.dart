@@ -5,6 +5,7 @@ import 'package:sparknp/router.dart';
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/model/wishlistmodel.dart';
 import 'package:sparknp/screens/wishlist/wishlistcomponents/title_text.dart';
+import 'package:sparknp/services/wishlistservice.dart';
 
 class WishlistBody extends StatefulWidget {
   final Wishlist wishlist;
@@ -37,10 +38,6 @@ class _WishlistBodyState extends State<WishlistBody> {
             : Column(
                 children: <Widget>[
                   _item(widget.wishlist),
-                  Divider(
-                    thickness: 1,
-                    height: 70,
-                  ),
                 ],
               ),
       ),
@@ -51,7 +48,7 @@ class _WishlistBodyState extends State<WishlistBody> {
     Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      height: 80,
+      height: 450,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: ListView.separated(
         itemCount: _wishlistList.length,
@@ -72,26 +69,30 @@ class _WishlistBodyState extends State<WishlistBody> {
                         fontSize: 15,
                         fontWeight: FontWeight.w700,
                       ),
-                      // subtitle: Row(children: <Widget>[
-                      //   TitleText(
-                      //     text: '\Rs ',
-                      //     color: LightColor.red,
-                      //     fontSize: 12,
-                      //   ),
-                      //   TitleText(
-                      //     text: product.product.price.toString(),
-                      //     fontSize: 14,
-                      //   ),
-                      // ],
-                      // ),
+                      trailing: FlatButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        color: LightColor.orange,
+                        onPressed: () {
+                          WishlistService.remove(product.productId)
+                              .then((value) {
+                            _showDialog(context);
+                          });
+                        },
+                        child: Text(
+                          "Remove",
+                          style: TextStyle(color: LightColor.background),
+                        ),
+                      ),
                     ),
                   ),
                 ]),
               ));
         },
         separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(
-            width: 10,
+          return Divider(
+            thickness: 1,
+            height: 70,
           );
         },
       ),
@@ -102,4 +103,15 @@ class _WishlistBodyState extends State<WishlistBody> {
   void dispose() {
     super.dispose();
   }
+}
+
+Future<void> _showDialog(context) async {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Removed from Wishlist'),
+      );
+    },
+  );
 }
