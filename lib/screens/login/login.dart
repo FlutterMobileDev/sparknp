@@ -1,20 +1,26 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/screens/login/createacc.dart';
 import 'package:sparknp/screens/login/forgetpw.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
+import 'package:sparknp/services/api.dart';
+
+import 'package:sparknp/router.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _LoginScreenState(); //this
-  //or State<StatefulWidget> createState(){  return _LoginScreenState(); }its same
-
+  State<StatefulWidget> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   int i = 0;
 
   String _email, _password;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   bool _obscureText = true;
   bool _isLogged = false;
@@ -33,6 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: boxDecorationStyle,
           height: 60.0,
           child: TextFormField(
+            controller: emailController,
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
               if (value.isEmpty) {
@@ -43,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
             },
             onSaved: (input) => _email = input,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -51,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.email,
-                color: Colors.white,
+                color: Colors.indigo[900],
               ),
               hintText: 'Enter your Email',
               hintStyle: hintTextStyle,
@@ -76,18 +83,21 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: boxDecorationStyle,
           height: 60.0,
           child: TextFormField(
-            obscureText: _obscureText,
+            controller: passwordController,
             validator: (value) {
               if (value.isEmpty) {
-                String a = 'Password Required';
+                String a = 'Password is required';
                 return a;
               }
-
+              if (value.length < 6) {
+                return 'Passoword Length less than 6 ';
+              }
               return null;
             },
             onSaved: (input) => _password = input,
+            obscureText: _obscureText,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -95,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.lock,
-                color: Colors.white,
+                color: Colors.indigo[900],
               ),
               hintText: 'Enter your Password',
               hintStyle: hintTextStyle,
@@ -114,7 +124,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  //TODO: anon routing
   Widget _buildForgotPasswordBtn(BuildContext context) {
     return Container(
       alignment: Alignment.centerRight,
@@ -136,7 +145,9 @@ class _LoginScreenState extends State<LoginScreen> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () {},
+        onPressed: () {
+          _handleLogin();
+        },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -260,60 +271,39 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
   }
 
-  //TODO: connect
+  void _handleLogin() async {
+    var data = {
+      "credential_type": "normal",
+      "email": emailController.text,
+      "password": passwordController.text,
+    };
 
-  // Future<void> signInWithEmailAndPassword(BuildContext context) async {
-  //   if (_formkey.currentState.validate()) {
-  //     _formkey.currentState.save();
-  //     try {
-  //       final currentUser = await FirebaseAuth.instance
-  //           .signInWithEmailAndPassword(email: _email, password: _password)
-  //           .catchError((err) {
-  //         showDialog(
-  //             context: context,
-  //             builder: (BuildContext context) {
-  //               return AlertDialog(
-  //                 title: Text("Error"),
-  //                 content: Text(err.message),
-  //                 actions: [
-  //                   FlatButton(
-  //                     child: Text("Ok"),
-  //                     onPressed: () {
-  //                       Navigator.of(context).pop();
-  //                     },
-  //                   )
-  //                 ],
-  //               );
-  //             });
-  //       });
-  //       if (currentUser.user.isEmailVerified) {
-  //         showAlertDialog(context, 'Email', 'User is Logged In', () {
-  //           Navigator.pushReplacement(
-  //               context, MaterialPageRoute(builder: (context) => HomeScreen()));
-  //         });
+    var res = await CallApi().login(data, 'app-login');
+    var body = json.decode(res.body);
 
-  //         print("User Verified");
-  //       } else {
-  //         showAlertDialog(context, 'Email', 'Email not Verified', () {
-  //           Navigator.of(context).pop();
-  //         });
-  //         print("Not Verified");
-  //       }
-  //     } catch (e) {
-  //       print(e.message);
-  //     }
-  //   }
-  // }
+    print(body);
 
-  showAlertDialog(
-      BuildContext context, String txt1, String txt2, Function function) {
+    if (body["status"] == true) {
+      showAlertDialog(
+        context,
+        "Signed In",
+        "Successfully Signed in",
+      );
+    } else {
+      showAlertDialog(context, "Incorrect e-mail or password",
+          "Please check email and password");
+    }
+  }
+
+  showAlertDialog(BuildContext context, String txt1, String txt2) {
     // set up the button
     Widget okButton = FlatButton(
       child: Text("OK"),
-      onPressed: function,
+      onPressed: () {
+        Navigator.pop(context);
+      },
     );
 
-    // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text(txt1),
       content: Text(txt2),
@@ -322,7 +312,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
 
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {

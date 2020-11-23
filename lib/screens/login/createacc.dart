@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sparknp/constants.dart';
+import 'package:sparknp/screens/login/login.dart';
+import 'package:sparknp/screens/home/home.dart';
+import 'package:sparknp/services/api.dart';
+import 'dart:convert';
 
 import 'dart:ui';
 
@@ -11,7 +15,15 @@ class CreateScreen extends StatefulWidget {
 }
 
 class _CreateScreenState extends State<CreateScreen> {
-  String _email, _password, _confirmpwd, _name;
+  String _email, _password, _confirmpwd, _name, _phone, _address;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmpwdController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+
+  bool _isLoading = false;
   bool _obscureText = true;
   bool _obscureText1 = true;
   final GlobalKey<FormState> _formkey1 = GlobalKey<FormState>();
@@ -29,6 +41,7 @@ class _CreateScreenState extends State<CreateScreen> {
           decoration: boxDecorationStyle,
           height: 60.0,
           child: TextFormField(
+            controller: nameController,
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
               if (value.isEmpty) {
@@ -39,7 +52,7 @@ class _CreateScreenState extends State<CreateScreen> {
             },
             onSaved: (input) => _name = input,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -47,7 +60,7 @@ class _CreateScreenState extends State<CreateScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.person,
-                color: Colors.white,
+                color: Colors.indigo[900],
               ),
               hintText: 'Enter your Name',
               hintStyle: hintTextStyle,
@@ -72,6 +85,7 @@ class _CreateScreenState extends State<CreateScreen> {
           decoration: boxDecorationStyle,
           height: 60.0,
           child: TextFormField(
+            controller: emailController,
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
               if (value.isEmpty) {
@@ -82,7 +96,7 @@ class _CreateScreenState extends State<CreateScreen> {
             },
             onSaved: (input) => _email = input,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -90,7 +104,7 @@ class _CreateScreenState extends State<CreateScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.email,
-                color: Colors.white,
+                color: Colors.indigo[900],
               ),
               hintText: 'Enter your Email',
               hintStyle: hintTextStyle,
@@ -115,6 +129,7 @@ class _CreateScreenState extends State<CreateScreen> {
           decoration: boxDecorationStyle,
           height: 60.0,
           child: TextFormField(
+            controller: phoneController,
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
               if (value.isEmpty) {
@@ -123,9 +138,9 @@ class _CreateScreenState extends State<CreateScreen> {
               }
               return null;
             },
-            onSaved: (input) => _email = input,
+            onSaved: (input) => _phone = input,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -133,7 +148,7 @@ class _CreateScreenState extends State<CreateScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.phone,
-                color: Colors.white,
+                color: Colors.indigo[900],
               ),
               hintText: 'Enter your Phone Number',
               hintStyle: hintTextStyle,
@@ -158,6 +173,7 @@ class _CreateScreenState extends State<CreateScreen> {
           decoration: boxDecorationStyle,
           height: 60.0,
           child: TextFormField(
+            controller: addressController,
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
               if (value.isEmpty) {
@@ -166,9 +182,9 @@ class _CreateScreenState extends State<CreateScreen> {
               }
               return null;
             },
-            onSaved: (input) => _email = input,
+            onSaved: (input) => _address = input,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -176,7 +192,7 @@ class _CreateScreenState extends State<CreateScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.add_location,
-                color: Colors.white,
+                color: Colors.indigo[900],
               ),
               hintText: 'Enter your Address',
               hintStyle: hintTextStyle,
@@ -201,6 +217,7 @@ class _CreateScreenState extends State<CreateScreen> {
           decoration: boxDecorationStyle,
           height: 60.0,
           child: TextFormField(
+            controller: passwordController,
             validator: (value) {
               if (value.isEmpty) {
                 String a = 'Password is required';
@@ -214,7 +231,7 @@ class _CreateScreenState extends State<CreateScreen> {
             onSaved: (input) => _password = input,
             obscureText: _obscureText,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -222,7 +239,7 @@ class _CreateScreenState extends State<CreateScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.lock,
-                color: Colors.white,
+                color: Colors.indigo[900],
               ),
               hintText: 'Enter your Password',
               hintStyle: hintTextStyle,
@@ -255,6 +272,7 @@ class _CreateScreenState extends State<CreateScreen> {
           decoration: boxDecorationStyle,
           height: 60.0,
           child: TextFormField(
+            controller: confirmpwdController,
             validator: (value) {
               if (value.isEmpty) {
                 String a = 'Confirm your Password';
@@ -268,7 +286,7 @@ class _CreateScreenState extends State<CreateScreen> {
             onSaved: (input) => _confirmpwd = input,
             obscureText: _obscureText1,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -276,7 +294,7 @@ class _CreateScreenState extends State<CreateScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.lock,
-                color: Colors.white,
+                color: Colors.indigo[900],
               ),
               hintText: 'Enter your Password',
               hintStyle: hintTextStyle,
@@ -295,22 +313,53 @@ class _CreateScreenState extends State<CreateScreen> {
     );
   }
 
+  void _handleRegister() async {
+    var data = {
+      "name": nameController.text,
+      "email": emailController.text,
+      "phone": phoneController.text,
+      "address": addressController.text,
+      "password": passwordController.text,
+      "password_confirmation": confirmpwdController.text,
+    };
+
+    var res = await CallApi().register(data, 'app-register');
+    var body = json.decode(res.body);
+
+    try {
+      showAlertDialog(
+        context,
+        "Registration Done",
+        body,
+      );
+    } catch (e) {
+      throw {
+        showAlertDialog(
+            context, "Already Registered", "This email is already registered")
+      };
+    }
+  }
+
   Widget _buildRegisterBtn(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () {},
+        onPressed: () {
+          _handleRegister();
+          Navigator.push(context,
+              new MaterialPageRoute(builder: (context) => LoginScreen()));
+        },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
-        color: Colors.white,
+        color: Colors.indigo[900],
         child: Text(
           'Register ',
           style: TextStyle(
-            color: Color(0xFF527DAA),
+            color: Colors.white,
             letterSpacing: 1.5,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
@@ -324,8 +373,8 @@ class _CreateScreenState extends State<CreateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.blue,
         appBar: AppBar(
+          backgroundColor: Colors.indigo[900],
           title: Text('Create Account'),
         ),
         body: Stack(
@@ -334,17 +383,8 @@ class _CreateScreenState extends State<CreateScreen> {
               height: double.infinity,
               width: double.infinity,
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFF73AEF5),
-                  Color(0xFF61A4F1),
-                  Color(0xFF478DE0),
-                  Color(0xFF398AE5),
-                ],
-                stops: [0.1, 0.4, 0.7, 0.9],
-              )),
+                color: Colors.white,
+              ),
             ),
             Container(
               height: double.infinity,
@@ -362,7 +402,7 @@ class _CreateScreenState extends State<CreateScreen> {
                       Text(
                         'Register Your Email',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.indigo[900],
                           fontFamily: 'OpenSans',
                           fontSize: 30.0,
                           fontWeight: FontWeight.bold,
