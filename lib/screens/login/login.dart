@@ -2,16 +2,18 @@ import 'dart:convert';
 import 'dart:convert' as JSON;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/screens/login/createacc.dart';
 import 'package:sparknp/screens/login/forgetpw.dart';
-import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
-import 'package:sparknp/services/api.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sparknp/services/loginservice.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:sparknp/router.dart';
+import 'package:sparknp/services/storage.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -20,6 +22,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   int i = 0;
+
   GoogleSignIn _googleSignIn = GoogleSignIn(
       clientId:
           "1061048219242-8knfc4bbji43lt7a6msslsqhco4i5qnf.apps.googleusercontent.com");
@@ -30,10 +33,14 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
   Map userProfile;
   final facebookLogin = FacebookLogin();
+
   bool _obscureText = true;
   bool _isLogged = false;
+
+  final SecureStorage secureStorage = SecureStorage();
 
   Widget _buildEmailTF() {
     return Column(
@@ -68,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.email,
-                color: Colors.indigo[900],
+                color: LightColor.lightGrey,
               ),
               hintText: 'Enter your Email',
               hintStyle: hintTextStyle,
@@ -115,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.lock,
-                color: Colors.indigo[900],
+                color: LightColor.lightGrey,
               ),
               hintText: 'Enter your Password',
               hintStyle: hintTextStyle,
@@ -179,21 +186,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildFBLoginBtn(BuildContext context) {
     return Container(
-      child: _isLogged
-          ? null
-          : FacebookSignInButton(
-              onPressed: _loginWithFB,
-            ),
+      child: FacebookSignInButton(
+        onPressed: _loginWithFB,
+      ),
     );
   }
 
   Widget _buildGoogleLoginBtn(BuildContext context) {
     return Container(
-      child: _isLogged
-          ? null
-          : GoogleSignInButton(
-              onPressed: _handleSignIn,
-            ),
+      child: GoogleSignInButton(
+        onPressed: _handleSignIn,
+      ),
     );
   }
 
@@ -238,45 +241,89 @@ class _LoginScreenState extends State<LoginScreen> {
                 stops: [0.1, 0.4, 0.7, 0.9],
               )),
             ),
-            Container(
-              height: double.infinity,
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 40.0,
-                  vertical: 120.0,
-                ),
-                child: Form(
-                  key: _formkey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Sign In',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
+            (_isLogged)
+                ? Container(
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(defaultPadding),
+                            child: Text(
+                              "Already Logged In",
+                              style: TextStyle(
+                                  fontSize: 32, color: LightColor.lightGrey),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(defaultPadding),
+                            child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              color: Colors.blue[300],
+                              textColor: Colors.white,
+                              child: Text(
+                                "Logout",
+                                style: TextStyle(fontWeight: FontWeight.normal),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 16.0,
+                                horizontal: 32.0,
+                              ),
+                              onPressed: () {
+                                secureStorage.deleteData("name");
+                                secureStorage.deleteData("address");
+                                secureStorage.deleteData("phone");
+                                secureStorage.deleteData("email");
+                                secureStorage.deleteData("token");
+                                setState(() {
+                                  _isLogged = false;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : Container(
+                    height: double.infinity,
+                    child: SingleChildScrollView(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 40.0,
+                        vertical: 120.0,
+                      ),
+                      child: Form(
+                        key: _formkey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Sign In',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'OpenSans',
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 30.0),
+                            _buildEmailTF(),
+                            SizedBox(
+                              height: 30.0,
+                            ),
+                            _buildPasswordTF(),
+                            _buildForgotPasswordBtn(context),
+                            _buildLoginBtn(context),
+                            _buildFBLoginBtn(context),
+                            SizedBox(height: 10.0),
+                            _buildGoogleLoginBtn(context),
+                            _buildSignupBtn(context),
+                          ],
                         ),
                       ),
-                      SizedBox(height: 30.0),
-                      _buildEmailTF(),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      _buildPasswordTF(),
-                      _buildForgotPasswordBtn(context),
-                      _buildLoginBtn(context),
-                      _buildFBLoginBtn(context),
-                      SizedBox(height: 10.0),
-                      _buildGoogleLoginBtn(context),
-                      _buildSignupBtn(context),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            ),
           ],
         ));
   }
@@ -291,7 +338,11 @@ class _LoginScreenState extends State<LoginScreen> {
     var res = await CallApi().login(data, 'app-login');
     var body = json.decode(res.body);
 
-    print(body);
+    secureStorage.writeData("name", body["user"]["name"]);
+    secureStorage.writeData("address", body["user"]["address"]);
+    secureStorage.writeData("phone", body["user"]["phone"]);
+    secureStorage.writeData("email", body["user"]["email"]);
+    secureStorage.writeData("token", body["user_token"]);
 
     if (body["status"] == true) {
       showAlertDialog(
@@ -299,6 +350,9 @@ class _LoginScreenState extends State<LoginScreen> {
         "Signed In",
         "Successfully Signed in",
       );
+      setState(() {
+        _isLogged = true;
+      });
     } else {
       showAlertDialog(context, "Incorrect e-mail or password",
           "Please check email and password");
@@ -307,7 +361,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
       setState(() {
@@ -317,13 +370,27 @@ class _LoginScreenState extends State<LoginScreen> {
     _googleSignIn.signInSilently();
   }
 
+//TODO: google login
   void _handleSignIn() async {
     await _googleSignIn.signOut(); //optional
     GoogleSignInAccount user = await _googleSignIn.signIn();
     if (user == null) {
-      print('Sign In Failed ');
+      showAlertDialog(context, "Incorrect e-mail or password",
+          "Please check email and password");
     } else {
-      Navigator.pushReplacementNamed(context, '/');
+      secureStorage.writeData("name", user.displayName);
+      secureStorage.writeData("email", user.email);
+      secureStorage.writeData("id", user.id);
+      secureStorage.writeData("photo", user.photoUrl);
+
+      showAlertDialog(
+        context,
+        "Signed In",
+        "Successfully Signed in",
+      );
+      setState(() {
+        _isLogged = true;
+      });
     }
   }
 
@@ -337,8 +404,11 @@ class _LoginScreenState extends State<LoginScreen> {
             'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=$token');
         final profile = JSON.jsonDecode(graphResponse.body);
         print(profile);
+        secureStorage.writeData("name", profile["name"]);
+        secureStorage.writeData("email", profile["email"]);
+        secureStorage.writeData("id", profile["id"]);
+        secureStorage.writeData("photo", profile["picture"]["data"]["url"]);
         setState(() {
-          userProfile = profile;
           _isLogged = true;
         });
         break;
@@ -353,7 +423,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   showAlertDialog(BuildContext context, String txt1, String txt2) {
-    // set up the button
     Widget okButton = FlatButton(
       child: Text("OK"),
       onPressed: () {
@@ -379,6 +448,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 }

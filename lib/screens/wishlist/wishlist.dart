@@ -4,6 +4,7 @@ import 'package:sparknp/constants.dart';
 
 import 'package:sparknp/model/wishlistmodel.dart';
 import 'package:sparknp/services/wishlistservice.dart';
+import 'package:sparknp/services/storage.dart';
 import 'package:sparknp/screens/wishlist/wishlistcomponents/wishlistbody.dart';
 
 class WishlistScreen extends StatefulWidget {
@@ -13,14 +14,22 @@ class WishlistScreen extends StatefulWidget {
 
 class _WishlistScreenState extends State<WishlistScreen> {
   Wishlist wishlist;
-  bool _loading = true;
+  bool _loading;
+
+  final SecureStorage secureStorage = SecureStorage();
+  String _token;
+
   @override
   void initState() {
     super.initState();
-    WishlistService.list().then((data) {
-      setState(() {
-        wishlist = data;
-        _loading = false;
+    _loading = true;
+    secureStorage.readData('token').then((value) {
+      _token = value;
+      WishlistService.list(_token).then((data) {
+        setState(() {
+          wishlist = data;
+          _loading = false;
+        });
       });
     });
   }

@@ -4,11 +4,14 @@ import 'package:sparknp/model/screenarguments.dart';
 
 import 'package:sparknp/screens/login/login.dart';
 import 'package:sparknp/screens/home/home.dart';
+import 'package:sparknp/screens/home/homecomponent/more.dart';
+
 import 'package:sparknp/screens/orders/myorders.dart';
+
 import 'package:sparknp/screens/account/myaccount.dart';
 import 'package:sparknp/screens/account/accinfo.dart';
+
 import 'package:sparknp/screens/categories/categories.dart';
-import 'package:sparknp/screens/home/homecomponent/more.dart';
 import 'package:sparknp/screens/details/details.dart';
 
 import 'package:sparknp/screens/cart/cart.dart';
@@ -25,8 +28,6 @@ const String details = '/details';
 const String cart = '/cart';
 const String wishlist = '/wishlist';
 const String more = '/more';
-
-//TODO: when logged in route pages
 
 class Routing {
   static Route<dynamic> generateRoute(RouteSettings screen) {

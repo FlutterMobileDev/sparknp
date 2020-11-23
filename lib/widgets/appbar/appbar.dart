@@ -11,25 +11,25 @@ AppBar buildAppBar(context) {
     elevation: 0,
     iconTheme: IconThemeData(color: LightColor.textLightColor),
     centerTitle: true,
-    title: Container(
-      width: 270,
-      height: 40,
-      decoration: BoxDecoration(
-        color: LightColor.primaryColor.withOpacity(0.3),
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: TextField(
-        decoration: InputDecoration(
-            enabledBorder: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            hintText: "Search",
-            prefixIcon: Icon(Icons.search),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 5,
-              vertical: 5,
-            )),
-      ),
-    ),
+    // title: Container(
+    //   width: 270,
+    //   height: 40,
+    //   decoration: BoxDecoration(
+    //     color: LightColor.primaryColor.withOpacity(0.3),
+    //     borderRadius: BorderRadius.circular(15),
+    //   ),
+    //   child: TextField(
+    //     decoration: InputDecoration(
+    //         enabledBorder: InputBorder.none,
+    //         focusedBorder: InputBorder.none,
+    //         hintText: "Search",
+    //         prefixIcon: Icon(Icons.search),
+    //         contentPadding: EdgeInsets.symmetric(
+    //           horizontal: 5,
+    //           vertical: 5,
+    //         )),
+    //   ),
+    // ),
     actions: <Widget>[
       Row(children: [
         SizedBox(

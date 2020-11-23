@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sparknp/services/cartservice.dart';
+import 'package:sparknp/services/storage.dart';
 
 import 'package:sparknp/screens/details/detailscomponents/detailsbody.dart';
 
@@ -14,6 +15,19 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
+  final SecureStorage secureStorage = SecureStorage();
+  String _token;
+
+  @override
+  void initState() {
+    super.initState();
+    secureStorage.readData('token').then((value) {
+      setState(() {
+        _token = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +35,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add_shopping_cart_outlined),
           onPressed: () {
-            CartService.add(widget.product.id).then(
+            CartService.add(_token, widget.product.id).then(
               (added) {
                 _showDialog(context);
               },

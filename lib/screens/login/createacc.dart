@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/screens/login/login.dart';
-import 'package:sparknp/screens/home/home.dart';
-import 'package:sparknp/services/api.dart';
+import 'package:sparknp/services/loginservice.dart';
 import 'dart:convert';
 
 import 'dart:ui';
 
 class CreateScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _CreateScreenState(); //this
-//or State<StatefulWidget> createState(){  return _LoginScreenState(); }its same
-
+  State<StatefulWidget> createState() => _CreateScreenState();
 }
 
 class _CreateScreenState extends State<CreateScreen> {
@@ -313,7 +310,7 @@ class _CreateScreenState extends State<CreateScreen> {
     );
   }
 
-  void _handleRegister() async {
+  void _handleLogin() async {
     var data = {
       "name": nameController.text,
       "email": emailController.text,
@@ -347,7 +344,7 @@ class _CreateScreenState extends State<CreateScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-          _handleRegister();
+          _handleLogin();
           Navigator.push(context,
               new MaterialPageRoute(builder: (context) => LoginScreen()));
         },
@@ -355,7 +352,7 @@ class _CreateScreenState extends State<CreateScreen> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
-        color: Colors.indigo[900],
+        color: LightColor.mainColor,
         child: Text(
           'Register ',
           style: TextStyle(
@@ -374,7 +371,7 @@ class _CreateScreenState extends State<CreateScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.indigo[900],
+          backgroundColor: LightColor.mainColor,
           title: Text('Create Account'),
         ),
         body: Stack(
@@ -402,7 +399,7 @@ class _CreateScreenState extends State<CreateScreen> {
                       Text(
                         'Register Your Email',
                         style: TextStyle(
-                          color: Colors.indigo[900],
+                          color: LightColor.mainColor,
                           fontFamily: 'OpenSans',
                           fontSize: 30.0,
                           fontWeight: FontWeight.bold,
@@ -463,5 +460,16 @@ class _CreateScreenState extends State<CreateScreen> {
         return alert;
       },
     );
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    addressController.dispose();
+    passwordController.dispose();
+    confirmpwdController.dispose();
+    super.dispose();
   }
 }

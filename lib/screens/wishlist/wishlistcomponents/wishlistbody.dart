@@ -6,6 +6,7 @@ import 'package:sparknp/constants.dart';
 import 'package:sparknp/model/wishlistmodel.dart';
 import 'package:sparknp/screens/wishlist/wishlistcomponents/title_text.dart';
 import 'package:sparknp/services/wishlistservice.dart';
+import 'package:sparknp/services/storage.dart';
 
 class WishlistBody extends StatefulWidget {
   final Wishlist wishlist;
@@ -17,31 +18,46 @@ class WishlistBody extends StatefulWidget {
 
 class _WishlistBodyState extends State<WishlistBody> {
   List _wishlistList;
+  bool _loading;
+
+  final SecureStorage secureStorage = SecureStorage();
+  String _token;
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      _wishlistList = widget.wishlist.wishlists;
+    _loading = true;
+    secureStorage.readData('token').then((value) {
+      setState(() {
+        _token = value;
+        _wishlistList = widget.wishlist.wishlists;
+        _loading = false;
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppTheme.padding,
-      child: SingleChildScrollView(
-        child: (widget.wishlist.wishlists.length == 0)
-            ? Center(
-                child: Text("No Items in wishlist"),
-              )
-            : Column(
-                children: <Widget>[
-                  _item(widget.wishlist),
-                ],
-              ),
-      ),
-    );
+    return (_loading)
+        ? Container(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          )
+        : Container(
+            padding: AppTheme.padding,
+            child: SingleChildScrollView(
+              child: (widget.wishlist.wishlists.length == 0)
+                  ? Center(
+                      child: Text("No Items in wishlist"),
+                    )
+                  : Column(
+                      children: <Widget>[
+                        _item(widget.wishlist),
+                      ],
+                    ),
+            ),
+          );
   }
 
   Widget _item(Wishlist model) {
@@ -60,7 +76,7 @@ class _WishlistBodyState extends State<WishlistBody> {
               },
               child: Container(
                 width: size.width * 0.8,
-                height: 80,
+                height: 50,
                 child: Column(children: [
                   Expanded(
                     child: ListTile(
@@ -74,7 +90,7 @@ class _WishlistBodyState extends State<WishlistBody> {
                             borderRadius: BorderRadius.circular(15)),
                         color: LightColor.orange,
                         onPressed: () {
-                          WishlistService.remove(product.productId)
+                          WishlistService.remove(_token, product.productId)
                               .then((value) {
                             _showDialog(context);
                           });

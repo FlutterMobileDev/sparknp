@@ -3,16 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/router.dart';
 
+import 'package:sparknp/services/storage.dart';
+
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String _name, userID;
+  final SecureStorage secureStorage = SecureStorage();
+  String _name;
+
+  bool _loading;
   @override
   void initState() {
     super.initState();
+    _loading = true;
+    secureStorage.readData('name').then((value) {
+      setState(() {
+        _name = value;
+        _loading = false;
+      });
+    });
   }
 
   Widget _blueColors() {
@@ -28,36 +40,29 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget _getInfo() {
     return Positioned(
       child: Container(
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  CircleAvatar(radius: 60, backgroundImage: null),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    "Name: $_name",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(""),
-                ],
-              ),
-              SizedBox(
-                height: 40,
-              ),
-            ],
-          ),
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                CircleAvatar(
+                  radius: 60,
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Text(
+                  _name,
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -92,7 +97,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: FlatButton(
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         color: LightColor.mainColor,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, myOrders);
+                        },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0)),
                         child: Text(
@@ -263,42 +270,74 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        brightness: Brightness.light,
-        title: Text(
-          "My Account",
-          style: TextStyle(
-              color: LightColor.background, fontWeight: FontWeight.bold),
-        ),
-        elevation: 0,
-        backgroundColor: LightColor.mainColor,
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.settings,
-              size: 30,
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, accInfo);
-            },
+        appBar: AppBar(
+          brightness: Brightness.light,
+          title: Text(
+            "My Account",
+            style: TextStyle(
+                color: LightColor.background, fontWeight: FontWeight.bold),
           ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
+          elevation: 0,
+          backgroundColor: LightColor.mainColor,
+          centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.settings,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, accInfo);
+              },
             ),
-            _blueColors(),
-            _getInfo(),
-            _buildOrders(context),
-            _buildService(context),
           ],
         ),
-      ),
-    );
+        body: (_loading)
+            ? Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            : SingleChildScrollView(
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                    ),
+                    _blueColors(),
+                    _getInfo(),
+                    _buildOrders(context),
+                    _buildService(context),
+                  ],
+                ),
+              ),
+        persistentFooterButtons: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 125, 0),
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0)),
+              color: Colors.blue[300],
+              textColor: Colors.white,
+              child: Text(
+                "Logout",
+                style: TextStyle(fontWeight: FontWeight.normal),
+              ),
+              padding: const EdgeInsets.symmetric(
+                vertical: 16.0,
+                horizontal: 32.0,
+              ),
+              onPressed: () {
+                secureStorage.deleteData("name");
+                secureStorage.deleteData("address");
+                secureStorage.deleteData("phone");
+                secureStorage.deleteData("email");
+                secureStorage.deleteData("token");
+                Navigator.popAndPushNamed(context, home);
+              },
+            ),
+          ),
+        ]);
   }
 }

@@ -7,6 +7,8 @@ import 'package:sparknp/model/cartmodel.dart';
 import 'package:sparknp/screens/cart/cartcomponents/title_text.dart';
 import 'package:sparknp/services/cartservice.dart';
 
+import 'package:sparknp/services/storage.dart';
+
 class CartBody extends StatefulWidget {
   final Cart cart;
   const CartBody({Key key, this.cart}) : super(key: key);
@@ -17,38 +19,53 @@ class CartBody extends StatefulWidget {
 
 class _CartBodyState extends State<CartBody> {
   List _cartList;
+  bool _loading;
+
+  final SecureStorage secureStorage = SecureStorage();
+  String _token;
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      _cartList = widget.cart.carts;
+    _loading = true;
+    secureStorage.readData('token').then((value) {
+      setState(() {
+        _token = value;
+        _cartList = widget.cart.carts;
+        _loading = false;
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppTheme.padding,
-      child: SingleChildScrollView(
-        child: (widget.cart.carts.length == 0)
-            ? Center(
-                child: Text("No Items in Cart"),
-              )
-            : Column(
-                children: <Widget>[
-                  _item(widget.cart),
-                  Divider(
-                    thickness: 1,
-                    height: 70,
-                  ),
-                  _price(),
-                  SizedBox(height: 30),
-                  _submitButton(context),
-                ],
-              ),
-      ),
-    );
+    return (_loading)
+        ? Container(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          )
+        : Container(
+            padding: AppTheme.padding,
+            child: SingleChildScrollView(
+              child: (widget.cart.carts.length == 0)
+                  ? Center(
+                      child: Text("No Items in Cart"),
+                    )
+                  : Column(
+                      children: <Widget>[
+                        _item(widget.cart),
+                        Divider(
+                          thickness: 1,
+                          height: 70,
+                        ),
+                        _price(),
+                        SizedBox(height: 30),
+                        _submitButton(context),
+                      ],
+                    ),
+            ),
+          );
   }
 
   Widget _item(Cart model) {
@@ -93,7 +110,8 @@ class _CartBodyState extends State<CartBody> {
                             borderRadius: BorderRadius.circular(15)),
                         color: LightColor.orange,
                         onPressed: () {
-                          CartService.remove(product.productId).then((removed) {
+                          CartService.remove(_token, product.productId)
+                              .then((removed) {
                             _showDialog(context);
                           });
                         },

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import 'package:connectivity/connectivity.dart';
+
 import 'package:sparknp/model/frontjson.dart';
 import 'package:sparknp/services/frontservice.dart';
 
@@ -15,10 +18,15 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _loading;
   ApiFront front;
 
+  bool iswificonnected = false;
+  bool isInternetOn = true;
+
   @override
   void initState() {
     super.initState();
     _loading = true;
+
+    getConnect();
 
     FrontService.fetch().then((data) {
       setState(() {
@@ -31,11 +39,30 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context),
-      drawer: MainDrawer(front: front),
-      body: (_loading)
-          ? Center(child: CircularProgressIndicator())
-          : HomeBody(front: front),
+        appBar: buildAppBar(context),
+        drawer: MainDrawer(front: front),
+        body: isInternetOn
+            ? _loading
+                ? Center(child: CircularProgressIndicator())
+                : HomeBody(front: front)
+            : buildAlertDialog());
+  }
+
+  AlertDialog buildAlertDialog() {
+    return AlertDialog(
+      title: Text(
+        "You are not Connected to Internet, Check your connection.",
+        style: TextStyle(fontStyle: FontStyle.italic),
+      ),
     );
+  }
+
+  void getConnect() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        isInternetOn = false;
+      });
+    }
   }
 }

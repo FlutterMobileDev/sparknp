@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/services/wishlistservice.dart';
+import 'package:sparknp/services/storage.dart';
 
 class DetailsBody extends StatefulWidget {
   final dynamic product;
@@ -11,7 +12,19 @@ class DetailsBody extends StatefulWidget {
 }
 
 class _DetailsBodyState extends State<DetailsBody> {
+  final SecureStorage secureStorage = SecureStorage();
+  String _token;
   double rating = 3.5;
+
+  @override
+  void initState() {
+    super.initState();
+    secureStorage.readData('token').then((value) {
+      setState(() {
+        _token = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +62,8 @@ class _DetailsBodyState extends State<DetailsBody> {
                   icon: Icon(CupertinoIcons.heart),
                   color: LightColor.orange,
                   onPressed: () {
-                    WishlistService.add(widget.product.id).then((added) {
+                    WishlistService.add(_token, widget.product.id)
+                        .then((added) {
                       _showDialog(context);
                     });
                   }),
