@@ -54,6 +54,7 @@ class CartService {
         ),
       );
       if (response.statusCode == 200) {
+        print(id);
       } else {
         throw Exception('error here');
       }

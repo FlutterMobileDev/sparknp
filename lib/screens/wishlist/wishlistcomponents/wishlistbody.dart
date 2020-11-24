@@ -90,8 +90,9 @@ class _WishlistBodyState extends State<WishlistBody> {
                             borderRadius: BorderRadius.circular(15)),
                         color: LightColor.orange,
                         onPressed: () {
-                          WishlistService.remove(_token, product.productId)
+                          WishlistService.remove(_token, product.id)
                               .then((value) {
+                            print(product.productId);
                             _showDialog(context);
                           });
                         },

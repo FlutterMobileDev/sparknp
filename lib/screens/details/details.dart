@@ -35,11 +35,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add_shopping_cart_outlined),
           onPressed: () {
-            CartService.add(_token, widget.product.id).then(
-              (added) {
-                _showDialog(context);
-              },
-            );
+            if (_token != null) {
+              CartService.add(_token, widget.product.id).then(
+                (added) {
+                  _showDialog(context, true);
+                },
+              );
+            } else {
+              _showDialog(context, false);
+            }
           }),
       persistentFooterButtons: [
         Padding(
@@ -68,13 +72,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
   }
 }
 
-Future<void> _showDialog(context) async {
+Future<void> _showDialog(context, added) async {
   return showDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Added to cart'),
-      );
-    },
-  );
+      context: context,
+      builder: (BuildContext context) {
+        return added
+            ? AlertDialog(
+                title: Text('Added to cart'),
+              )
+            : AlertDialog(
+                title: Text('Please Log In'),
+              );
+      });
 }

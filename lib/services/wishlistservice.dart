@@ -46,7 +46,7 @@ class WishlistService {
   static Future<bool> remove(token, id) async {
     try {
       final response = await http.get(
-        'https://www.sparknp.com/api/carts/reduce/$id',
+        'https://www.sparknp.com/api/wishlists/removewish/$id',
         headers: {"Authorization": "Bearer $token"},
       ).timeout(
         Duration(

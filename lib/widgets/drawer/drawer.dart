@@ -5,6 +5,8 @@ import 'package:sparknp/router.dart';
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/widgets/drawer/catdrawer.dart';
 
+import 'package:sparknp/services/storage.dart';
+
 class MainDrawer extends StatefulWidget {
   final ApiFront front;
   const MainDrawer({Key key, this.front}) : super(key: key);
@@ -16,10 +18,19 @@ class _MainDrawerState extends State<MainDrawer> {
   int myIndex;
   PageController _controller;
 
+  final SecureStorage secureStorage = SecureStorage();
+  String _token;
+
   @override
   void initState() {
     super.initState();
     _controller = PageController(initialPage: 0);
+
+    secureStorage.readData('token').then((value) {
+      setState(() {
+        _token = value;
+      });
+    });
   }
 
   //The Logic where you change the pages
@@ -38,39 +49,35 @@ class _MainDrawerState extends State<MainDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        child: PageView.builder(
-      controller: _controller,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: 2,
-      itemBuilder: (context, index) {
-        // Original Drawer
-        if (index == 0)
-          return MyWidget(
-            explore: () => _onChangePage(1),
-            settings: () => _onChangePage(2),
-          );
-        //Second Drawer form the PageView
-        switch (myIndex) {
-          case 1:
-            return MyExploreAll(
-              goBack: () => _onChangePage(0),
-              front: widget.front,
+      child: PageView.builder(
+        controller: _controller,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: 2,
+        itemBuilder: (context, index) {
+          // Original Drawer
+          if (index == 0)
+            return MyWidget(
+              explore: () => _onChangePage(1),
+              token: _token,
             );
-          case 2:
-          default:
-            return MySettings(goBack: () => _onChangePage(0));
-        }
-      },
-    ));
+          //Second Drawer form the PageView
+          return MyExploreAll(
+            goBack: () => _onChangePage(0),
+            front: widget.front,
+          );
+        },
+      ),
+    );
   }
 }
 
 //The Menu Drawer (Your first image)
 class MyWidget extends StatelessWidget {
   final VoidCallback explore;
-  final VoidCallback settings;
 
-  MyWidget({this.explore, this.settings});
+  final String token;
+
+  MyWidget({this.explore, this.token});
 
   @override
   Widget build(BuildContext context) {
@@ -95,22 +102,27 @@ class MyWidget extends StatelessWidget {
                 title: Text('Home'),
                 onTap: () {
                   Navigator.of(context).pop();
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, home, (home) => false);
+                  Navigator.pushNamed(context, home);
                 }),
             ListTile(
                 title: Text('Your Orders'),
                 onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, myOrders, (home) => true);
+                  // if (token != null) {
+                  //   Navigator.of(context).pop();
+                  //   Navigator.pushNamed(context, myOrders);
+                  // } else {
+                  _showDialog(context, 'Feature Coming soon');
+                  // }
                 }),
             ListTile(
                 title: Text('Your Account'),
                 onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, myAccount, (home) => true);
+                  if (token != null) {
+                    Navigator.of(context).pop();
+                    Navigator.pushNamed(context, myAccount);
+                  } else {
+                    _showDialog(context, 'Please Log In');
+                  }
                 }),
             ListTile(
               title: Text('Shop by Categories'),
@@ -124,82 +136,16 @@ class MyWidget extends StatelessWidget {
             ListTile(
                 title: Text('Sign In'),
                 onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, login, (home) => true);
+                  if (token == null) {
+                    Navigator.of(context).pop();
+                    Navigator.pushNamed(context, login);
+                  } else {
+                    _showDialog(context, 'Already logged In');
+                  }
                 }),
             const Divider(
               color: Colors.grey,
               thickness: 1,
-            ),
-            // ListTile(
-            //   title: Text('Settings'),
-            //   trailing: const Icon(
-            //     Icons.arrow_forward_ios,
-            //     color: LightColor.iconColor,
-            //   ),
-            //   onTap: settings,
-            // ),
-          ]))
-        ],
-      ),
-    );
-  }
-}
-
-// The settings Drawer(second image)
-class MySettings extends StatelessWidget {
-  final VoidCallback goBack;
-
-  MySettings({this.goBack});
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            pinned: true,
-            title: Text(
-              'Main Menu',
-              style: TextStyle(color: LightColor.black),
-            ),
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: LightColor.black,
-              ),
-              onPressed: goBack,
-            ),
-            backgroundColor: Colors.blueAccent[900],
-          ),
-          SliverList(
-              delegate: SliverChildListDelegate([
-            ListTile(
-              title: Text(
-                'Settings',
-              ),
-              onTap: () => print('Settings'),
-            ),
-            const Divider(
-              color: Colors.grey,
-              thickness: 1,
-            ),
-            ListTile(
-              title: Text('Change Country'),
-              onTap: () => print('Change Country'),
-            ),
-            ListTile(
-              title: Text('ETC'),
-              onTap: () => print('ETC'),
-            ),
-            const Divider(
-              color: Colors.grey,
-              thickness: 1,
-            ),
-            ListTile(
-              title: Text('Dummy Text'),
-              onTap: () => print('Dummy Text'),
             ),
           ]))
         ],
@@ -225,4 +171,15 @@ class MyInnerDrawer extends StatelessWidget {
       )
     ]);
   }
+}
+
+Future<void> _showDialog(context, txt) async {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(txt),
+      );
+    },
+  );
 }

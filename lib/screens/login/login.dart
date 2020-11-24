@@ -58,13 +58,6 @@ class _LoginScreenState extends State<LoginScreen> {
           child: TextFormField(
             controller: emailController,
             keyboardType: TextInputType.emailAddress,
-            validator: (value) {
-              if (value.isEmpty) {
-                String a = 'Email is required';
-                return a;
-              }
-              return null;
-            },
             onSaved: (input) => _email = input,
             style: TextStyle(
               color: Colors.black,
@@ -101,16 +94,6 @@ class _LoginScreenState extends State<LoginScreen> {
           height: 60.0,
           child: TextFormField(
             controller: passwordController,
-            validator: (value) {
-              if (value.isEmpty) {
-                String a = 'Password is required';
-                return a;
-              }
-              if (value.length < 6) {
-                return 'Passoword Length less than 6 ';
-              }
-              return null;
-            },
             onSaved: (input) => _password = input,
             obscureText: _obscureText,
             style: TextStyle(
@@ -184,21 +167,21 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildFBLoginBtn(BuildContext context) {
-    return Container(
-      child: FacebookSignInButton(
-        onPressed: _loginWithFB,
-      ),
-    );
-  }
+  // Widget _buildFBLoginBtn(BuildContext context) {
+  //   return Container(
+  //     child: FacebookSignInButton(
+  //       onPressed: _loginWithFB,
+  //     ),
+  //   );
+  // }
 
-  Widget _buildGoogleLoginBtn(BuildContext context) {
-    return Container(
-      child: GoogleSignInButton(
-        onPressed: _handleSignIn,
-      ),
-    );
-  }
+  // Widget _buildGoogleLoginBtn(BuildContext context) {
+  //   return Container(
+  //     child: GoogleSignInButton(
+  //       onPressed: _handleSignIn,
+  //     ),
+  //   );
+  // }
 
   Widget _buildSignupBtn(BuildContext context) {
     return Container(
@@ -315,9 +298,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             _buildPasswordTF(),
                             _buildForgotPasswordBtn(context),
                             _buildLoginBtn(context),
-                            _buildFBLoginBtn(context),
+                            // _buildFBLoginBtn(context),
                             SizedBox(height: 10.0),
-                            _buildGoogleLoginBtn(context),
+                            // _buildGoogleLoginBtn(context),
                             _buildSignupBtn(context),
                           ],
                         ),
@@ -359,68 +342,71 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
-      setState(() {
-        _currentUser = account;
-      });
-    });
-    _googleSignIn.signInSilently();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
+  //     setState(() {
+  //       _currentUser = account;
+  //       print(account);
+  //     });
+  //   });
+  //   _googleSignIn.signInSilently();
+  // }
 
-//TODO: google login
-  void _handleSignIn() async {
-    await _googleSignIn.signOut(); //optional
-    GoogleSignInAccount user = await _googleSignIn.signIn();
-    if (user == null) {
-      showAlertDialog(context, "Incorrect e-mail or password",
-          "Please check email and password");
-    } else {
-      secureStorage.writeData("name", user.displayName);
-      secureStorage.writeData("email", user.email);
-      secureStorage.writeData("id", user.id);
-      secureStorage.writeData("photo", user.photoUrl);
+//TODO: google / FB login
 
-      showAlertDialog(
-        context,
-        "Signed In",
-        "Successfully Signed in",
-      );
-      setState(() {
-        _isLogged = true;
-      });
-    }
-  }
+  // void _handleSignIn() async {
+  //   // await _googleSignIn.signOut(); //optional
+  //   GoogleSignInAccount user = await _googleSignIn.signIn();
+  //   print(user);
+  //   if (user == null) {
+  //     showAlertDialog(context, "Incorrect e-mail or password",
+  //         "Please check email and password");
+  //   } else {
+  //     secureStorage.writeData("name", user.displayName);
+  //     secureStorage.writeData("email", user.email);
+  //     secureStorage.writeData("id", user.id);
+  //     secureStorage.writeData("photo", user.photoUrl);
 
-  void _loginWithFB() async {
-    final result = await facebookLogin.logInWithReadPermissions(['email']);
+  //     showAlertDialog(
+  //       context,
+  //       "Signed In",
+  //       "Successfully Signed in",
+  //     );
+  //     setState(() {
+  //       _isLogged = true;
+  //     });
+  //   }
+  // }
 
-    switch (result.status) {
-      case FacebookLoginStatus.loggedIn:
-        final token = result.accessToken.token;
-        final graphResponse = await http.get(
-            'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=$token');
-        final profile = JSON.jsonDecode(graphResponse.body);
-        print(profile);
-        secureStorage.writeData("name", profile["name"]);
-        secureStorage.writeData("email", profile["email"]);
-        secureStorage.writeData("id", profile["id"]);
-        secureStorage.writeData("photo", profile["picture"]["data"]["url"]);
-        setState(() {
-          _isLogged = true;
-        });
-        break;
+  // void _loginWithFB() async {
+  //   final result = await facebookLogin.logInWithReadPermissions(['email']);
 
-      case FacebookLoginStatus.cancelledByUser:
-        setState(() => _isLogged = false);
-        break;
-      case FacebookLoginStatus.error:
-        setState(() => _isLogged = false);
-        break;
-    }
-  }
+  //   switch (result.status) {
+  //     case FacebookLoginStatus.loggedIn:
+  //       final token = result.accessToken.token;
+  //       final graphResponse = await http.get(
+  //           'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=$token');
+  //       final profile = JSON.jsonDecode(graphResponse.body);
+  //       print(profile);
+  //       secureStorage.writeData("name", profile["name"]);
+  //       secureStorage.writeData("email", profile["email"]);
+  //       secureStorage.writeData("id", profile["id"]);
+  //       secureStorage.writeData("photo", profile["picture"]["data"]["url"]);
+  //       setState(() {
+  //         _isLogged = true;
+  //       });
+  //       break;
+
+  //     case FacebookLoginStatus.cancelledByUser:
+  //       setState(() => _isLogged = false);
+  //       break;
+  //     case FacebookLoginStatus.error:
+  //       setState(() => _isLogged = false);
+  //       break;
+  //   }
+  // }
 
   showAlertDialog(BuildContext context, String txt1, String txt2) {
     Widget okButton = FlatButton(

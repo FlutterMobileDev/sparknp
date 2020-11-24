@@ -62,10 +62,14 @@ class _DetailsBodyState extends State<DetailsBody> {
                   icon: Icon(CupertinoIcons.heart),
                   color: LightColor.orange,
                   onPressed: () {
-                    WishlistService.add(_token, widget.product.id)
-                        .then((added) {
-                      _showDialog(context);
-                    });
+                    if (_token != null) {
+                      WishlistService.add(_token, widget.product.id)
+                          .then((added) {
+                        _showDialog(context, true);
+                      });
+                    } else {
+                      _showDialog(context, false);
+                    }
                   }),
             ),
             subtitle: Column(
@@ -129,13 +133,13 @@ class StarRating extends StatelessWidget {
   }
 }
 
-Future<void> _showDialog(context) async {
+Future<void> _showDialog(context, removed) async {
   return showDialog<void>(
     context: context,
     builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Added to wishlist'),
-      );
+      return removed
+          ? AlertDialog(title: Text('Added to wishlist'))
+          : AlertDialog(title: Text('Please Log In'));
     },
   );
 }
