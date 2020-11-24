@@ -15,6 +15,7 @@ import 'package:sparknp/screens/categories/categories.dart';
 import 'package:sparknp/screens/details/details.dart';
 
 import 'package:sparknp/screens/cart/cart.dart';
+import 'package:sparknp/screens/cart/cartcomponents/processcart.dart';
 import 'package:sparknp/screens/wishlist/wishlist.dart';
 
 const String home = '/';
@@ -26,6 +27,7 @@ const String accInfo = '/accinfo';
 const String categories = '/categories';
 const String details = '/details';
 const String cart = '/cart';
+const String processCart = '/processCart';
 const String wishlist = '/wishlist';
 const String more = '/more';
 
@@ -51,6 +53,8 @@ class Routing {
         return MaterialPageRoute(builder: (_) => WishlistScreen());
       case cart:
         return MaterialPageRoute(builder: (_) => CartScreen());
+      case processCart:
+        return MaterialPageRoute(builder: (_) => ProcessScreen());
       case details:
         return MaterialPageRoute(
           builder: (_) => DetailsScreen(screen.arguments),

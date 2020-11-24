@@ -6,7 +6,6 @@ import 'package:sparknp/model/frontjson.dart';
 import 'package:sparknp/services/frontservice.dart';
 
 import 'package:sparknp/widgets/drawer/drawer.dart';
-import 'package:sparknp/widgets/appbar/appbar.dart';
 import 'package:sparknp/screens/home/homecomponent/homebody.dart';
 
 import 'package:sparknp/router.dart';
@@ -35,18 +34,16 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _loading = true;
-    secureStorage.readData('token').then((value) {
-      setState(() {
-        _token = value;
-      });
-    });
 
     getConnect();
 
     FrontService.fetch().then((data) {
-      setState(() {
-        front = data;
-        _loading = false;
+      secureStorage.readData('token').then((value) {
+        setState(() {
+          front = data;
+          _token = value;
+          _loading = false;
+        });
       });
     });
   }

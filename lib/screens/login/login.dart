@@ -7,6 +7,7 @@ import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'package:sparknp/router.dart';
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/screens/login/createacc.dart';
 import 'package:sparknp/screens/login/forgetpw.dart';
@@ -58,6 +59,13 @@ class _LoginScreenState extends State<LoginScreen> {
           child: TextFormField(
             controller: emailController,
             keyboardType: TextInputType.emailAddress,
+            validator: (value) {
+              if (value.isEmpty) {
+                String a = 'Email is required';
+                return a;
+              }
+              return null;
+            },
             onSaved: (input) => _email = input,
             style: TextStyle(
               color: Colors.black,
@@ -94,6 +102,13 @@ class _LoginScreenState extends State<LoginScreen> {
           height: 60.0,
           child: TextFormField(
             controller: passwordController,
+            validator: (value) {
+              if (value.isEmpty) {
+                String a = 'Password is required';
+                return a;
+              }
+              return null;
+            },
             onSaved: (input) => _password = input,
             obscureText: _obscureText,
             style: TextStyle(
@@ -167,13 +182,13 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // Widget _buildFBLoginBtn(BuildContext context) {
-  //   return Container(
-  //     child: FacebookSignInButton(
-  //       onPressed: _loginWithFB,
-  //     ),
-  //   );
-  // }
+  Widget _buildFBLoginBtn(BuildContext context) {
+    return Container(
+      child: FacebookSignInButton(
+        onPressed: _loginWithFB,
+      ),
+    );
+  }
 
   // Widget _buildGoogleLoginBtn(BuildContext context) {
   //   return Container(
@@ -298,7 +313,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             _buildPasswordTF(),
                             _buildForgotPasswordBtn(context),
                             _buildLoginBtn(context),
-                            // _buildFBLoginBtn(context),
+                            _buildFBLoginBtn(context),
                             SizedBox(height: 10.0),
                             // _buildGoogleLoginBtn(context),
                             _buildSignupBtn(context),
@@ -321,6 +336,7 @@ class _LoginScreenState extends State<LoginScreen> {
     var res = await CallApi().login(data, 'app-login');
     var body = json.decode(res.body);
 
+    secureStorage.writeData("id", body["user"]["id"]);
     secureStorage.writeData("name", body["user"]["name"]);
     secureStorage.writeData("address", body["user"]["address"]);
     secureStorage.writeData("phone", body["user"]["phone"]);
@@ -328,11 +344,7 @@ class _LoginScreenState extends State<LoginScreen> {
     secureStorage.writeData("token", body["user_token"]);
 
     if (body["status"] == true) {
-      showAlertDialog(
-        context,
-        "Signed In",
-        "Successfully Signed in",
-      );
+      Navigator.pushNamed(context, home);
       setState(() {
         _isLogged = true;
       });
@@ -380,33 +392,34 @@ class _LoginScreenState extends State<LoginScreen> {
   //   }
   // }
 
-  // void _loginWithFB() async {
-  //   final result = await facebookLogin.logInWithReadPermissions(['email']);
+  void _loginWithFB() async {
+    final result = await facebookLogin.logInWithReadPermissions(['email']);
 
-  //   switch (result.status) {
-  //     case FacebookLoginStatus.loggedIn:
-  //       final token = result.accessToken.token;
-  //       final graphResponse = await http.get(
-  //           'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=$token');
-  //       final profile = JSON.jsonDecode(graphResponse.body);
-  //       print(profile);
-  //       secureStorage.writeData("name", profile["name"]);
-  //       secureStorage.writeData("email", profile["email"]);
-  //       secureStorage.writeData("id", profile["id"]);
-  //       secureStorage.writeData("photo", profile["picture"]["data"]["url"]);
-  //       setState(() {
-  //         _isLogged = true;
-  //       });
-  //       break;
+    switch (result.status) {
+      case FacebookLoginStatus.loggedIn:
+        final token = result.accessToken.token;
+        final graphResponse = await http.get(
+            'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=$token');
+        final profile = JSON.jsonDecode(graphResponse.body);
+        print(token);
+        secureStorage.writeData("name", profile["name"]);
+        secureStorage.writeData("email", profile["email"]);
+        secureStorage.writeData("id", profile["id"]);
+        secureStorage.writeData("photo", profile["picture"]["data"]["url"]);
+        secureStorage.writeData("token", token);
+        setState(() {
+          _isLogged = true;
+        });
+        break;
 
-  //     case FacebookLoginStatus.cancelledByUser:
-  //       setState(() => _isLogged = false);
-  //       break;
-  //     case FacebookLoginStatus.error:
-  //       setState(() => _isLogged = false);
-  //       break;
-  //   }
-  // }
+      case FacebookLoginStatus.cancelledByUser:
+        setState(() => _isLogged = false);
+        break;
+      case FacebookLoginStatus.error:
+        setState(() => _isLogged = false);
+        break;
+    }
+  }
 
   showAlertDialog(BuildContext context, String txt1, String txt2) {
     Widget okButton = FlatButton(

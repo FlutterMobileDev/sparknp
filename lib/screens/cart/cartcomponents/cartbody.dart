@@ -34,6 +34,8 @@ class _CartBodyState extends State<CartBody> {
         _cartList = widget.cart.carts;
         _loading = false;
       });
+      secureStorage.writeData("totalPrice", widget.cart.totalPrice.toString());
+      secureStorage.writeData("quantity", widget.cart.carts.length.toString());
     });
   }
 
@@ -79,51 +81,86 @@ class _CartBodyState extends State<CartBody> {
         itemBuilder: (context, index) {
           dynamic product = _cartList[index];
           return GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, details, arguments: product);
-              },
-              child: Container(
-                width: size.width * 0.8,
-                height: 80,
-                child: Column(children: [
-                  Expanded(
-                    child: ListTile(
-                      title: TitleText(
-                        text:
-                            "Product ID : ${product.productId}    x${product.quantity}",
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
+            onTap: () {},
+            child: Container(
+              width: size.width * 0.9,
+              height: 100,
+              child: Column(children: [
+                Expanded(
+                  child: ListTile(
+                    title: TitleText(
+                      text:
+                          "Product ID : ${product.productId}    x${product.quantity}",
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    subtitle: Row(children: <Widget>[
+                      TitleText(
+                        text: '\Rs ',
+                        color: LightColor.red,
+                        fontSize: 14,
                       ),
-                      subtitle: Row(children: <Widget>[
-                        TitleText(
-                          text: '\Rs ',
-                          color: LightColor.red,
-                          fontSize: 12,
-                        ),
-                        TitleText(
-                          text: product.price.toString(),
-                          fontSize: 14,
-                        ),
-                      ]),
-                      trailing: FlatButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        color: LightColor.orange,
-                        onPressed: () {
-                          CartService.remove(_token, product.productId)
-                              .then((removed) {
-                            _showDialog(context);
-                          });
-                        },
-                        child: Text(
-                          "Remove",
-                          style: TextStyle(color: LightColor.background),
-                        ),
+                      TitleText(
+                        text: product.price.toString(),
+                        fontSize: 14,
+                      ),
+                    ]),
+                    trailing: FlatButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      color: LightColor.orange,
+                      onPressed: () {
+                        CartService.destroy(_token, product.productId)
+                            .then((removed) {
+                          _showDialog(context, "Revoved all items");
+                        });
+                      },
+                      child: Text(
+                        "Remove All items",
+                        style: TextStyle(color: LightColor.background),
                       ),
                     ),
                   ),
-                ]),
-              ));
+                ),
+                Row(
+                  children: [
+                    FlatButton(
+                      minWidth: 5,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      color: LightColor.orange,
+                      onPressed: () {
+                        CartService.remove(_token, product.productId)
+                            .then((removed) {
+                          _showDialog(context, "One item removed");
+                        });
+                      },
+                      child: Text(
+                        "-",
+                        style: TextStyle(color: LightColor.background),
+                      ),
+                    ),
+                    FlatButton(
+                      minWidth: 5,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      color: LightColor.orange,
+                      onPressed: () {
+                        CartService.add(_token, product.productId)
+                            .then((removed) {
+                          _showDialog(context, "One item added");
+                        });
+                      },
+                      child: Text(
+                        "+",
+                        style: TextStyle(color: LightColor.background),
+                      ),
+                    ),
+                  ],
+                )
+              ]),
+            ),
+          );
         },
         separatorBuilder: (BuildContext context, int index) {
           return Divider(
@@ -146,7 +183,7 @@ class _CartBodyState extends State<CartBody> {
           fontWeight: FontWeight.w500,
         ),
         TitleText(
-          text: "Rs${widget.cart.totalPrice}",
+          text: "Total: Rs ${widget.cart.totalPrice}",
           fontSize: 18,
         ),
       ],
@@ -155,7 +192,11 @@ class _CartBodyState extends State<CartBody> {
 
   Widget _submitButton(BuildContext context) {
     return FlatButton(
-        onPressed: () {},
+        onPressed: () {
+          if (widget.cart.carts.isNotEmpty) {
+            Navigator.pushNamed(context, processCart);
+          }
+        },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         color: LightColor.orange,
         child: Container(
@@ -176,12 +217,12 @@ class _CartBodyState extends State<CartBody> {
   }
 }
 
-Future<void> _showDialog(context) async {
+Future<void> _showDialog(context, txt) async {
   return showDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Removed from Cart'),
+        title: Text(txt),
       );
     },
   );
