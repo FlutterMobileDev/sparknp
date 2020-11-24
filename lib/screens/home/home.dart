@@ -25,8 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _loading;
   ApiFront front;
 
-  bool _islogged = false;
-
   bool iswificonnected = false;
   bool isInternetOn = true;
 
