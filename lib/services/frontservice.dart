@@ -24,6 +24,26 @@ class FrontService {
     }
   }
 
+  static Future<Subcat> cat(id) async {
+    try {
+      final response =
+          await http.get('https://www.sparknp.com/api/categories/$id').timeout(
+                Duration(
+                  seconds: 15,
+                ),
+              );
+      if (response.statusCode == 200) {
+        final Subcat subcat = subcatFromJson(response.body);
+        return subcat;
+      } else {
+        print(response.body);
+        throw Exception('error here');
+      }
+    } catch (e) {
+      throw Exception('There was a problem connecting to the internet');
+    }
+  }
+
   static Future<Subcat> subcat(id) async {
     try {
       final response = await http

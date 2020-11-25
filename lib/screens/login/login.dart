@@ -354,44 +354,41 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
-  //     print(account);
-
-  //     setState(() {
-  //       _currentUser = account;
-  //       print(account);
-  //     });
-  //   });
-  //   _googleSignIn.signInSilently();
-  // }
-
-//TODO: google
-
   void _loginWithGoogle() async {
     await _googleSignIn.signOut(); //optional
-    print("here again");
     GoogleSignInAccount user = await _googleSignIn.signIn();
-    print(user);
-    if (user == null) {
-      showAlertDialog(context, "Incorrect e-mail or password",
-          "Please check email and password");
-    } else {
-      secureStorage.writeData("name", user.displayName);
-      secureStorage.writeData("email", user.email);
-      secureStorage.writeData("id", user.id);
-      secureStorage.writeData("photo", user.photoUrl);
 
-      showAlertDialog(
-        context,
-        "Signed In",
-        "Successfully Signed in",
-      );
+    GoogleSignInAuthentication googleauth = await user.authentication;
+
+    print(user.id);
+    print(googleauth.accessToken);
+    print(user.email);
+    print(user.displayName);
+
+    var data = {
+      "credential_type": "google",
+      "google_token": googleauth.accessToken,
+      "email": user.email,
+      "name": user.displayName,
+      "google_id": user.id
+    };
+
+    var res = await CallApi().login(data, 'app-login');
+    var body = json.decode(res.body);
+
+    print(body);
+
+    if (body["status"] == true) {
+      secureStorage.writeData("name", _googleSignIn.currentUser.displayName);
+      secureStorage.writeData("email", _googleSignIn.currentUser.email);
+      secureStorage.writeData("token", body["user"]["user_token"]);
       setState(() {
         _isLogged = true;
       });
+      Navigator.pop(context);
+      Navigator.popAndPushNamed(context, home);
+    } else {
+      showAlertDialog(context, "Error", "Log in Unsuccessful");
     }
   }
 
@@ -416,14 +413,14 @@ class _LoginScreenState extends State<LoginScreen> {
         var res = await CallApi().login(data, 'app-login');
         var body = json.decode(res.body);
 
-        secureStorage.writeData("name", profile["name"]);
-        secureStorage.writeData("email", profile["email"]);
-        secureStorage.writeData("id", profile["id"]);
-        secureStorage.writeData("photo", profile["picture"]["data"]["url"]);
-        secureStorage.writeData("token", body["user"]["user_token"]);
+        print(body);
 
-        print(body["user_token"]);
         if (body["status"] == true) {
+          secureStorage.writeData("name", profile["name"]);
+          secureStorage.writeData("email", profile["email"]);
+          secureStorage.writeData("id", profile["id"]);
+          secureStorage.writeData("photo", profile["picture"]["data"]["url"]);
+          secureStorage.writeData("token", body["user"]["user_token"]);
           setState(() {
             _isLogged = true;
           });

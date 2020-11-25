@@ -31,12 +31,16 @@ class _AccInfoState extends State<AccInfo> {
     });
     secureStorage.readData('phone').then((value) {
       setState(() {
-        _phone = value;
+        if (value != null) {
+          _phone = value;
+        }
       });
     });
     secureStorage.readData('address').then((value) {
       setState(() {
-        _address = value;
+        if (value != null) {
+          _address = value;
+        }
       });
     });
     _loading = false;
