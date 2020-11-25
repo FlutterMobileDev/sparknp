@@ -14,33 +14,33 @@ class _AccInfoState extends State<AccInfo> {
 
   final SecureStorage secureStorage = SecureStorage();
 
-  String _name, _email, _address, _phone;
+  String _name = " ";
+  String _email = " ";
+  String _phone = " ";
+  String _address = " ";
+
   @override
   void initState() {
     super.initState();
     _loading = true;
     secureStorage.readData('name').then((value) {
       setState(() {
-        _name = value;
+        if (value != null) _name = value;
       });
     });
     secureStorage.readData('email').then((value) {
       setState(() {
-        _email = value;
+        if (value != null) _email = value;
       });
     });
     secureStorage.readData('phone').then((value) {
       setState(() {
-        if (value != null) {
-          _phone = value;
-        }
+        if (value != null) _phone = value;
       });
     });
     secureStorage.readData('address').then((value) {
       setState(() {
-        if (value != null) {
-          _address = value;
-        }
+        if (value != null) _address = value;
       });
     });
     _loading = false;
