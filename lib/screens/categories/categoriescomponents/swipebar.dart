@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/model/frontjson.dart';
+import 'package:sparknp/model/subcategorymodel.dart';
+import 'package:sparknp/screens/categories/categoriescomponents/subcatcard.dart';
+import 'package:sparknp/services/frontservice.dart';
 
 class SwipeBar extends StatefulWidget {
   final Category category;
@@ -13,7 +16,25 @@ class SwipeBar extends StatefulWidget {
 }
 
 class _SwipeBarState extends State<SwipeBar> {
+  bool _loading;
+  Subcat _subcat;
   int selectedIndex = 0;
+
+  String _token;
+
+  @override
+  void initState() {
+    super.initState();
+    _loading = true;
+    FrontService.subcat(widget.category).then((data) {
+      setState(() {
+        _subcat = data;
+        _loading = false;
+        print(widget.category.subs[0].categoryId);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,6 +83,7 @@ class _SwipeBarState extends State<SwipeBar> {
             ),
           ),
           // ItemCard(subcat: widget.category.subs[selectedIndex]),
+          // ItemCard(subcat: _subcat),
         ],
       ),
     );

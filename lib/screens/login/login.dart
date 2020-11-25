@@ -190,13 +190,13 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // Widget _buildGoogleLoginBtn(BuildContext context) {
-  //   return Container(
-  //     child: GoogleSignInButton(
-  //       onPressed: _handleSignIn,
-  //     ),
-  //   );
-  // }
+  Widget _buildGoogleLoginBtn(BuildContext context) {
+    return Container(
+      child: GoogleSignInButton(
+        onPressed: _loginWithGoogle,
+      ),
+    );
+  }
 
   Widget _buildSignupBtn(BuildContext context) {
     return Container(
@@ -315,7 +315,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             _buildLoginBtn(context),
                             _buildFBLoginBtn(context),
                             SizedBox(height: 10.0),
-                            // _buildGoogleLoginBtn(context),
+                            _buildGoogleLoginBtn(context),
                             _buildSignupBtn(context),
                           ],
                         ),
@@ -341,10 +341,10 @@ class _LoginScreenState extends State<LoginScreen> {
     secureStorage.writeData("address", body["user"]["address"]);
     secureStorage.writeData("phone", body["user"]["phone"]);
     secureStorage.writeData("email", body["user"]["email"]);
-    secureStorage.writeData("token", body["user_token"]);
 
     if (body["status"] == true) {
-      Navigator.pushNamed(context, home);
+      Navigator.pop(context);
+      Navigator.popAndPushNamed(context, home);
       setState(() {
         _isLogged = true;
       });
@@ -358,6 +358,8 @@ class _LoginScreenState extends State<LoginScreen> {
   // void initState() {
   //   super.initState();
   //   _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
+  //     print(account);
+
   //     setState(() {
   //       _currentUser = account;
   //       print(account);
@@ -366,31 +368,32 @@ class _LoginScreenState extends State<LoginScreen> {
   //   _googleSignIn.signInSilently();
   // }
 
-//TODO: google / FB login
+//TODO: google
 
-  // void _handleSignIn() async {
-  //   // await _googleSignIn.signOut(); //optional
-  //   GoogleSignInAccount user = await _googleSignIn.signIn();
-  //   print(user);
-  //   if (user == null) {
-  //     showAlertDialog(context, "Incorrect e-mail or password",
-  //         "Please check email and password");
-  //   } else {
-  //     secureStorage.writeData("name", user.displayName);
-  //     secureStorage.writeData("email", user.email);
-  //     secureStorage.writeData("id", user.id);
-  //     secureStorage.writeData("photo", user.photoUrl);
+  void _loginWithGoogle() async {
+    await _googleSignIn.signOut(); //optional
+    print("here again");
+    GoogleSignInAccount user = await _googleSignIn.signIn();
+    print(user);
+    if (user == null) {
+      showAlertDialog(context, "Incorrect e-mail or password",
+          "Please check email and password");
+    } else {
+      secureStorage.writeData("name", user.displayName);
+      secureStorage.writeData("email", user.email);
+      secureStorage.writeData("id", user.id);
+      secureStorage.writeData("photo", user.photoUrl);
 
-  //     showAlertDialog(
-  //       context,
-  //       "Signed In",
-  //       "Successfully Signed in",
-  //     );
-  //     setState(() {
-  //       _isLogged = true;
-  //     });
-  //   }
-  // }
+      showAlertDialog(
+        context,
+        "Signed In",
+        "Successfully Signed in",
+      );
+      setState(() {
+        _isLogged = true;
+      });
+    }
+  }
 
   void _loginWithFB() async {
     final result = await facebookLogin.logInWithReadPermissions(['email']);
@@ -401,15 +404,34 @@ class _LoginScreenState extends State<LoginScreen> {
         final graphResponse = await http.get(
             'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=$token');
         final profile = JSON.jsonDecode(graphResponse.body);
-        print(token);
+
+        var data = {
+          "credential_type": "facebook",
+          "facebook_token": token,
+          "email": profile["email"],
+          "name": profile["name"],
+          "facebook_id": profile["id"],
+        };
+
+        var res = await CallApi().login(data, 'app-login');
+        var body = json.decode(res.body);
+
         secureStorage.writeData("name", profile["name"]);
         secureStorage.writeData("email", profile["email"]);
         secureStorage.writeData("id", profile["id"]);
         secureStorage.writeData("photo", profile["picture"]["data"]["url"]);
-        secureStorage.writeData("token", token);
-        setState(() {
-          _isLogged = true;
-        });
+        secureStorage.writeData("token", body["user"]["user_token"]);
+
+        print(body["user_token"]);
+        if (body["status"] == true) {
+          setState(() {
+            _isLogged = true;
+          });
+          Navigator.pop(context);
+          Navigator.popAndPushNamed(context, home);
+        } else {
+          showAlertDialog(context, "Error", "Log in Unsuccessful");
+        }
         break;
 
       case FacebookLoginStatus.cancelledByUser:

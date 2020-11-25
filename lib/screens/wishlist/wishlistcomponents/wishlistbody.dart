@@ -48,8 +48,11 @@ class _WishlistBodyState extends State<WishlistBody> {
             padding: AppTheme.padding,
             child: SingleChildScrollView(
               child: (widget.wishlist.wishlists.length == 0)
-                  ? Center(
-                      child: Text("No Items in wishlist"),
+                  ? Container(
+                      height: 400,
+                      child: Center(
+                        child: Text("No Items in Wishlist"),
+                      ),
                     )
                   : Column(
                       children: <Widget>[
@@ -92,7 +95,6 @@ class _WishlistBodyState extends State<WishlistBody> {
                         onPressed: () {
                           WishlistService.remove(_token, product.id)
                               .then((value) {
-                            print(product.productId);
                             _showDialog(context);
                           });
                         },

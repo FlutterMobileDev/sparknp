@@ -4,7 +4,7 @@ import 'package:sparknp/router.dart';
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/model/frontjson.dart';
 
-import 'package:sparknp/screens/categories/categoriescomponents/itemcard.dart';
+import 'package:sparknp/screens/home/homecomponent/morecard.dart';
 
 import 'package:sparknp/services/storage.dart';
 import 'package:sparknp/widgets/appbar/barbutton.dart';

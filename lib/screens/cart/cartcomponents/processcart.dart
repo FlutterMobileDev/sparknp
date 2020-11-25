@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sparknp/constants.dart';
+import 'package:sparknp/router.dart';
 
 import 'package:sparknp/services/cartservice.dart';
 
@@ -340,11 +341,13 @@ class _ProcessScreenState extends State<ProcessScreen> {
             "coupon_code": null,
             "coupon_discount": null,
             "coupon_id": null,
-            "user_id": "55", //User id out of range
           };
           CartService.process(_token, data).then((data) {
             if (data["status"] = true) {
-              _showDialog(context, data["message"]);
+              _showDialog(context, data["message"]).whenComplete(() {
+                Navigator.pop(context);
+                Navigator.popAndPushNamed(context, home);
+              });
             }
           });
         },

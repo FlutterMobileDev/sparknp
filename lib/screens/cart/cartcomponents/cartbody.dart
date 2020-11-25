@@ -51,8 +51,11 @@ class _CartBodyState extends State<CartBody> {
             padding: AppTheme.padding,
             child: SingleChildScrollView(
               child: (widget.cart.carts.length == 0)
-                  ? Center(
-                      child: Text("No Items in Cart"),
+                  ? Container(
+                      height: 400,
+                      child: Center(
+                        child: Text("No Items in Cart"),
+                      ),
                     )
                   : Column(
                       children: <Widget>[

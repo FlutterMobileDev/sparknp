@@ -103,6 +103,7 @@ class CartService {
         var data = jsonDecode(response.body);
         return data;
       } else {
+        print(response.body);
         throw Exception('error here');
       }
     } catch (e) {
