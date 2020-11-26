@@ -4,8 +4,10 @@ import 'package:sparknp/router.dart';
 
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/model/cartmodel.dart';
+import 'package:sparknp/model/productmodel.dart';
 import 'package:sparknp/screens/cart/cartcomponents/title_text.dart';
 import 'package:sparknp/services/cartservice.dart';
+import 'package:sparknp/services/productservice.dart';
 
 import 'package:sparknp/services/storage.dart';
 
@@ -23,16 +25,29 @@ class _CartBodyState extends State<CartBody> {
 
   final SecureStorage secureStorage = SecureStorage();
   String _token;
+  List<String> _productName = [];
+
+  Product _product;
 
   @override
   void initState() {
     super.initState();
     _loading = true;
-    secureStorage.readData('token').then((value) {
+    secureStorage.readData('token').then((value) async {
+      int n = widget.cart.carts.length;
+      for (int i = 1; i <= n; i++) {
+        await ProductService.fetch(widget.cart.carts[i - 1].productId)
+            .then((value) {
+          _product = value;
+          _productName.add(_product.product.name);
+          print(_product.product.name);
+        });
+      }
       setState(() {
         _token = value;
         _cartList = widget.cart.carts;
         _loading = false;
+        print(_productName);
       });
       secureStorage.writeData("totalPrice", widget.cart.totalPrice.toString());
       secureStorage.writeData("quantity", widget.cart.carts.length.toString());
@@ -87,15 +102,15 @@ class _CartBodyState extends State<CartBody> {
             onTap: () {},
             child: Container(
               width: size.width * 0.9,
-              height: 100,
+              height: 150,
               child: Column(children: [
                 Expanded(
                   child: ListTile(
-                    title: TitleText(
-                      text:
-                          "Product ID : ${product.productId}    x${product.quantity}",
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
+                    title: Text(
+                      "${_productName[index]}             x${product.quantity}",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                      overflow: TextOverflow.clip,
                     ),
                     subtitle: Row(children: <Widget>[
                       TitleText(

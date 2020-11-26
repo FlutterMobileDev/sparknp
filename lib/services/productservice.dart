@@ -9,7 +9,7 @@ class ProductService {
       print("id");
       print(id);
       final response =
-          await http.get('https://www.sparknp.com/api/products/195').timeout(
+          await http.get('https://www.sparknp.com/api/products/$id').timeout(
                 Duration(
                   seconds: 15,
                 ),
