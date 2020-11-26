@@ -22,6 +22,7 @@ class _WishlistBodyState extends State<WishlistBody> {
 
   final SecureStorage secureStorage = SecureStorage();
   String _token;
+  List _productName;
 
   @override
   void initState() {
@@ -83,10 +84,11 @@ class _WishlistBodyState extends State<WishlistBody> {
                 child: Column(children: [
                   Expanded(
                     child: ListTile(
-                      title: TitleText(
-                        text: "Product ID : ${product.productId}",
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
+                      title: Text(
+                        "${_wishlistList[index].product.name}",
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w700),
+                        overflow: TextOverflow.clip,
                       ),
                       trailing: FlatButton(
                         shape: RoundedRectangleBorder(
