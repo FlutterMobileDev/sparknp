@@ -31,7 +31,7 @@ class ApiFront {
   });
 
   bool status;
-  Map<String, String> generalSettings;
+  GeneralSettings generalSettings;
   List<Category> categories;
   List<Slider> sliders;
   List<Banner> topSmallBanners;
@@ -51,8 +51,7 @@ class ApiFront {
 
   factory ApiFront.fromJson(Map<String, dynamic> json) => ApiFront(
         status: json["status"],
-        generalSettings: Map.from(json["general_settings"])
-            .map((k, v) => MapEntry<String, String>(k, v)),
+        generalSettings: GeneralSettings.fromJson(json["general_settings"]),
         categories: List<Category>.from(
             json["categories"].map((x) => Category.fromJson(x))),
         sliders:
@@ -88,8 +87,7 @@ class ApiFront {
 
   Map<String, dynamic> toJson() => {
         "status": status,
-        "general_settings": Map.from(generalSettings)
-            .map((k, v) => MapEntry<String, dynamic>(k, v)),
+        "general_settings": generalSettings.toJson(),
         "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
         "sliders": List<dynamic>.from(sliders.map((x) => x.toJson())),
         "top_small_banners":
@@ -134,14 +132,14 @@ class BestProductElement {
   });
 
   int id;
-  String userId;
+  int userId;
   String name;
   String slug;
   String features;
   String colors;
   String thumbnail;
-  String price;
-  String previousPrice;
+  double price;
+  double previousPrice;
   dynamic attributes;
   String size;
   String sizePrice;
@@ -156,8 +154,8 @@ class BestProductElement {
         features: json["features"],
         colors: json["colors"],
         thumbnail: json["thumbnail"],
-        price: json["price"],
-        previousPrice: json["previous_price"],
+        price: json["price"].toDouble(),
+        previousPrice: json["previous_price"].toDouble(),
         attributes: json["attributes"],
         size: json["size"],
         sizePrice: json["size_price"],
@@ -196,9 +194,9 @@ class Category {
   int id;
   String name;
   String slug;
-  String status;
+  int status;
   String photo;
-  String isFeatured;
+  int isFeatured;
   String image;
   List<Sub> subs;
 
@@ -232,13 +230,15 @@ class Sub {
     this.name,
     this.slug,
     this.status,
+    this.childs,
   });
 
   int id;
-  String categoryId;
+  int categoryId;
   String name;
   String slug;
-  String status;
+  int status;
+  List<Child> childs;
 
   factory Sub.fromJson(Map<String, dynamic> json) => Sub(
         id: json["id"],
@@ -246,6 +246,7 @@ class Sub {
         name: json["name"],
         slug: json["slug"],
         status: json["status"],
+        childs: List<Child>.from(json["childs"].map((x) => Child.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -254,6 +255,516 @@ class Sub {
         "name": name,
         "slug": slug,
         "status": status,
+        "childs": List<dynamic>.from(childs.map((x) => x.toJson())),
+      };
+}
+
+class Child {
+  Child({
+    this.id,
+    this.subcategoryId,
+    this.name,
+    this.slug,
+    this.status,
+  });
+
+  int id;
+  int subcategoryId;
+  String name;
+  String slug;
+  int status;
+
+  factory Child.fromJson(Map<String, dynamic> json) => Child(
+        id: json["id"],
+        subcategoryId: json["subcategory_id"],
+        name: json["name"],
+        slug: json["slug"],
+        status: json["status"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "subcategory_id": subcategoryId,
+        "name": name,
+        "slug": slug,
+        "status": status,
+      };
+}
+
+class GeneralSettings {
+  GeneralSettings({
+    this.id,
+    this.logo,
+    this.favicon,
+    this.title,
+    this.headerEmail,
+    this.headerPhone,
+    this.footer,
+    this.copyright,
+    this.colors,
+    this.loader,
+    this.adminLoader,
+    this.isTalkto,
+    this.talkto,
+    this.isLanguage,
+    this.isLoader,
+    this.mapKey,
+    this.isDisqus,
+    this.disqus,
+    this.isContact,
+    this.isFaq,
+    this.guestCheckout,
+    this.stripeCheck,
+    this.codCheck,
+    this.stripeKey,
+    this.stripeSecret,
+    this.currencyFormat,
+    this.withdrawFee,
+    this.withdrawCharge,
+    this.tax,
+    this.shippingCost,
+    this.smtpHost,
+    this.smtpPort,
+    this.smtpUser,
+    this.smtpPass,
+    this.fromEmail,
+    this.fromName,
+    this.isSmtp,
+    this.isComment,
+    this.isCurrency,
+    this.addCart,
+    this.outStock,
+    this.addWish,
+    this.alreadyWish,
+    this.wishRemove,
+    this.addCompare,
+    this.alreadyCompare,
+    this.compareRemove,
+    this.colorChange,
+    this.couponFound,
+    this.noCoupon,
+    this.alreadyCoupon,
+    this.orderTitle,
+    this.orderText,
+    this.isAffilate,
+    this.affilateCharge,
+    this.affilateBanner,
+    this.alreadyCart,
+    this.fixedCommission,
+    this.percentageCommission,
+    this.multipleShipping,
+    this.multiplePackaging,
+    this.vendorShipInfo,
+    this.regVendor,
+    this.codText,
+    this.paypalText,
+    this.stripeText,
+    this.headerColor,
+    this.footerColor,
+    this.copyrightColor,
+    this.isAdminLoader,
+    this.menuColor,
+    this.menuHoverColor,
+    this.isHome,
+    this.isVerificationEmail,
+    this.instamojoKey,
+    this.instamojoToken,
+    this.instamojoText,
+    this.isInstamojo,
+    this.instamojoSandbox,
+    this.isPaystack,
+    this.paystackKey,
+    this.paystackEmail,
+    this.paystackText,
+    this.wholesell,
+    this.isCapcha,
+    this.errorBanner,
+    this.isPopup,
+    this.popupTitle,
+    this.popupText,
+    this.popupBackground,
+    this.invoiceLogo,
+    this.userImage,
+    this.vendorColor,
+    this.isSecure,
+    this.isReport,
+    this.paypalCheck,
+    this.paypalBusiness,
+    this.footerLogo,
+    this.emailEncryption,
+    this.paytmMerchant,
+    this.paytmSecret,
+    this.paytmWebsite,
+    this.paytmIndustry,
+    this.isPaytm,
+    this.paytmText,
+    this.paytmMode,
+    this.isMolly,
+    this.mollyKey,
+    this.mollyText,
+    this.isRazorpay,
+    this.razorpayKey,
+    this.razorpaySecret,
+    this.razorpayText,
+    this.showStock,
+    this.isMaintain,
+    this.maintainText,
+  });
+
+  int id;
+  String logo;
+  String favicon;
+  String title;
+  String headerEmail;
+  String headerPhone;
+  String footer;
+  String copyright;
+  String colors;
+  String loader;
+  String adminLoader;
+  int isTalkto;
+  String talkto;
+  int isLanguage;
+  int isLoader;
+  String mapKey;
+  int isDisqus;
+  String disqus;
+  int isContact;
+  int isFaq;
+  int guestCheckout;
+  int stripeCheck;
+  int codCheck;
+  String stripeKey;
+  String stripeSecret;
+  int currencyFormat;
+  int withdrawFee;
+  int withdrawCharge;
+  int tax;
+  int shippingCost;
+  String smtpHost;
+  String smtpPort;
+  String smtpUser;
+  String smtpPass;
+  String fromEmail;
+  String fromName;
+  int isSmtp;
+  int isComment;
+  int isCurrency;
+  String addCart;
+  String outStock;
+  String addWish;
+  String alreadyWish;
+  String wishRemove;
+  String addCompare;
+  String alreadyCompare;
+  String compareRemove;
+  String colorChange;
+  String couponFound;
+  String noCoupon;
+  String alreadyCoupon;
+  String orderTitle;
+  String orderText;
+  int isAffilate;
+  int affilateCharge;
+  String affilateBanner;
+  String alreadyCart;
+  int fixedCommission;
+  int percentageCommission;
+  int multipleShipping;
+  int multiplePackaging;
+  int vendorShipInfo;
+  int regVendor;
+  String codText;
+  String paypalText;
+  String stripeText;
+  String headerColor;
+  String footerColor;
+  String copyrightColor;
+  int isAdminLoader;
+  String menuColor;
+  String menuHoverColor;
+  int isHome;
+  int isVerificationEmail;
+  String instamojoKey;
+  String instamojoToken;
+  String instamojoText;
+  int isInstamojo;
+  int instamojoSandbox;
+  int isPaystack;
+  String paystackKey;
+  String paystackEmail;
+  String paystackText;
+  int wholesell;
+  int isCapcha;
+  String errorBanner;
+  int isPopup;
+  String popupTitle;
+  String popupText;
+  String popupBackground;
+  String invoiceLogo;
+  String userImage;
+  String vendorColor;
+  int isSecure;
+  int isReport;
+  int paypalCheck;
+  String paypalBusiness;
+  String footerLogo;
+  String emailEncryption;
+  String paytmMerchant;
+  String paytmSecret;
+  String paytmWebsite;
+  String paytmIndustry;
+  int isPaytm;
+  String paytmText;
+  String paytmMode;
+  int isMolly;
+  String mollyKey;
+  String mollyText;
+  int isRazorpay;
+  String razorpayKey;
+  String razorpaySecret;
+  String razorpayText;
+  int showStock;
+  int isMaintain;
+  String maintainText;
+
+  factory GeneralSettings.fromJson(Map<String, dynamic> json) =>
+      GeneralSettings(
+        id: json["id"],
+        logo: json["logo"],
+        favicon: json["favicon"],
+        title: json["title"],
+        headerEmail: json["header_email"],
+        headerPhone: json["header_phone"],
+        footer: json["footer"],
+        copyright: json["copyright"],
+        colors: json["colors"],
+        loader: json["loader"],
+        adminLoader: json["admin_loader"],
+        isTalkto: json["is_talkto"],
+        talkto: json["talkto"],
+        isLanguage: json["is_language"],
+        isLoader: json["is_loader"],
+        mapKey: json["map_key"],
+        isDisqus: json["is_disqus"],
+        disqus: json["disqus"],
+        isContact: json["is_contact"],
+        isFaq: json["is_faq"],
+        guestCheckout: json["guest_checkout"],
+        stripeCheck: json["stripe_check"],
+        codCheck: json["cod_check"],
+        stripeKey: json["stripe_key"],
+        stripeSecret: json["stripe_secret"],
+        currencyFormat: json["currency_format"],
+        withdrawFee: json["withdraw_fee"],
+        withdrawCharge: json["withdraw_charge"],
+        tax: json["tax"],
+        shippingCost: json["shipping_cost"],
+        smtpHost: json["smtp_host"],
+        smtpPort: json["smtp_port"],
+        smtpUser: json["smtp_user"],
+        smtpPass: json["smtp_pass"],
+        fromEmail: json["from_email"],
+        fromName: json["from_name"],
+        isSmtp: json["is_smtp"],
+        isComment: json["is_comment"],
+        isCurrency: json["is_currency"],
+        addCart: json["add_cart"],
+        outStock: json["out_stock"],
+        addWish: json["add_wish"],
+        alreadyWish: json["already_wish"],
+        wishRemove: json["wish_remove"],
+        addCompare: json["add_compare"],
+        alreadyCompare: json["already_compare"],
+        compareRemove: json["compare_remove"],
+        colorChange: json["color_change"],
+        couponFound: json["coupon_found"],
+        noCoupon: json["no_coupon"],
+        alreadyCoupon: json["already_coupon"],
+        orderTitle: json["order_title"],
+        orderText: json["order_text"],
+        isAffilate: json["is_affilate"],
+        affilateCharge: json["affilate_charge"],
+        affilateBanner: json["affilate_banner"],
+        alreadyCart: json["already_cart"],
+        fixedCommission: json["fixed_commission"],
+        percentageCommission: json["percentage_commission"],
+        multipleShipping: json["multiple_shipping"],
+        multiplePackaging: json["multiple_packaging"],
+        vendorShipInfo: json["vendor_ship_info"],
+        regVendor: json["reg_vendor"],
+        codText: json["cod_text"],
+        paypalText: json["paypal_text"],
+        stripeText: json["stripe_text"],
+        headerColor: json["header_color"],
+        footerColor: json["footer_color"],
+        copyrightColor: json["copyright_color"],
+        isAdminLoader: json["is_admin_loader"],
+        menuColor: json["menu_color"],
+        menuHoverColor: json["menu_hover_color"],
+        isHome: json["is_home"],
+        isVerificationEmail: json["is_verification_email"],
+        instamojoKey: json["instamojo_key"],
+        instamojoToken: json["instamojo_token"],
+        instamojoText: json["instamojo_text"],
+        isInstamojo: json["is_instamojo"],
+        instamojoSandbox: json["instamojo_sandbox"],
+        isPaystack: json["is_paystack"],
+        paystackKey: json["paystack_key"],
+        paystackEmail: json["paystack_email"],
+        paystackText: json["paystack_text"],
+        wholesell: json["wholesell"],
+        isCapcha: json["is_capcha"],
+        errorBanner: json["error_banner"],
+        isPopup: json["is_popup"],
+        popupTitle: json["popup_title"],
+        popupText: json["popup_text"],
+        popupBackground: json["popup_background"],
+        invoiceLogo: json["invoice_logo"],
+        userImage: json["user_image"],
+        vendorColor: json["vendor_color"],
+        isSecure: json["is_secure"],
+        isReport: json["is_report"],
+        paypalCheck: json["paypal_check"],
+        paypalBusiness: json["paypal_business"],
+        footerLogo: json["footer_logo"],
+        emailEncryption: json["email_encryption"],
+        paytmMerchant: json["paytm_merchant"],
+        paytmSecret: json["paytm_secret"],
+        paytmWebsite: json["paytm_website"],
+        paytmIndustry: json["paytm_industry"],
+        isPaytm: json["is_paytm"],
+        paytmText: json["paytm_text"],
+        paytmMode: json["paytm_mode"],
+        isMolly: json["is_molly"],
+        mollyKey: json["molly_key"],
+        mollyText: json["molly_text"],
+        isRazorpay: json["is_razorpay"],
+        razorpayKey: json["razorpay_key"],
+        razorpaySecret: json["razorpay_secret"],
+        razorpayText: json["razorpay_text"],
+        showStock: json["show_stock"],
+        isMaintain: json["is_maintain"],
+        maintainText: json["maintain_text"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "logo": logo,
+        "favicon": favicon,
+        "title": title,
+        "header_email": headerEmail,
+        "header_phone": headerPhone,
+        "footer": footer,
+        "copyright": copyright,
+        "colors": colors,
+        "loader": loader,
+        "admin_loader": adminLoader,
+        "is_talkto": isTalkto,
+        "talkto": talkto,
+        "is_language": isLanguage,
+        "is_loader": isLoader,
+        "map_key": mapKey,
+        "is_disqus": isDisqus,
+        "disqus": disqus,
+        "is_contact": isContact,
+        "is_faq": isFaq,
+        "guest_checkout": guestCheckout,
+        "stripe_check": stripeCheck,
+        "cod_check": codCheck,
+        "stripe_key": stripeKey,
+        "stripe_secret": stripeSecret,
+        "currency_format": currencyFormat,
+        "withdraw_fee": withdrawFee,
+        "withdraw_charge": withdrawCharge,
+        "tax": tax,
+        "shipping_cost": shippingCost,
+        "smtp_host": smtpHost,
+        "smtp_port": smtpPort,
+        "smtp_user": smtpUser,
+        "smtp_pass": smtpPass,
+        "from_email": fromEmail,
+        "from_name": fromName,
+        "is_smtp": isSmtp,
+        "is_comment": isComment,
+        "is_currency": isCurrency,
+        "add_cart": addCart,
+        "out_stock": outStock,
+        "add_wish": addWish,
+        "already_wish": alreadyWish,
+        "wish_remove": wishRemove,
+        "add_compare": addCompare,
+        "already_compare": alreadyCompare,
+        "compare_remove": compareRemove,
+        "color_change": colorChange,
+        "coupon_found": couponFound,
+        "no_coupon": noCoupon,
+        "already_coupon": alreadyCoupon,
+        "order_title": orderTitle,
+        "order_text": orderText,
+        "is_affilate": isAffilate,
+        "affilate_charge": affilateCharge,
+        "affilate_banner": affilateBanner,
+        "already_cart": alreadyCart,
+        "fixed_commission": fixedCommission,
+        "percentage_commission": percentageCommission,
+        "multiple_shipping": multipleShipping,
+        "multiple_packaging": multiplePackaging,
+        "vendor_ship_info": vendorShipInfo,
+        "reg_vendor": regVendor,
+        "cod_text": codText,
+        "paypal_text": paypalText,
+        "stripe_text": stripeText,
+        "header_color": headerColor,
+        "footer_color": footerColor,
+        "copyright_color": copyrightColor,
+        "is_admin_loader": isAdminLoader,
+        "menu_color": menuColor,
+        "menu_hover_color": menuHoverColor,
+        "is_home": isHome,
+        "is_verification_email": isVerificationEmail,
+        "instamojo_key": instamojoKey,
+        "instamojo_token": instamojoToken,
+        "instamojo_text": instamojoText,
+        "is_instamojo": isInstamojo,
+        "instamojo_sandbox": instamojoSandbox,
+        "is_paystack": isPaystack,
+        "paystack_key": paystackKey,
+        "paystack_email": paystackEmail,
+        "paystack_text": paystackText,
+        "wholesell": wholesell,
+        "is_capcha": isCapcha,
+        "error_banner": errorBanner,
+        "is_popup": isPopup,
+        "popup_title": popupTitle,
+        "popup_text": popupText,
+        "popup_background": popupBackground,
+        "invoice_logo": invoiceLogo,
+        "user_image": userImage,
+        "vendor_color": vendorColor,
+        "is_secure": isSecure,
+        "is_report": isReport,
+        "paypal_check": paypalCheck,
+        "paypal_business": paypalBusiness,
+        "footer_logo": footerLogo,
+        "email_encryption": emailEncryption,
+        "paytm_merchant": paytmMerchant,
+        "paytm_secret": paytmSecret,
+        "paytm_website": paytmWebsite,
+        "paytm_industry": paytmIndustry,
+        "is_paytm": isPaytm,
+        "paytm_text": paytmText,
+        "paytm_mode": paytmMode,
+        "is_molly": isMolly,
+        "molly_key": mollyKey,
+        "molly_text": mollyText,
+        "is_razorpay": isRazorpay,
+        "razorpay_key": razorpayKey,
+        "razorpay_secret": razorpaySecret,
+        "razorpay_text": razorpayText,
+        "show_stock": showStock,
+        "is_maintain": isMaintain,
+        "maintain_text": maintainText,
       };
 }
 
@@ -275,14 +786,14 @@ class HotProductElement {
   });
 
   int id;
-  String userId;
+  int userId;
   String name;
   String slug;
   dynamic features;
   dynamic colors;
   String thumbnail;
-  String price;
-  String previousPrice;
+  double price;
+  double previousPrice;
   dynamic attributes;
   String size;
   String sizePrice;
@@ -297,8 +808,8 @@ class HotProductElement {
         features: json["features"],
         colors: json["colors"],
         thumbnail: json["thumbnail"],
-        price: json["price"],
-        previousPrice: json["previous_price"],
+        price: json["price"].toDouble(),
+        previousPrice: json["previous_price"].toDouble(),
         attributes: json["attributes"],
         size: json["size"],
         sizePrice: json["size_price"],
@@ -348,7 +859,7 @@ class Banner {
     this.type,
   });
 
-  String id;
+  int id;
   String photo;
   String link;
   String type;
@@ -406,7 +917,7 @@ class PageSettings {
     this.featuredCategory,
   });
 
-  String id;
+  int id;
   String contactSuccess;
   String contactEmail;
   String contactTitle;
@@ -418,28 +929,28 @@ class PageSettings {
   dynamic fax;
   String email;
   String site;
-  String slider;
-  String service;
-  String featured;
-  String smallBanner;
-  String best;
-  String topRated;
-  String largeBanner;
-  String big;
-  String hotSale;
-  String partners;
-  String reviewBlog;
+  int slider;
+  int service;
+  int featured;
+  int smallBanner;
+  int best;
+  int topRated;
+  int largeBanner;
+  int big;
+  int hotSale;
+  int partners;
+  int reviewBlog;
   String bestSellerBanner;
   String bestSellerBannerLink;
   String bigSaveBanner;
   String bigSaveBannerLink;
-  String bottomSmall;
-  String flashDeal;
+  int bottomSmall;
+  int flashDeal;
   String bestSellerBanner1;
   String bestSellerBannerLink1;
   String bigSaveBanner1;
   String bigSaveBannerLink1;
-  String featuredCategory;
+  int featuredCategory;
 
   factory PageSettings.fromJson(Map<String, dynamic> json) => PageSettings(
         id: json["id"],
@@ -526,12 +1037,12 @@ class Review {
     this.userId,
   });
 
-  String id;
+  int id;
   String photo;
   String title;
   String subtitle;
   String details;
-  String userId;
+  int userId;
 
   factory Review.fromJson(Map<String, dynamic> json) => Review(
         id: json["id"],
@@ -572,7 +1083,7 @@ class Slider {
     this.link,
   });
 
-  String id;
+  int id;
   String subtitleText;
   String subtitleSize;
   String subtitleColor;

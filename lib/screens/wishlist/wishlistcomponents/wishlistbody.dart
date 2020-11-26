@@ -75,7 +75,7 @@ class _WishlistBodyState extends State<WishlistBody> {
           dynamic product = _wishlistList[index];
           return GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, details, arguments: product);
+                // Navigator.pushNamed(context, details, arguments: product);
               },
               child: Container(
                 width: size.width * 0.8,

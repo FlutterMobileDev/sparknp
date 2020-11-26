@@ -38,7 +38,6 @@ class FrontService {
         final Subcat subcat = subcatFromJson(response.body);
         return subcat;
       } else {
-        print(response.body);
         throw Exception('error here');
       }
     } catch (e) {

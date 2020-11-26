@@ -100,7 +100,7 @@ class _DetailImageCardState extends State<DetailImageCard> {
                       ),
                       Spacer(),
                       Text(
-                        product.price,
+                        product.price.toString(),
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context)
                             .textTheme

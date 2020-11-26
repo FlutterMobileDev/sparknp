@@ -1,77 +1,285 @@
-// import 'package:flutter/material.dart';
+// To parse this JSON data, do
+//
+//     final product = productFromJson(jsonString);
 
-// class Product {
-//   final String name, category, image, title, description;
-//   final int size, id;
-//   final double price;
-//   final Color color;
-//   bool isliked, isSelected;
-//   Product({
-//     this.id,
-//     this.name,
-//     this.category,
-//     this.image,
-//     this.title,
-//     this.price,
-//     this.description,
-//     this.size,
-//     this.color,
-//     this.isliked,
-//     this.isSelected = false,
-//   });
-// }
+import 'dart:convert';
 
-// List<Product> products = [
-//   Product(
-//       id: 1,
-//       title: "Office Code",
-//       price: 234,
-//       size: 12,
-//       description: dummyText,
-//       image: "assets/images/bag_1.png",
-//       color: Color(0xFF3D82AE)),
-//   Product(
-//       id: 2,
-//       title: "Belt Bag",
-//       price: 234,
-//       size: 8,
-//       description: dummyText,
-//       image: "assets/images/bag_2.png",
-//       color: Color(0xFFD3A984)),
-//   Product(
-//       id: 3,
-//       title: "Hang Top",
-//       price: 234,
-//       size: 10,
-//       description: dummyText,
-//       image: "assets/images/bag_3.png",
-//       color: Color(0xFF989493)),
-//   Product(
-//       id: 4,
-//       title: "Old Fashion",
-//       price: 234,
-//       size: 11,
-//       description: dummyText,
-//       image: "assets/images/bag_4.png",
-//       color: Color(0xFFE6B398)),
-//   Product(
-//       id: 5,
-//       title: "Office Code",
-//       price: 234,
-//       size: 12,
-//       description: dummyText,
-//       image: "assets/images/bag_5.png",
-//       color: Color(0xFFFB7883)),
-//   Product(
-//     id: 6,
-//     title: "Office Code",
-//     price: 234,
-//     size: 12,
-//     description: dummyText,
-//     image: "assets/images/bag_6.png",
-//     color: Color(0xFFAEAEAE),
-//   ),
-// ];
+Product productFromJson(String str) => Product.fromJson(json.decode(str));
 
-// String dummyText =
-//     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since. When an unknown printer took a galley.";
+String productToJson(Product data) => json.encode(data.toJson());
+
+class Product {
+  Product({
+    this.status,
+    this.product,
+  });
+
+  bool status;
+  ProductClass product;
+
+  factory Product.fromJson(Map<String, dynamic> json) => Product(
+        status: json["status"],
+        product: ProductClass.fromJson(json["product"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "status": status,
+        "product": product.toJson(),
+      };
+}
+
+class ProductClass {
+  ProductClass({
+    this.id,
+    this.sku,
+    this.productType,
+    this.affiliateLink,
+    this.userId,
+    this.categoryId,
+    this.subcategoryId,
+    this.childcategoryId,
+    this.attributes,
+    this.name,
+    this.slug,
+    this.photo,
+    this.photoPath,
+    this.thumbnail,
+    this.file,
+    this.size,
+    this.sizeQty,
+    this.sizePrice,
+    this.color,
+    this.price,
+    this.previousPrice,
+    this.details,
+    this.stock,
+    this.policy,
+    this.status,
+    this.views,
+    this.tags,
+    this.features,
+    this.colors,
+    this.productCondition,
+    this.ship,
+    this.isMeta,
+    this.metaTag,
+    this.metaDescription,
+    this.youtube,
+    this.type,
+    this.license,
+    this.licenseQty,
+    this.link,
+    this.platform,
+    this.region,
+    this.licenceType,
+    this.measure,
+    this.featured,
+    this.best,
+    this.top,
+    this.hot,
+    this.latest,
+    this.big,
+    this.trending,
+    this.sale,
+    this.createdAt,
+    this.updatedAt,
+    this.isDiscount,
+    this.discountDate,
+    this.wholeSellQty,
+    this.wholeSellDiscount,
+    this.isCatalog,
+    this.catalogId,
+    this.comments,
+    this.ratings,
+  });
+
+  int id;
+  String sku;
+  String productType;
+  dynamic affiliateLink;
+  int userId;
+  int categoryId;
+  int subcategoryId;
+  int childcategoryId;
+  dynamic attributes;
+  String name;
+  String slug;
+  String photo;
+  dynamic photoPath;
+  String thumbnail;
+  dynamic file;
+  String size;
+  String sizeQty;
+  String sizePrice;
+  String color;
+  double price;
+  double previousPrice;
+  String details;
+  dynamic stock;
+  String policy;
+  int status;
+  int views;
+  String tags;
+  String features;
+  String colors;
+  int productCondition;
+  dynamic ship;
+  int isMeta;
+  String metaTag;
+  dynamic metaDescription;
+  dynamic youtube;
+  String type;
+  String license;
+  String licenseQty;
+  dynamic link;
+  dynamic platform;
+  dynamic region;
+  dynamic licenceType;
+  dynamic measure;
+  int featured;
+  int best;
+  int top;
+  int hot;
+  int latest;
+  int big;
+  int trending;
+  int sale;
+  DateTime createdAt;
+  DateTime updatedAt;
+  int isDiscount;
+  dynamic discountDate;
+  String wholeSellQty;
+  String wholeSellDiscount;
+  int isCatalog;
+  int catalogId;
+  List<dynamic> comments;
+  List<dynamic> ratings;
+
+  factory ProductClass.fromJson(Map<String, dynamic> json) => ProductClass(
+        id: json["id"],
+        sku: json["sku"],
+        productType: json["product_type"],
+        affiliateLink: json["affiliate_link"],
+        userId: json["user_id"],
+        categoryId: json["category_id"],
+        subcategoryId: json["subcategory_id"],
+        childcategoryId: json["childcategory_id"],
+        attributes: json["attributes"],
+        name: json["name"],
+        slug: json["slug"],
+        photo: json["photo"],
+        photoPath: json["photo_path"],
+        thumbnail: json["thumbnail"],
+        file: json["file"],
+        size: json["size"],
+        sizeQty: json["size_qty"],
+        sizePrice: json["size_price"],
+        color: json["color"],
+        price: json["price"].toDouble(),
+        previousPrice: json["previous_price"].toDouble(),
+        details: json["details"],
+        stock: json["stock"],
+        policy: json["policy"],
+        status: json["status"],
+        views: json["views"],
+        tags: json["tags"],
+        features: json["features"],
+        colors: json["colors"],
+        productCondition: json["product_condition"],
+        ship: json["ship"],
+        isMeta: json["is_meta"],
+        metaTag: json["meta_tag"],
+        metaDescription: json["meta_description"],
+        youtube: json["youtube"],
+        type: json["type"],
+        license: json["license"],
+        licenseQty: json["license_qty"],
+        link: json["link"],
+        platform: json["platform"],
+        region: json["region"],
+        licenceType: json["licence_type"],
+        measure: json["measure"],
+        featured: json["featured"],
+        best: json["best"],
+        top: json["top"],
+        hot: json["hot"],
+        latest: json["latest"],
+        big: json["big"],
+        trending: json["trending"],
+        sale: json["sale"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        isDiscount: json["is_discount"],
+        discountDate: json["discount_date"],
+        wholeSellQty: json["whole_sell_qty"],
+        wholeSellDiscount: json["whole_sell_discount"],
+        isCatalog: json["is_catalog"],
+        catalogId: json["catalog_id"],
+        comments: List<dynamic>.from(json["comments"].map((x) => x)),
+        ratings: List<dynamic>.from(json["ratings"].map((x) => x)),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "sku": sku,
+        "product_type": productType,
+        "affiliate_link": affiliateLink,
+        "user_id": userId,
+        "category_id": categoryId,
+        "subcategory_id": subcategoryId,
+        "childcategory_id": childcategoryId,
+        "attributes": attributes,
+        "name": name,
+        "slug": slug,
+        "photo": photo,
+        "photo_path": photoPath,
+        "thumbnail": thumbnail,
+        "file": file,
+        "size": size,
+        "size_qty": sizeQty,
+        "size_price": sizePrice,
+        "color": color,
+        "price": price,
+        "previous_price": previousPrice,
+        "details": details,
+        "stock": stock,
+        "policy": policy,
+        "status": status,
+        "views": views,
+        "tags": tags,
+        "features": features,
+        "colors": colors,
+        "product_condition": productCondition,
+        "ship": ship,
+        "is_meta": isMeta,
+        "meta_tag": metaTag,
+        "meta_description": metaDescription,
+        "youtube": youtube,
+        "type": type,
+        "license": license,
+        "license_qty": licenseQty,
+        "link": link,
+        "platform": platform,
+        "region": region,
+        "licence_type": licenceType,
+        "measure": measure,
+        "featured": featured,
+        "best": best,
+        "top": top,
+        "hot": hot,
+        "latest": latest,
+        "big": big,
+        "trending": trending,
+        "sale": sale,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+        "is_discount": isDiscount,
+        "discount_date": discountDate,
+        "whole_sell_qty": wholeSellQty,
+        "whole_sell_discount": wholeSellDiscount,
+        "is_catalog": isCatalog,
+        "catalog_id": catalogId,
+        "comments": List<dynamic>.from(comments.map((x) => x)),
+        "ratings": List<dynamic>.from(ratings.map((x) => x)),
+      };
+}

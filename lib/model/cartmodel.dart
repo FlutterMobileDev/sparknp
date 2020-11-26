@@ -58,20 +58,20 @@ class CartElement {
   });
 
   int id;
-  String productId;
+  int productId;
   dynamic orderId;
-  String userId;
+  int userId;
   String status;
-  String price;
+  double price;
   String size;
   String color;
-  String quantity;
+  int quantity;
   dynamic sizeQuantity;
   dynamic sizePrice;
   dynamic sizeKey;
   dynamic stock;
   dynamic license;
-  String dp;
+  int dp;
   String cartKeys;
   String cartValues;
   DateTime createdAt;
@@ -84,7 +84,7 @@ class CartElement {
         orderId: json["order_id"],
         userId: json["user_id"],
         status: json["status"],
-        price: json["price"],
+        price: json["price"].toDouble(),
         size: json["size"],
         color: json["color"],
         quantity: json["quantity"],

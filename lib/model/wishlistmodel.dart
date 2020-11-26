@@ -38,8 +38,8 @@ class WishlistElement {
   });
 
   int id;
-  String userId;
-  String productId;
+  int userId;
+  int productId;
   Product product;
 
   factory WishlistElement.fromJson(Map<String, dynamic> json) =>
@@ -125,10 +125,10 @@ class Product {
   String sku;
   String productType;
   dynamic affiliateLink;
-  String userId;
-  String categoryId;
-  String subcategoryId;
-  String childcategoryId;
+  int userId;
+  int categoryId;
+  int subcategoryId;
+  int childcategoryId;
   dynamic attributes;
   String name;
   String slug;
@@ -140,19 +140,19 @@ class Product {
   String sizeQty;
   String sizePrice;
   String color;
-  String price;
-  String previousPrice;
+  double price;
+  double previousPrice;
   String details;
   dynamic stock;
   String policy;
-  String status;
-  String views;
+  int status;
+  int views;
   String tags;
   String features;
   String colors;
-  String productCondition;
+  int productCondition;
   dynamic ship;
-  String isMeta;
+  int isMeta;
   String metaTag;
   dynamic metaDescription;
   dynamic youtube;
@@ -164,22 +164,22 @@ class Product {
   dynamic region;
   dynamic licenceType;
   dynamic measure;
-  String featured;
-  String best;
-  String top;
-  String hot;
-  String latest;
-  String big;
-  String trending;
-  String sale;
+  int featured;
+  int best;
+  int top;
+  int hot;
+  int latest;
+  int big;
+  int trending;
+  int sale;
   DateTime createdAt;
   DateTime updatedAt;
-  String isDiscount;
+  int isDiscount;
   dynamic discountDate;
   String wholeSellQty;
   String wholeSellDiscount;
-  String isCatalog;
-  String catalogId;
+  int isCatalog;
+  int catalogId;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
@@ -201,8 +201,8 @@ class Product {
         sizeQty: json["size_qty"],
         sizePrice: json["size_price"],
         color: json["color"],
-        price: json["price"],
-        previousPrice: json["previous_price"],
+        price: json["price"].toDouble(),
+        previousPrice: json["previous_price"].toDouble(),
         details: json["details"],
         stock: json["stock"],
         policy: json["policy"],
