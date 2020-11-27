@@ -5,6 +5,7 @@ import 'package:sparknp/model/screenarguments.dart';
 import 'package:sparknp/screens/login/login.dart';
 import 'package:sparknp/screens/home/home.dart';
 import 'package:sparknp/screens/home/homecomponent/more.dart';
+import 'package:sparknp/screens/home/homecomponent/search.dart';
 
 import 'package:sparknp/screens/orders/myorders.dart';
 
@@ -18,6 +19,7 @@ import 'package:sparknp/screens/cart/cartcomponents/processcart.dart';
 import 'package:sparknp/screens/wishlist/wishlist.dart';
 
 const String home = '/';
+const String search = '/search';
 const String login = '/login';
 const String register = '/register';
 const String myOrders = '/myorders';
@@ -37,6 +39,9 @@ class Routing {
         return MaterialPageRoute(builder: (_) => LoginScreen());
       case home:
         return MaterialPageRoute(builder: (_) => HomeScreen());
+      case search:
+        return MaterialPageRoute(
+            builder: (_) => Search(search: screen.arguments));
       case more:
         ScreenArguments args = screen.arguments;
         return MaterialPageRoute(

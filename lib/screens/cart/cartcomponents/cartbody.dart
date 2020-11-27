@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:sparknp/router.dart';
 
 import 'package:sparknp/constants.dart';
@@ -87,10 +89,9 @@ class _CartBodyState extends State<CartBody> {
   }
 
   Widget _item(Cart model) {
-    Size size = MediaQuery.of(context).size;
     return Container(
-      width: size.width,
-      height: 450,
+      width: AppTheme.fullWidth(context) - 20,
+      height: AppTheme.fullHeight(context) * 0.55,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: ListView.separated(
         itemCount: _cartList.length,
@@ -102,8 +103,8 @@ class _CartBodyState extends State<CartBody> {
                   arguments: _product.product);
             },
             child: Container(
-              width: size.width * 0.9,
-              height: 160,
+              width: AppTheme.fullWidth(context),
+              height: 100,
               child: Column(children: [
                 Expanded(
                   child: ListTile(
@@ -138,7 +139,7 @@ class _CartBodyState extends State<CartBody> {
                         });
                       },
                       child: Text(
-                        "Remove All items",
+                        "Remove",
                         style: TextStyle(color: LightColor.background),
                       ),
                     ),
@@ -201,20 +202,28 @@ class _CartBodyState extends State<CartBody> {
   }
 
   Widget _price() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        TitleText(
-          text: '${widget.cart.carts.length} Items',
-          color: LightColor.grey,
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-        ),
-        TitleText(
-          text: "Total: Rs ${widget.cart.totalPrice}",
-          fontSize: 18,
-        ),
-      ],
+    return Positioned(
+      bottom: 250,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            '${widget.cart.carts.length} Items',
+            style: GoogleFonts.muli(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: LightColor.grey),
+            overflow: TextOverflow.fade,
+          ),
+          Text(
+            "Total: Rs ${widget.cart.totalPrice}",
+            style: TextStyle(
+              fontSize: 18,
+            ),
+            overflow: TextOverflow.fade,
+          ),
+        ],
+      ),
     );
   }
 

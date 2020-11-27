@@ -16,8 +16,11 @@ class TitleText extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Text(text,
-        style: GoogleFonts.muli(
-            fontSize: fontSize, fontWeight: fontWeight, color: color));
+    return Text(
+      text,
+      style: GoogleFonts.muli(
+          fontSize: fontSize, fontWeight: fontWeight, color: color),
+      overflow: TextOverflow.fade,
+    );
   }
 }
