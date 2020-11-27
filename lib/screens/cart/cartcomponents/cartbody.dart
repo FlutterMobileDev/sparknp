@@ -27,7 +27,7 @@ class _CartBodyState extends State<CartBody> {
   String _token;
   List<String> _productName = [];
 
-  Product _product;
+  ProductDetails _product;
 
   @override
   void initState() {
@@ -40,14 +40,12 @@ class _CartBodyState extends State<CartBody> {
             .then((value) {
           _product = value;
           _productName.add(_product.product.name);
-          print(_product.product.name);
         });
       }
       setState(() {
         _token = value;
         _cartList = widget.cart.carts;
         _loading = false;
-        print(_productName);
       });
       secureStorage.writeData("totalPrice", widget.cart.totalPrice.toString());
       secureStorage.writeData("quantity", widget.cart.carts.length.toString());
@@ -99,10 +97,13 @@ class _CartBodyState extends State<CartBody> {
         itemBuilder: (context, index) {
           dynamic product = _cartList[index];
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.popAndPushNamed(context, details,
+                  arguments: _product.product);
+            },
             child: Container(
               width: size.width * 0.9,
-              height: 150,
+              height: 160,
               child: Column(children: [
                 Expanded(
                   child: ListTile(
@@ -110,7 +111,7 @@ class _CartBodyState extends State<CartBody> {
                       "${_productName[index]}             x${product.quantity}",
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                      overflow: TextOverflow.clip,
+                      overflow: TextOverflow.fade,
                     ),
                     subtitle: Row(children: <Widget>[
                       TitleText(
@@ -130,7 +131,10 @@ class _CartBodyState extends State<CartBody> {
                       onPressed: () {
                         CartService.destroy(_token, product.productId)
                             .then((removed) {
-                          _showDialog(context, "Revoved all items");
+                          _showDialog(context, "Revoved this items")
+                              .whenComplete(() {
+                            Navigator.popAndPushNamed(context, cart);
+                          });
                         });
                       },
                       child: Text(
@@ -150,7 +154,10 @@ class _CartBodyState extends State<CartBody> {
                       onPressed: () {
                         CartService.remove(_token, product.productId)
                             .then((removed) {
-                          _showDialog(context, "One item removed");
+                          _showDialog(context, "One item removed")
+                              .whenComplete(() {
+                            Navigator.popAndPushNamed(context, cart);
+                          });
                         });
                       },
                       child: Text(
@@ -166,7 +173,10 @@ class _CartBodyState extends State<CartBody> {
                       onPressed: () {
                         CartService.add(_token, product.productId)
                             .then((removed) {
-                          _showDialog(context, "One item added");
+                          _showDialog(context, "One item added")
+                              .whenComplete(() {
+                            Navigator.popAndPushNamed(context, cart);
+                          });
                         });
                       },
                       child: Text(

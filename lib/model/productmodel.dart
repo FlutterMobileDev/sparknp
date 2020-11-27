@@ -1,25 +1,26 @@
 // To parse this JSON data, do
 //
-//     final product = productFromJson(jsonString);
+//     final productDetails = productDetailsFromJson(jsonString);
 
 import 'dart:convert';
 
-Product productFromJson(String str) => Product.fromJson(json.decode(str));
+ProductDetails productDetailsFromJson(String str) =>
+    ProductDetails.fromJson(json.decode(str));
 
-String productToJson(Product data) => json.encode(data.toJson());
+String productDetailsToJson(ProductDetails data) => json.encode(data.toJson());
 
-class Product {
-  Product({
+class ProductDetails {
+  ProductDetails({
     this.status,
     this.product,
   });
 
   bool status;
-  ProductClass product;
+  Product product;
 
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
+  factory ProductDetails.fromJson(Map<String, dynamic> json) => ProductDetails(
         status: json["status"],
-        product: ProductClass.fromJson(json["product"]),
+        product: Product.fromJson(json["product"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -28,8 +29,8 @@ class Product {
       };
 }
 
-class ProductClass {
-  ProductClass({
+class Product {
+  Product({
     this.id,
     this.sku,
     this.productType,
@@ -152,10 +153,10 @@ class ProductClass {
   String wholeSellDiscount;
   int isCatalog;
   int catalogId;
-  List<dynamic> comments;
+  List<Comment> comments;
   List<dynamic> ratings;
 
-  factory ProductClass.fromJson(Map<String, dynamic> json) => ProductClass(
+  factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
         sku: json["sku"],
         productType: json["product_type"],
@@ -215,7 +216,8 @@ class ProductClass {
         wholeSellDiscount: json["whole_sell_discount"],
         isCatalog: json["is_catalog"],
         catalogId: json["catalog_id"],
-        comments: List<dynamic>.from(json["comments"].map((x) => x)),
+        comments: List<Comment>.from(
+            json["comments"].map((x) => Comment.fromJson(x))),
         ratings: List<dynamic>.from(json["ratings"].map((x) => x)),
       );
 
@@ -279,7 +281,84 @@ class ProductClass {
         "whole_sell_discount": wholeSellDiscount,
         "is_catalog": isCatalog,
         "catalog_id": catalogId,
-        "comments": List<dynamic>.from(comments.map((x) => x)),
+        "comments": List<dynamic>.from(comments.map((x) => x.toJson())),
         "ratings": List<dynamic>.from(ratings.map((x) => x)),
+      };
+}
+
+class Comment {
+  Comment({
+    this.id,
+    this.userId,
+    this.productId,
+    this.text,
+    this.createdAt,
+    this.updatedAt,
+    this.replies,
+  });
+
+  int id;
+  int userId;
+  int productId;
+  String text;
+  DateTime createdAt;
+  DateTime updatedAt;
+  List<Reply> replies;
+
+  factory Comment.fromJson(Map<String, dynamic> json) => Comment(
+        id: json["id"],
+        userId: json["user_id"],
+        productId: json["product_id"],
+        text: json["text"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        replies:
+            List<Reply>.from(json["replies"].map((x) => Reply.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "user_id": userId,
+        "product_id": productId,
+        "text": text,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+        "replies": List<dynamic>.from(replies.map((x) => x.toJson())),
+      };
+}
+
+class Reply {
+  Reply({
+    this.id,
+    this.userId,
+    this.commentId,
+    this.text,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  int id;
+  int userId;
+  int commentId;
+  String text;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  factory Reply.fromJson(Map<String, dynamic> json) => Reply(
+        id: json["id"],
+        userId: json["user_id"],
+        commentId: json["comment_id"],
+        text: json["text"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "user_id": userId,
+        "comment_id": commentId,
+        "text": text,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
       };
 }

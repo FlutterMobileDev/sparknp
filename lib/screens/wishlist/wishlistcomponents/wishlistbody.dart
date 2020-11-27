@@ -4,7 +4,9 @@ import 'package:sparknp/router.dart';
 
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/model/wishlistmodel.dart';
-import 'package:sparknp/screens/wishlist/wishlistcomponents/title_text.dart';
+import 'package:sparknp/model/productmodel.dart';
+
+import 'package:sparknp/services/productservice.dart';
 import 'package:sparknp/services/wishlistservice.dart';
 import 'package:sparknp/services/storage.dart';
 
@@ -22,13 +24,25 @@ class _WishlistBodyState extends State<WishlistBody> {
 
   final SecureStorage secureStorage = SecureStorage();
   String _token;
-  List _productName;
+  List<String> _productName = [];
+
+  ProductDetails _product;
 
   @override
   void initState() {
     super.initState();
     _loading = true;
-    secureStorage.readData('token').then((value) {
+    secureStorage.readData('token').then((value) async {
+      int n = widget.wishlist.wishlists.length;
+      print(n);
+      for (int i = 1; i <= n; i++) {
+        await ProductService.fetch(widget.wishlist.wishlists[i - 1].productId)
+            .then((value) {
+          _product = value;
+          print(_product.product.name);
+          _productName.add(_product.product.name);
+        });
+      }
       setState(() {
         _token = value;
         _wishlistList = widget.wishlist.wishlists;
@@ -76,7 +90,8 @@ class _WishlistBodyState extends State<WishlistBody> {
           dynamic product = _wishlistList[index];
           return GestureDetector(
               onTap: () {
-                // Navigator.pushNamed(context, details, arguments: product);
+                Navigator.pushNamed(context, details,
+                    arguments: _product.product);
               },
               child: Container(
                 width: size.width * 0.8,
@@ -97,7 +112,9 @@ class _WishlistBodyState extends State<WishlistBody> {
                         onPressed: () {
                           WishlistService.remove(_token, product.id)
                               .then((value) {
-                            _showDialog(context);
+                            _showDialog(context).whenComplete(() {
+                              Navigator.popAndPushNamed(context, wishlist);
+                            });
                           });
                         },
                         child: Text(

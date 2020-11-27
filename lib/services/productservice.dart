@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:sparknp/model/productmodel.dart';
 
 class ProductService {
-  static Future<Product> fetch(id) async {
+  static Future<ProductDetails> fetch(id) async {
     try {
       print("id");
       print(id);
@@ -15,7 +15,7 @@ class ProductService {
                 ),
               );
       if (response.statusCode == 200) {
-        final Product product = productFromJson(response.body);
+        final ProductDetails product = productDetailsFromJson(response.body);
         return product;
       } else {
         throw Exception('error here');
