@@ -4,6 +4,7 @@ import 'package:sparknp/constants.dart';
 import 'package:sparknp/router.dart';
 
 import 'package:sparknp/services/storage.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -139,6 +140,38 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  Widget _buildVendorBtn(BuildContext context) {
+    return Positioned(
+      top: 430,
+      child: Container(
+        height: 70,
+        width: MediaQuery.of(context).size.width * 1.0,
+        decoration: BoxDecoration(color: LightColor.lightGrey),
+        child: RaisedButton(
+          elevation: 5.0,
+          onPressed: () {
+            _launchURL();
+          },
+          padding: EdgeInsets.all(15.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          color: Colors.blue[300],
+          child: Text(
+            'Become a Vendor',
+            style: TextStyle(
+              color: Colors.white,
+              letterSpacing: 1.5,
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OpenSans',
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -169,6 +202,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     _blueColors(),
                     _getInfo(),
                     _buildInfo(context),
+                    _buildVendorBtn(context),
                   ],
                 ),
               ),
@@ -199,5 +233,14 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
         ]);
+  }
+
+  _launchURL() async {
+    const url = 'https://sparknp.com/user/package';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
