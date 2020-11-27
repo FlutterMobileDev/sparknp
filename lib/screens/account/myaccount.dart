@@ -79,9 +79,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 SizedBox(
                   width: 20,
                 ),
-                Text(
-                  _name,
-                  style: TextStyle(fontSize: 22, color: Colors.white),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.45,
+                  child: Text(
+                    _name,
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    overflow: TextOverflow.fade,
+                  ),
                 ),
               ],
             ),
