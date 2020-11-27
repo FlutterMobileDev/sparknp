@@ -105,16 +105,6 @@ class MyWidget extends StatelessWidget {
                   Navigator.pushNamed(context, home);
                 }),
             ListTile(
-                title: Text('Your Orders'),
-                onTap: () {
-                  // if (token != null) {
-                  //   Navigator.of(context).pop();
-                  //   Navigator.pushNamed(context, myOrders);
-                  // } else {
-                  _showDialog(context, 'Feature Coming soon');
-                  // }
-                }),
-            ListTile(
                 title: Text('Your Account'),
                 onTap: () {
                   if (token != null) {

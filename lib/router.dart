@@ -9,7 +9,6 @@ import 'package:sparknp/screens/home/homecomponent/more.dart';
 import 'package:sparknp/screens/orders/myorders.dart';
 
 import 'package:sparknp/screens/account/myaccount.dart';
-import 'package:sparknp/screens/account/accinfo.dart';
 
 import 'package:sparknp/screens/categories/categories.dart';
 import 'package:sparknp/screens/details/details.dart';
@@ -47,8 +46,6 @@ class Routing {
         return MaterialPageRoute(builder: (_) => OrdersScreen());
       case myAccount:
         return MaterialPageRoute(builder: (_) => ProfilePage());
-      case accInfo:
-        return MaterialPageRoute(builder: (_) => AccInfo());
       case wishlist:
         return MaterialPageRoute(builder: (_) => WishlistScreen());
       case cart:

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:connectivity/connectivity.dart';
-
 import 'package:sparknp/model/frontjson.dart';
 import 'package:sparknp/services/frontservice.dart';
 
@@ -34,8 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _loading = true;
-
-    getConnect();
 
     FrontService.fetch().then((data) {
       secureStorage.readData('token').then((value) {
@@ -105,15 +101,6 @@ class _HomeScreenState extends State<HomeScreen> {
         style: TextStyle(fontStyle: FontStyle.italic),
       ),
     );
-  }
-
-  void getConnect() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.none) {
-      setState(() {
-        isInternetOn = false;
-      });
-    }
   }
 }
 

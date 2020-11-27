@@ -326,6 +326,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _handleLogin() async {
+    print("here");
     var data = {
       "credential_type": "normal",
       "email": emailController.text,
@@ -335,13 +336,12 @@ class _LoginScreenState extends State<LoginScreen> {
     var res = await CallApi().login(data, 'app-login');
     var body = json.decode(res.body);
 
-    secureStorage.writeData("id", body["user"]["id"]);
-    secureStorage.writeData("name", body["user"]["name"]);
-    secureStorage.writeData("address", body["user"]["address"]);
-    secureStorage.writeData("phone", body["user"]["phone"]);
-    secureStorage.writeData("email", body["user"]["email"]);
-
     if (body["status"] == true) {
+      secureStorage.writeData("name", body["user"]["name"]);
+      secureStorage.writeData("address", body["user"]["address"]);
+      secureStorage.writeData("phone", body["user"]["phone"]);
+      secureStorage.writeData("email", body["user"]["email"]);
+      secureStorage.writeData("token", body["user_token"]);
       Navigator.pop(context);
       Navigator.popAndPushNamed(context, home);
       setState(() {
@@ -392,7 +392,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _loginWithFB() async {
-    final result = await facebookLogin.logInWithReadPermissions(['email']);
+    final result = await facebookLogin.logIn(['email']);
 
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:

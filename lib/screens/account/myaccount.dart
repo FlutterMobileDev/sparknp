@@ -12,19 +12,38 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final SecureStorage secureStorage = SecureStorage();
-  String _name;
-
   bool _loading;
+
+  String _name = " ";
+  String _email = " ";
+  String _phone = " ";
+  String _address = " ";
+
   @override
   void initState() {
     super.initState();
     _loading = true;
     secureStorage.readData('name').then((value) {
       setState(() {
-        _name = value;
-        _loading = false;
+        if (value != null) _name = value;
       });
     });
+    secureStorage.readData('email').then((value) {
+      setState(() {
+        if (value != null) _email = value;
+      });
+    });
+    secureStorage.readData('phone').then((value) {
+      setState(() {
+        if (value != null) _phone = value;
+      });
+    });
+    secureStorage.readData('address').then((value) {
+      setState(() {
+        if (value != null) _address = value;
+      });
+    });
+    _loading = false;
   }
 
   Widget _blueColors() {
@@ -52,13 +71,17 @@ class _ProfilePageState extends State<ProfilePage> {
               children: <Widget>[
                 CircleAvatar(
                   radius: 60,
+                  child: Icon(
+                    Icons.account_circle,
+                    size: 100,
+                  ),
                 ),
                 SizedBox(
                   width: 20,
                 ),
                 Text(
                   _name,
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(fontSize: 22, color: Colors.white),
                 ),
               ],
             ),
@@ -68,200 +91,45 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildOrders(BuildContext context) {
+  Widget _buildInfo(BuildContext context) {
     return Positioned(
       top: 230,
       child: Container(
-        height: 170,
-        width: MediaQuery.of(context).size.width * 1.0,
-        decoration: BoxDecoration(color: Colors.white),
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "My Orders",
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                  SizedBox(width: 210),
-                  Container(
-                    alignment: Alignment.topRight,
-                    child: ButtonTheme(
-                      height: 18,
-                      child: FlatButton(
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        color: LightColor.mainColor,
-                        onPressed: () {
-                          // Navigator.pushNamed(context, myOrders);
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0)),
-                        child: Text(
-                          'View All >',
-                          style: TextStyle(color: LightColor.background),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        color: LightColor.lightGrey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Card(
+              elevation: 0,
+              child: ListTile(
+                title: Text('Mobile'),
+                trailing: Text(_phone),
+                onTap: () {},
               ),
-              SizedBox(height: 10),
-              Row(
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.card_membership),
-                    onPressed: () {},
-                  ),
-                  SizedBox(
-                    width: 50,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.local_shipping),
-                    onPressed: () {},
-                  ),
-                  SizedBox(
-                    width: 50,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.motorcycle),
-                    onPressed: () {},
-                  ),
-                  SizedBox(
-                    width: 50,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.rate_review),
-                    onPressed: () {},
-                  ),
-                ],
+            ),
+            Card(
+              elevation: 0,
+              child: ListTile(
+                title: Text('Email'),
+                trailing: Text(_email),
+                onTap: () {},
               ),
-              Row(
-                children: <Widget>[
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('To Pay'),
-                  SizedBox(
-                    width: 50,
-                  ),
-                  Text('To ship'),
-                  SizedBox(
-                    width: 40,
-                  ),
-                  Text('To Receive'),
-                  SizedBox(
-                    width: 40,
-                  ),
-                  Text('To Reveiw'),
-                ],
+            ),
+            Card(
+              elevation: 0,
+              child: ListTile(
+                title: Text('Address'),
+                trailing: Text(_address),
+                onTap: () {},
               ),
-              SizedBox(height: 10),
-              Row(
-                children: <Widget>[
-                  SizedBox(
-                    width: 30,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.assignment_return),
-                    onPressed: () {},
-                  ),
-                  Text('My Returns'),
-                  SizedBox(
-                    width: 50,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.cancel),
-                    onPressed: () {},
-                  ),
-                  Text('My Cancellations'),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildService(BuildContext context) {
-    return Positioned(
-      top: 400,
-      child: Container(
-        height: 170,
-        width: MediaQuery.of(context).size.width * 1.0,
-        decoration: BoxDecoration(color: LightColor.background),
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "My Services",
-                    style: TextStyle(
-                      color: LightColor.black,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.message),
-                    onPressed: () {},
-                  ),
-                  SizedBox(
-                    width: 50,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.rate_review),
-                    onPressed: () {},
-                  ),
-                  SizedBox(
-                    width: 50,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.payment),
-                    onPressed: () {},
-                  ),
-                  SizedBox(
-                    width: 60,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.help),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Text('Messages'),
-                  SizedBox(
-                    width: 30,
-                  ),
-                  Text('My Reveiw'),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text('Payment Options'),
-                  SizedBox(
-                    width: 30,
-                  ),
-                  Text('Help'),
-                ],
-              ),
-              SizedBox(height: 10),
-            ],
-          ),
+            ),
+            Divider(
+              color: Colors.transparent,
+              thickness: 5,
+            ),
+          ],
         ),
       ),
     );
@@ -280,17 +148,6 @@ class _ProfilePageState extends State<ProfilePage> {
           elevation: 0,
           backgroundColor: LightColor.mainColor,
           centerTitle: true,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.settings,
-                size: 30,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, accInfo);
-              },
-            ),
-          ],
         ),
         body: (_loading)
             ? Container(
@@ -307,8 +164,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     _blueColors(),
                     _getInfo(),
-                    _buildOrders(context),
-                    _buildService(context),
+                    _buildInfo(context),
                   ],
                 ),
               ),

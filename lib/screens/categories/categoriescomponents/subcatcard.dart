@@ -28,7 +28,7 @@ class _SubCatCardState extends State<SubCatCard> {
     super.initState();
     _loading = true;
     // TODO: Use widget.subId here instead of 20 when there is data
-    FrontService.subcat(20).then((data) {
+    FrontService.subcat(widget.subId).then((data) {
       setState(() {
         _subCatList = data;
         _loading = false;
