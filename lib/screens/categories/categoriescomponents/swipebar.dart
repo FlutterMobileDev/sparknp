@@ -23,7 +23,7 @@ class _SwipeBarState extends State<SwipeBar> {
       child: Column(
         children: [
           SizedBox(
-            height: 25,
+            height: AppTheme.fullHeight(context) * 0.05,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: widget.category.subs.length,
