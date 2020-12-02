@@ -103,9 +103,28 @@ class _SearchState extends State<Search> {
                     child: FutureBuilder<SearchProducts>(
                       future: SearchService.getlist(searchString),
                       builder: ( context ,snapshot ){
-                        if(snapshot.connectionState == ConnectionState.none && snapshot.hasData == null){
+                        if(snapshot.connectionState == ConnectionState.none && snapshot.hasData == null && snapshot.hasData){
                           return Container(
                             child: CircularProgressIndicator(),
+                          );
+                        }
+                        if(snapshot.connectionState == ConnectionState.done && snapshot.hasData == null){
+                          return Container(
+                            child: Text("No such Products"),
+                          );
+                        }
+                        if(snapshot.hasData == null){
+                          return Container(
+                            child: Text("No Such proucts"),
+                          );
+
+                        }
+                        if(snapshot.data == null){
+                          return Padding(
+                            padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
+                            child: Container(
+                              child: Text("No such product"),
+                            ),
                           );
                         }
                         return (snapshot.connectionState == ConnectionState.waiting)?Center(
