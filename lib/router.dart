@@ -41,7 +41,7 @@ class Routing {
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case search:
         return MaterialPageRoute(
-            builder: (_) => Search(search: screen.arguments));
+            builder: (_) => Search());
       case more:
         ScreenArguments args = screen.arguments;
         return MaterialPageRoute(

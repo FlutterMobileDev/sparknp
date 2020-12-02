@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 import 'package:sparknp/model/searchmodel.dart';
@@ -11,9 +13,9 @@ class SearchService {
       }, body: {
         "name": nameProduct
       });
+      var searchdata =  jsonDecode(response.body);
+      return SearchProducts.fromJson(searchdata);
 
-      final SearchProducts products = searchProductsFromJson(response.body);
-      return products;
     } catch (e) {
       throw Exception('There was a problem connecting to the internet');
     }

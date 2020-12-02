@@ -85,15 +85,15 @@ class MyWidget extends StatelessWidget {
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backgroundColor: LightColor.mainColor,
+            backgroundColor: LightColor.primaryColor,
             pinned: true,
             title: Text(
               'Spark Np',
-              style: TextStyle(color: LightColor.black),
+              style: TextStyle(color: Colors.white),
             ),
             leading: Icon(
               Icons.store_mall_directory_rounded,
-              color: LightColor.black,
+              color: Colors.white,
             ),
           ),
           SliverList(

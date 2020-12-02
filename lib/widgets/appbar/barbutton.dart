@@ -23,9 +23,9 @@ class IconBtnWithCounter extends StatelessWidget {
         overflow: Overflow.visible,
         children: [
           Container(
-            padding: EdgeInsets.all(8),
-            height: 40,
-            width: 45,
+            padding: EdgeInsets.all(6),
+            height: 32,
+            width: 37,
             decoration: BoxDecoration(
                 color: LightColor.primaryColor.withOpacity(0.1),
                 shape: BoxShape.circle,

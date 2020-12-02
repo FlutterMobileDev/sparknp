@@ -54,63 +54,63 @@ class _DetailImageCardState extends State<DetailImageCard> {
             onTap: () {
               Navigator.pushNamed(context, details, arguments: product);
             },
-            child: Column(
-              children: <Widget>[
-                Container(
-                  width: 240,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(imgpath + product.thumbnail),
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      height: 180,
+                      width: 180,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Image.network(
+                        imgpath + product.thumbnail,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                Flexible(
-                  child: Container(
-                    width: 240,
+                  Container(
                     height: 50,
-                    padding: EdgeInsets.all(defaultPadding / 2),
+                    width: 180,
                     decoration: BoxDecoration(
-                      color: LightColor.background,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(0, 10),
-                          blurRadius: 50,
-                          color: LightColor.primaryColor.withOpacity(0.23),
+                        color: LightColor.background,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(0, 10),
+                            blurRadius: 50,
+                            color: LightColor.primaryColor.withOpacity(0.23),
+                          ),
+                        ]),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: defaultPadding / 4,
+                              horizontal: defaultPadding / 4),
+                          child: Text(
+                            // products is out demo list
+                            product.name.toUpperCase(),
+                            style: TextStyle(color: LightColor.textLightColor),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Text(
+                          "\Rs ${product.price}",
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
-                    child: Row(children: <Widget>[
-                      Expanded(
-                        child: RichText(
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          text: TextSpan(children: [
-                            TextSpan(
-                                text: product.name.toUpperCase(),
-                                style: Theme.of(context).textTheme.button),
-                          ]),
-                        ),
-                      ),
-                      Spacer(),
-                      Text(
-                        product.price.toString(),
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context)
-                            .textTheme
-                            .button
-                            .copyWith(color: LightColor.primaryColor),
-                      )
-                    ]),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },

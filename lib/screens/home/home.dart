@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sparknp/model/frontjson.dart';
+import 'package:sparknp/model/searchmodel.dart';
 import 'package:sparknp/services/frontservice.dart';
 
 import 'package:sparknp/widgets/drawer/drawer.dart';
@@ -21,11 +22,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool _loading;
   ApiFront front;
-
-  final TextEditingController _searchcontroller = TextEditingController();
   final SecureStorage secureStorage = SecureStorage();
   String _token;
-
+  SearchProducts products;
   @override
   void initState() {
     super.initState();
@@ -47,20 +46,21 @@ class _HomeScreenState extends State<HomeScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: LightColor.mainColor,
+        backgroundColor: LightColor.primaryColor,
         elevation: 0,
         iconTheme: IconThemeData(color: LightColor.textLightColor),
         actions: <Widget>[
           Row(children: [
+
+
             Container(
               width: size.width * 0.6,
               height: 40,
               decoration: BoxDecoration(
-                color: LightColor.primaryColor.withOpacity(0.1),
+                color: Colors.white.withOpacity(1),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: TextField(
-                controller: _searchcontroller,
                 decoration: InputDecoration(
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
@@ -70,13 +70,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       horizontal: 5,
                       vertical: 5,
                     )),
-                onSubmitted: (value) {
-                  print(_searchcontroller.text);
+                onTap: (){
                   Navigator.pushNamed(context, search,
-                      arguments: _searchcontroller.text);
+                  );
                 },
+
               ),
             ),
+
             SizedBox(
               width: 5,
             ),
@@ -114,8 +115,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: _loading
           ? Center(child: CircularProgressIndicator())
           : HomeBody(
-              front: front,
-            ),
+        front: front,
+      ),
     );
   }
 

@@ -25,8 +25,9 @@ class TitleWithMoreBtn extends StatelessWidget {
           FlatButton(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
+              side: BorderSide(color: LightColor.primaryColor),
             ),
-            color: LightColor.primaryColor,
+            color: Colors.white.withOpacity(0.6),
             onPressed: () {
               Navigator.pushNamed(
                 context,
@@ -36,7 +37,7 @@ class TitleWithMoreBtn extends StatelessWidget {
             },
             child: Text(
               "More",
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: LightColor.primaryColor),
             ),
           ),
         ],
