@@ -5,9 +5,9 @@ import 'package:sparknp/model/frontjson.dart';
 import 'package:sparknp/screens/categories/categoriescomponents/subcatcard.dart';
 
 class SwipeBar extends StatefulWidget {
-  final Category category;
+  final List<Category> categories;
 
-  const SwipeBar({Key key, this.category}) : super(key: key);
+  const SwipeBar({Key key, this.categories}) : super(key: key);
 
   @override
   _SwipeBarState createState() => _SwipeBarState();
@@ -18,7 +18,7 @@ class _SwipeBarState extends State<SwipeBar> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.category.subs[selectedIndex].id);
+    print(widget.categories[selectedIndex].name);
     return Container(
       child: Column(
         children: [
@@ -26,7 +26,7 @@ class _SwipeBarState extends State<SwipeBar> {
             height: AppTheme.fullHeight(context) * 0.05,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: widget.category.subs.length,
+              itemCount: widget.categories.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
@@ -41,7 +41,7 @@ class _SwipeBarState extends State<SwipeBar> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          widget.category.subs[index].name,
+                          widget.categories[index].name,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: selectedIndex == index
@@ -64,7 +64,7 @@ class _SwipeBarState extends State<SwipeBar> {
               },
             ),
           ),
-          SubCatCard(subId: widget.category.subs[selectedIndex].id),
+          SubCatCard(subId: widget.categories[selectedIndex].id),
         ],
       ),
     );

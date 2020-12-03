@@ -21,7 +21,7 @@ class _SubCatCardState extends State<SubCatCard> {
   String thumbnail;
 
   bool _loading;
-  Subcat _subCatList;
+  SubCat _subCatList;
 
   @override
   void initState() {

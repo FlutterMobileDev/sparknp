@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/model/frontjson.dart';
-import 'package:sparknp/screens/categories/categoriescomponents/swipebar.dart';
+import 'package:sparknp/screens/categories/categoriescomponents/subcatcard.dart';
 
 class CategoryBody extends StatelessWidget {
   final Category category;
@@ -22,9 +22,11 @@ class CategoryBody extends StatelessWidget {
                 .textTheme
                 .headline5
                 .copyWith(fontWeight: FontWeight.bold),
+            overflow: TextOverflow.ellipsis,
           ),
         ),
-        SwipeBar(category: category),
+        SubCatCard(subId: category.id),
+        // SwipeBar(category: category),
       ],
     );
   }
