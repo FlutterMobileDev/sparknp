@@ -11,24 +11,21 @@ import 'package:sparknp/screens/categories/categoriescomponents/categorybody.dar
 import 'package:sparknp/router.dart';
 
 import 'package:sparknp/constants.dart';
-import 'package:sparknp/widgets/appbar/barbutton.dart';
 
 import 'package:sparknp/services/storage.dart';
 
 TabController _tabController;
 
 class HomeScreen extends StatefulWidget {
+  final ApiFront front;
+  const HomeScreen({Key key, this.front}) : super(key: key);
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
-  final SecureStorage secureStorage = SecureStorage();
-
   bool _loading;
-  ApiFront front;
-  String _token;
   SearchProducts products;
 
   @override
@@ -36,17 +33,9 @@ class _HomeScreenState extends State<HomeScreen>
     super.initState();
     _loading = true;
 
-    FrontService.fetch().then((data) {
-      secureStorage.readData('token').then((value) {
-        setState(() {
-          front = data;
-          _token = value;
-          _loading = false;
-          _tabController =
-              TabController(vsync: this, length: front.categories.length + 1);
-        });
-      });
-    });
+    _tabController =
+        TabController(vsync: this, length: widget.front.categories.length + 1);
+    _loading = false;
   }
 
   @override
@@ -63,93 +52,50 @@ class _HomeScreenState extends State<HomeScreen>
                   Tab(
                     text: "All",
                   ),
-                  for (int i = 0; i < front.categories.length; i++)
-                    Tab(text: front.categories[i].name),
+                  for (int i = 0; i < widget.front.categories.length; i++)
+                    Tab(text: widget.front.categories[i].name),
                 ],
               ),
               backgroundColor: LightColor.primaryColor,
               elevation: 0,
               iconTheme: IconThemeData(color: LightColor.textLightColor),
-              actions: <Widget>[
-                Row(children: [
-                  Container(
-                    width: size.width * 0.6,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(1),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          hintText: "Search",
-                          prefixIcon: Icon(Icons.search),
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 5,
-                            vertical: 5,
-                          )),
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          search,
-                        );
-                      },
-                    ),
+              title: Center(
+                child: Container(
+                  width: size.width * 0.6,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(1),
+                    borderRadius: BorderRadius.circular(15),
                   ),
-                  SizedBox(
-                    width: 5,
+                  child: TextField(
+                    decoration: InputDecoration(
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        hintText: "Search",
+                        prefixIcon: Icon(Icons.search),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 5,
+                        )),
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        search,
+                      );
+                    },
                   ),
-                  IconBtnWithCounter(
-                      svgSrc: "assets/Cart Icon.svg",
-                      // numOfitem: cart.carts,
-                      press: () {
-                        if (_token != null) {
-                          Navigator.pushNamed(
-                            context,
-                            cart,
-                          );
-                        } else {
-                          _showDialog(context);
-                        }
-                      }),
-                  IconBtnWithCounter(
-                      svgSrc: "assets/Heart Icon.svg",
-                      // numOfitem: 5,
-                      press: () {
-                        if (_token != null) {
-                          Navigator.pushNamed(
-                            context,
-                            wishlist,
-                          );
-                        } else {
-                          _showDialog(context);
-                        }
-                      }),
-                  SizedBox(width: defaultPadding / 2)
-                ])
-              ],
+                ),
+              ),
             ),
-            drawer: MainDrawer(front: front),
+            drawer: MainDrawer(front: widget.front),
             body: TabBarView(controller: _tabController, children: [
               HomeBody(
-                front: front,
+                front: widget.front,
               ),
-              for (int i = 0; i < front.categories.length; i++)
-                CategoryBody(category: front.categories[i])
+              for (int i = 0; i < widget.front.categories.length; i++)
+                CategoryBody(category: widget.front.categories[i])
             ]),
           );
-  }
-
-  Future<void> _showDialog(context) async {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Please Log In'),
-        );
-      },
-    );
   }
 
   @override

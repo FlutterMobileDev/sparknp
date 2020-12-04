@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:sparknp/constants.dart';
+import 'package:sparknp/widgets/appbar.dart';
 
 import 'package:sparknp/model/cartmodel.dart';
 import 'package:sparknp/services/cartservice.dart';
@@ -44,13 +44,4 @@ class _CartScreenState extends State<CartScreen> {
           : CartBody(cart: cart),
     );
   }
-}
-
-AppBar buildAppBar(context) {
-  return AppBar(
-      backgroundColor: LightColor.mainColor,
-      elevation: 0,
-      iconTheme: IconThemeData(color: LightColor.textLightColor),
-      centerTitle: true,
-      title: Text("CART"));
 }

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:sparknp/router.dart';
-import 'package:sparknp/constants.dart';
 import 'package:sparknp/services/cartservice.dart';
 import 'package:sparknp/services/storage.dart';
 
 import 'package:sparknp/screens/details/detailscomponents/detailsbody.dart';
 
-import 'package:sparknp/widgets/appbar/barbutton.dart';
+import 'package:sparknp/widgets/appbar.dart';
 
 class DetailsScreen extends StatefulWidget {
   final dynamic product;
@@ -43,57 +41,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
             ),
           )
         : Scaffold(
-            appBar: AppBar(
-              backgroundColor: LightColor.mainColor,
-              elevation: 0,
-              iconTheme: IconThemeData(color: LightColor.textLightColor),
-              actions: <Widget>[
-                Row(children: [
-                  SizedBox(
-                    width: 5,
-                  ),
-                  IconBtnWithCounter(
-                      svgSrc: "assets/Cart Icon.svg",
-                      // numOfitem: cart.carts,
-                      press: () {
-                        if (_token != null) {
-                          Navigator.pushNamed(
-                            context,
-                            cart,
-                          );
-                        } else {
-                          _showDialog(context, "Please Log In");
-                        }
-                      }),
-                  IconBtnWithCounter(
-                      svgSrc: "assets/Heart Icon.svg",
-                      // numOfitem: 5,
-                      press: () {
-                        if (_token != null) {
-                          Navigator.pushNamed(
-                            context,
-                            wishlist,
-                          );
-                        } else {
-                          _showDialog(context, "Please Log In");
-                        }
-                      }),
-                  SizedBox(width: defaultPadding / 2)
-                ])
-              ],
-            ),
+            appBar: buildAppBar(context),
             floatingActionButton: FloatingActionButton(
                 child: Icon(Icons.add_shopping_cart_outlined),
                 onPressed: () {
-                  if (_token != null) {
-                    CartService.add(_token, widget.product.id).then(
-                      (added) {
-                        _showDialog(context, "Added to Cart");
-                      },
-                    );
-                  } else {
-                    _showDialog(context, "Please Log In");
-                  }
+                  (_token != null)
+                      ? CartService.add(_token, widget.product.id).then(
+                          (added) {
+                            _showDialog(context, "Added to Cart");
+                          },
+                        )
+                      : _showDialog(context, "Please Log In");
                 }),
             body: DetailsBody(widget.product),
           );

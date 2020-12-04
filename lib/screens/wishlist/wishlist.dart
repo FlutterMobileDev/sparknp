@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:sparknp/constants.dart';
-
 import 'package:sparknp/model/wishlistmodel.dart';
 import 'package:sparknp/services/wishlistservice.dart';
 import 'package:sparknp/services/storage.dart';
 import 'package:sparknp/screens/wishlist/wishlistcomponents/wishlistbody.dart';
+import 'package:sparknp/widgets/appbar.dart';
 
 class WishlistScreen extends StatefulWidget {
   @override
@@ -24,6 +23,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
     super.initState();
     _loading = true;
     secureStorage.readData('token').then((value) {
+      print("herer");
       _token = value;
       WishlistService.list(_token).then((data) {
         setState(() {
@@ -43,13 +43,4 @@ class _WishlistScreenState extends State<WishlistScreen> {
           : WishlistBody(wishlist: wishlist),
     );
   }
-}
-
-AppBar buildAppBar(context) {
-  return AppBar(
-      backgroundColor: LightColor.mainColor,
-      elevation: 0,
-      iconTheme: IconThemeData(color: LightColor.textLightColor),
-      centerTitle: true,
-      title: Text("Wishlist"));
 }

@@ -46,7 +46,7 @@ class _SubCatCardState extends State<SubCatCard> {
           )
         : Container(
             width: size.width,
-            height: size.height * 0.7,
+            height: size.height * 0.6,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
             child: GridView.builder(
               physics: ScrollPhysics(),

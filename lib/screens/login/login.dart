@@ -343,7 +343,7 @@ class _LoginScreenState extends State<LoginScreen> {
       secureStorage.writeData("email", body["user"]["email"]);
       secureStorage.writeData("token", body["user_token"]);
       Navigator.pop(context);
-      Navigator.popAndPushNamed(context, home);
+      Navigator.popAndPushNamed(context, splash);
       setState(() {
         _isLogged = true;
       });
@@ -385,7 +385,7 @@ class _LoginScreenState extends State<LoginScreen> {
         _isLogged = true;
       });
       Navigator.pop(context);
-      Navigator.popAndPushNamed(context, home);
+      Navigator.popAndPushNamed(context, splash);
     } else {
       showAlertDialog(context, "Error", "Log in Unsuccessful");
     }
@@ -424,7 +424,7 @@ class _LoginScreenState extends State<LoginScreen> {
             _isLogged = true;
           });
           Navigator.pop(context);
-          Navigator.popAndPushNamed(context, home);
+          Navigator.popAndPushNamed(context, splash);
         } else {
           showAlertDialog(context, "Error", "Log in Unsuccessful");
         }

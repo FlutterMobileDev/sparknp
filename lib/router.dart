@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:sparknp/model/screenarguments.dart';
 
+import 'package:sparknp/splash.dart';
+
 import 'package:sparknp/screens/login/login.dart';
 import 'package:sparknp/screens/home/home.dart';
 import 'package:sparknp/screens/home/homecomponent/more.dart';
@@ -11,14 +13,15 @@ import 'package:sparknp/screens/orders/myorders.dart';
 
 import 'package:sparknp/screens/account/myaccount.dart';
 
-import 'package:sparknp/screens/categories/categories.dart';
+// import 'package:sparknp/screens/categories/categories.dart';
 import 'package:sparknp/screens/details/details.dart';
 
 import 'package:sparknp/screens/cart/cart.dart';
 import 'package:sparknp/screens/cart/cartcomponents/processcart.dart';
 import 'package:sparknp/screens/wishlist/wishlist.dart';
 
-const String home = '/';
+const String splash = '/';
+const String home = '/home';
 const String search = '/search';
 const String login = '/login';
 const String register = '/register';
@@ -37,11 +40,12 @@ class Routing {
     switch (screen.name) {
       case login:
         return MaterialPageRoute(builder: (_) => LoginScreen());
+      case splash:
+        return MaterialPageRoute(builder: (_) => SplashScreen());
       case home:
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case search:
-        return MaterialPageRoute(
-            builder: (_) => Search());
+        return MaterialPageRoute(builder: (_) => Search());
       case more:
         ScreenArguments args = screen.arguments;
         return MaterialPageRoute(
@@ -61,10 +65,10 @@ class Routing {
         return MaterialPageRoute(
           builder: (_) => DetailsScreen(screen.arguments),
         );
-      case categories:
-        return MaterialPageRoute(
-          builder: (_) => Categories(category: screen.arguments),
-        );
+      // case categories:
+      // return MaterialPageRoute(
+      //   builder: (_) => Categories(category: screen.arguments),
+      // );
       default:
         return null;
     }

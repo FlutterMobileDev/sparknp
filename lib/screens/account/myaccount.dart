@@ -228,7 +228,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 secureStorage.deleteData("phone");
                 secureStorage.deleteData("email");
                 secureStorage.deleteData("token");
-                Navigator.popAndPushNamed(context, home);
+                Navigator.popAndPushNamed(context, splash);
               },
             ),
           ),

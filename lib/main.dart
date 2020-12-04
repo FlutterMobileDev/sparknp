@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sparknp/router.dart';
+import 'package:sparknp/splash.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,9 +12,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       onGenerateRoute: Routing.generateRoute,
-      initialRoute: home,
+      // home: Bottomnavbar(),
+      initialRoute: splash,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,

@@ -43,88 +43,85 @@ class _HomeBodyState extends State<HomeBody> {
             stops: [0.1, 0.4, 0.7, 0.9],
           )),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 30),
-          child: Container(
-            child: Column(
-              children: [
-                Bigbanner(
-                  apiFront: widget.front,
-                  name: "bigbanner",
-                ),
-                TitleWithMoreBtn(
-                  name: "Featured Products",
-                  front: widget.front,
-                ),
-                ImageCard(
-                  name: "featureProducts",
-                  front: widget.front,
-                ),
-                TitleWithMoreBtn(
-                  name: "Trending Products",
-                  front: widget.front,
-                ),
-                DetailImageCard(
-                  name: "trendingProducts",
-                  front: widget.front,
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Bigbanner(
-                  apiFront: widget.front,
-                  name: "smallbanner",
-                ),
-                TitleWithMoreBtn(
-                  name: "Sale Products",
-                  front: widget.front,
-                ),
-                ImageCard(
-                  name: "saleProducts",
-                  front: widget.front,
-                ),
-                TitleWithMoreBtn(
-                  name: "Best Products",
-                  front: widget.front,
-                ),
-                DetailImageCard(
-                  name: "bestProducts",
-                  front: widget.front,
-                ),
-                TitleWithMoreBtn(
-                  name: "Big Products",
-                  front: widget.front,
-                ),
-                GridProduct(
-                  name: "bigProducts",
-                  front: widget.front,
-                ),
-                TitleWithMoreBtn(
-                  name: "Latest Products",
-                  front: widget.front,
-                ),
-                ImageCard(
-                  name: "latestProducts",
-                  front: widget.front,
-                ),
-                TitleWithMoreBtn(
-                  name: "Top Products",
-                  front: widget.front,
-                ),
-                GridProduct(
-                  name: "topProducts",
-                  front: widget.front,
-                ),
-                TitleWithMoreBtn(
-                  name: "Hot Products",
-                  front: widget.front,
-                ),
-                DetailImageCard(
-                  name: "hotProducts",
-                  front: widget.front,
-                ),
-              ],
-            ),
+        Container(
+          child: Column(
+            children: [
+              Bigbanner(
+                apiFront: widget.front,
+                name: "bigbanner",
+              ),
+              TitleWithMoreBtn(
+                name: "Featured Products",
+                front: widget.front,
+              ),
+              ImageCard(
+                name: "featureProducts",
+                front: widget.front,
+              ),
+              TitleWithMoreBtn(
+                name: "Trending Products",
+                front: widget.front,
+              ),
+              DetailImageCard(
+                name: "trendingProducts",
+                front: widget.front,
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              Bigbanner(
+                apiFront: widget.front,
+                name: "smallbanner",
+              ),
+              TitleWithMoreBtn(
+                name: "Sale Products",
+                front: widget.front,
+              ),
+              ImageCard(
+                name: "saleProducts",
+                front: widget.front,
+              ),
+              TitleWithMoreBtn(
+                name: "Best Products",
+                front: widget.front,
+              ),
+              DetailImageCard(
+                name: "bestProducts",
+                front: widget.front,
+              ),
+              TitleWithMoreBtn(
+                name: "Big Products",
+                front: widget.front,
+              ),
+              GridProduct(
+                name: "bigProducts",
+                front: widget.front,
+              ),
+              TitleWithMoreBtn(
+                name: "Latest Products",
+                front: widget.front,
+              ),
+              ImageCard(
+                name: "latestProducts",
+                front: widget.front,
+              ),
+              TitleWithMoreBtn(
+                name: "Top Products",
+                front: widget.front,
+              ),
+              GridProduct(
+                name: "topProducts",
+                front: widget.front,
+              ),
+              TitleWithMoreBtn(
+                name: "Hot Products",
+                front: widget.front,
+              ),
+              DetailImageCard(
+                name: "hotProducts",
+                front: widget.front,
+              ),
+            ],
           ),
         ),
       ]),

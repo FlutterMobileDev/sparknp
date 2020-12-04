@@ -6,6 +6,7 @@ import 'package:sparknp/model/ordersmodel.dart';
 import 'package:sparknp/services/ordersservice.dart';
 import 'package:sparknp/services/storage.dart';
 import 'package:sparknp/screens/orders/orderscomponents/ordersbody.dart';
+import 'package:sparknp/widgets/appbar.dart';
 
 class OrdersScreen extends StatefulWidget {
   @override
@@ -45,13 +46,4 @@ class _OrdersScreenState extends State<OrdersScreen> {
           : OrdersBody(orders: orders),
     );
   }
-}
-
-AppBar buildAppBar(context) {
-  return AppBar(
-      backgroundColor: LightColor.mainColor,
-      elevation: 0,
-      iconTheme: IconThemeData(color: LightColor.textLightColor),
-      centerTitle: true,
-      title: Text("My Orders"));
 }
