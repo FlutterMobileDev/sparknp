@@ -22,39 +22,39 @@ class _ImageCardState extends State<ImageCard> {
   @override
   void initState() {
     super.initState();
-
-    if (widget.name == "featureProducts") {
-      setState(() {
-        _productList = widget.front.featureProducts;
-      });
-    } else if (widget.name == "trendingProducts") {
-      setState(() {
-        _productList = widget.front.trendingProducts;
-      });
-    } else if (widget.name == "saleProducts") {
-      setState(() {
-        _productList = widget.front.saleProducts;
-      });
-    } else if (widget.name == "bestProducts") {
-      setState(() {
-        _productList = widget.front.bestProducts;
-      });
-    } else if (widget.name == "bigProducts") {
-      setState(() {
-        _productList = widget.front.bigProducts;
-      });
-    } else if (widget.name == "latestProducts") {
-      setState(() {
-        _productList = widget.front.latestProducts;
-      });
-    } else if (widget.name == "topProducts") {
-      setState(() {
-        _productList = widget.front.topProducts;
-      });
-    } else if (widget.name == "hotProducts") {
-      setState(() {
-        _productList = widget.front.hotProducts;
-      });
+    switch (widget.name) {
+      case "featureProducts":
+        return setState(() {
+          _productList = widget.front.featureProducts;
+        });
+      case "trendingProducts":
+        return setState(() {
+          _productList = widget.front.trendingProducts;
+        });
+      case "saleProducts":
+        return setState(() {
+          _productList = widget.front.saleProducts;
+        });
+      case "bestProducts":
+        return setState(() {
+          _productList = widget.front.bestProducts;
+        });
+      case "bigProducts":
+        return setState(() {
+          _productList = widget.front.bigProducts;
+        });
+      case "latestProducts":
+        return setState(() {
+          _productList = widget.front.latestProducts;
+        });
+      case "topProducts":
+        return setState(() {
+          _productList = widget.front.topProducts;
+        });
+      case "hotProducts":
+        return setState(() {
+          _productList = widget.front.hotProducts;
+        });
     }
   }
 

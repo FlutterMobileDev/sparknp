@@ -23,18 +23,19 @@ class _DetailImageCardState extends State<DetailImageCard> {
   @override
   void initState() {
     super.initState();
-    if (widget.name == "trendingProducts") {
-      setState(() {
-        _productList = widget.front.trendingProducts;
-      });
-    } else if (widget.name == "bestProducts") {
-      setState(() {
-        _productList = widget.front.bestProducts;
-      });
-    } else if (widget.name == "hotProducts") {
-      setState(() {
-        _productList = widget.front.hotProducts;
-      });
+    switch (widget.name) {
+      case "trendingProducts":
+        return setState(() {
+          _productList = widget.front.trendingProducts;
+        });
+      case "bestProducts":
+        return setState(() {
+          _productList = widget.front.bestProducts;
+        });
+      case "hotProducts":
+        return setState(() {
+          _productList = widget.front.hotProducts;
+        });
     }
   }
 

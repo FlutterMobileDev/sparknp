@@ -34,7 +34,6 @@ class _WishlistBodyState extends State<WishlistBody> {
     _loading = true;
     secureStorage.readData('token').then((value) async {
       int n = widget.wishlist.wishlists.length;
-      print(n);
       for (int i = 1; i <= n; i++) {
         await ProductService.fetch(widget.wishlist.wishlists[i - 1].productId)
             .then((value) {
@@ -95,32 +94,30 @@ class _WishlistBodyState extends State<WishlistBody> {
               },
               child: Container(
                 width: size.width * 0.8,
-                height: 50,
+                height: size.height * 0.175,
                 child: Column(children: [
-                  Expanded(
-                    child: ListTile(
-                      title: Text(
-                        "${_wishlistList[index].product.name}",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w700),
-                        overflow: TextOverflow.clip,
-                      ),
-                      trailing: FlatButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        color: LightColor.orange,
-                        onPressed: () {
-                          WishlistService.remove(_token, product.id)
-                              .then((value) {
-                            _showDialog(context).whenComplete(() {
-                              Navigator.popAndPushNamed(context, wishlist);
-                            });
+                  ListTile(
+                    title: Text(
+                      "${_wishlistList[index].product.name}",
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                      overflow: TextOverflow.clip,
+                    ),
+                    trailing: FlatButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      color: LightColor.orange,
+                      onPressed: () {
+                        WishlistService.remove(_token, product.id)
+                            .then((value) {
+                          _showDialog(context).whenComplete(() {
+                            Navigator.popAndPushNamed(context, wishlist);
                           });
-                        },
-                        child: Text(
-                          "Remove",
-                          style: TextStyle(color: LightColor.background),
-                        ),
+                        });
+                      },
+                      child: Text(
+                        "Remove",
+                        style: TextStyle(color: LightColor.background),
                       ),
                     ),
                   ),

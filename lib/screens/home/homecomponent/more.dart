@@ -9,8 +9,10 @@ import 'package:sparknp/widgets/appbar.dart';
 class MoreScreen extends StatefulWidget {
   final String name;
   final ApiFront front;
+  final int subId;
 
-  const MoreScreen({Key key, this.name, this.front}) : super(key: key);
+  const MoreScreen({Key key, this.name, this.front, this.subId})
+      : super(key: key);
   @override
   _MoreScreenState createState() => _MoreScreenState();
 }
@@ -23,6 +25,7 @@ class _MoreScreenState extends State<MoreScreen> {
       body: ItemCard(
         name: widget.name,
         front: widget.front,
+        subId: widget.subId,
       ),
     );
   }

@@ -138,20 +138,20 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildForgotPasswordBtn(BuildContext context) {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: FlatButton(
-        onPressed: () => Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => ForgetPwdScreen())),
-        padding: EdgeInsets.only(right: 0.0),
-        child: Text(
-          'Forgot Password?',
-          style: labelStyle,
-        ),
-      ),
-    );
-  }
+  // Widget _buildForgotPasswordBtn(BuildContext context) {
+  //   return Container(
+  //     alignment: Alignment.centerRight,
+  //     child: FlatButton(
+  //       onPressed: () => Navigator.of(context)
+  //           .push(MaterialPageRoute(builder: (context) => ForgetPwdScreen())),
+  //       padding: EdgeInsets.only(right: 0.0),
+  //       child: Text(
+  //         'Forgot Password?',
+  //         style: labelStyle,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildLoginBtn(BuildContext context) {
     return Container(
@@ -310,7 +310,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: 30.0,
                             ),
                             _buildPasswordTF(),
-                            _buildForgotPasswordBtn(context),
+                            // _buildForgotPasswordBtn(context),
                             _buildLoginBtn(context),
                             _buildFBLoginBtn(context),
                             SizedBox(height: 10.0),

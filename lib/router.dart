@@ -49,7 +49,8 @@ class Routing {
       case more:
         ScreenArguments args = screen.arguments;
         return MaterialPageRoute(
-          builder: (_) => MoreScreen(name: args.name, front: args.front),
+          builder: (_) =>
+              MoreScreen(name: args.name, front: args.front, subId: args.id),
         );
       case myOrders:
         return MaterialPageRoute(builder: (_) => OrdersScreen());
@@ -65,10 +66,6 @@ class Routing {
         return MaterialPageRoute(
           builder: (_) => DetailsScreen(screen.arguments),
         );
-      // case categories:
-      // return MaterialPageRoute(
-      //   builder: (_) => Categories(category: screen.arguments),
-      // );
       default:
         return null;
     }

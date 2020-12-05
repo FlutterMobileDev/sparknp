@@ -26,20 +26,19 @@ class _GridProductState extends State<GridProduct> {
   @override
   void initState() {
     super.initState();
-    if (widget.name == "bigProducts") {
-      setState(() {
-        _productList = widget.front.bigProducts;
-      });
-    }
-    if (widget.name == "bestProducts") {
-      setState(() {
-        _productList = widget.front.bestProducts;
-      });
-    }
-    if (widget.name == "topProducts") {
-      setState(() {
-        _productList = widget.front.topProducts;
-      });
+    switch (widget.name) {
+      case "bigProducts":
+        return setState(() {
+          _productList = widget.front.bigProducts;
+        });
+      case "bestProducts":
+        return setState(() {
+          _productList = widget.front.bestProducts;
+        });
+      case "topProducts":
+        return setState(() {
+          _productList = widget.front.topProducts;
+        });
     }
   }
 

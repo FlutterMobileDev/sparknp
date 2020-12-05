@@ -18,15 +18,16 @@ class _BigbannerState extends State<Bigbanner> {
   List _bannerList;
   @override
   void initState() {
-    if (widget.name == "smallbanner") {
-      setState(() {
-        _bannerList = widget.apiFront.topSmallBanners;
-      });
+    switch (widget.name) {
+      case "smallbanner":
+        return setState(() {
+          _bannerList = widget.apiFront.topSmallBanners;
+        });
+      case "bigbanner":
+        return setState(() {
+          _bannerList = widget.apiFront.largeBanners;
+        });
     }
-    if (widget.name == "bigbanner")
-      setState(() {
-        _bannerList = widget.apiFront.largeBanners;
-      });
     super.initState();
   }
 

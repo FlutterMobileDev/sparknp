@@ -91,7 +91,7 @@ class _CartBodyState extends State<CartBody> {
   Widget _item(Cart model) {
     return Container(
       width: AppTheme.fullWidth(context) - 20,
-      height: AppTheme.fullHeight(context) * 0.55,
+      height: AppTheme.fullHeight(context) * 0.5,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: ListView.separated(
         itemCount: _cartList.length,
@@ -104,44 +104,41 @@ class _CartBodyState extends State<CartBody> {
             },
             child: Container(
               width: AppTheme.fullWidth(context),
-              height: 100,
+              height: AppTheme.fullHeight(context) * 0.175,
               child: Column(children: [
-                Expanded(
-                  child: ListTile(
-                    title: Text(
-                      "${_productName[index]}             x${product.quantity}",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                      overflow: TextOverflow.fade,
+                ListTile(
+                  title: Text(
+                    "${_productName[index]}             x${product.quantity}",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                    overflow: TextOverflow.fade,
+                  ),
+                  subtitle: Row(children: <Widget>[
+                    TitleText(
+                      text: '\Rs ',
+                      color: LightColor.red,
+                      fontSize: 14,
                     ),
-                    subtitle: Row(children: <Widget>[
-                      TitleText(
-                        text: '\Rs ',
-                        color: LightColor.red,
-                        fontSize: 14,
-                      ),
-                      TitleText(
-                        text: product.price.toString(),
-                        fontSize: 14,
-                      ),
-                    ]),
-                    trailing: FlatButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      color: LightColor.orange,
-                      onPressed: () {
-                        CartService.destroy(_token, product.productId)
-                            .then((removed) {
-                          _showDialog(context, "Revoved this items")
-                              .whenComplete(() {
-                            Navigator.popAndPushNamed(context, cart);
-                          });
+                    TitleText(
+                      text: product.price.toString(),
+                      fontSize: 14,
+                    ),
+                  ]),
+                  trailing: FlatButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    color: LightColor.orange,
+                    onPressed: () {
+                      CartService.destroy(_token, product.productId)
+                          .then((removed) {
+                        _showDialog(context, "Revoved this items")
+                            .whenComplete(() {
+                          Navigator.popAndPushNamed(context, cart);
                         });
-                      },
-                      child: Text(
-                        "Remove",
-                        style: TextStyle(color: LightColor.background),
-                      ),
+                      });
+                    },
+                    child: Text(
+                      "Remove",
+                      style: TextStyle(color: LightColor.background),
                     ),
                   ),
                 ),

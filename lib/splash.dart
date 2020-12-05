@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:sparknp/router.dart';
 import 'package:sparknp/constants.dart';
 
 import 'package:sparknp/services/frontservice.dart';
@@ -49,20 +48,19 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return _loading
-        ? CircularProgressIndicator()
+        ? Container(
+            color: LightColor.textColor,
+            child: Center(child: CircularProgressIndicator()))
         : (_token != null)
-            ? Bottomnavbar(
-                front: front,
-              )
-            : HomeScreen(
-                front: front,
-              );
+            ? Bottomnavbar(front: front, token: _token)
+            : HomeScreen(front: front, token: _token);
   }
 }
 
 class Bottomnavbar extends StatefulWidget {
   final ApiFront front;
-  Bottomnavbar({Key key, this.front}) : super(key: key);
+  final String token;
+  Bottomnavbar({Key key, this.front, this.token}) : super(key: key);
   @override
   _BottomnavbarState createState() => _BottomnavbarState();
 }
@@ -82,7 +80,7 @@ class _BottomnavbarState extends State<Bottomnavbar> {
             setState(() => _currentIndex = index);
           },
           children: <Widget>[
-            HomeScreen(front: widget.front),
+            HomeScreen(front: widget.front, token: widget.token),
             CartScreen(),
             WishlistScreen(),
             ProfilePage()

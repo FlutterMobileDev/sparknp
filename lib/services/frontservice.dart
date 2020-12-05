@@ -26,18 +26,15 @@ class FrontService {
 
   static Future<SubCat> subcat(id) async {
     try {
-      print(id);
-      final response =
-          await http.get('https://www.sparknp.com/api/categories/$id').timeout(
-                Duration(
-                  seconds: 15,
-                ),
-              );
-      // print(response.body);
-      print(response.statusCode);
+      final response = await http
+          .get('https://www.sparknp.com/api/subcategories/$id')
+          .timeout(
+            Duration(
+              seconds: 15,
+            ),
+          );
       if (response.statusCode == 200) {
         final SubCat subcat = subCatFromJson(response.body);
-        print(subcat);
         return subcat;
       } else {
         throw Exception('error here');

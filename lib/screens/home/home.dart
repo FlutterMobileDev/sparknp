@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:sparknp/model/frontjson.dart';
 import 'package:sparknp/model/searchmodel.dart';
-import 'package:sparknp/services/frontservice.dart';
 
-import 'package:sparknp/widgets/drawer/drawer.dart';
+import 'package:sparknp/widgets/appbar.dart';
 import 'package:sparknp/screens/home/homecomponent/homebody.dart';
 import 'package:sparknp/screens/categories/categoriescomponents/categorybody.dart';
 
@@ -12,13 +11,12 @@ import 'package:sparknp/router.dart';
 
 import 'package:sparknp/constants.dart';
 
-import 'package:sparknp/services/storage.dart';
-
 TabController _tabController;
 
 class HomeScreen extends StatefulWidget {
   final ApiFront front;
-  const HomeScreen({Key key, this.front}) : super(key: key);
+  final String token;
+  const HomeScreen({Key key, this.front, this.token}) : super(key: key);
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -86,8 +84,20 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                 ),
               ),
+              actions: (widget.token != null)
+                  ? null
+                  : [
+                      FlatButton(
+                          child: Text(
+                            "Sign In",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, login);
+                          }),
+                    ],
             ),
-            drawer: MainDrawer(front: widget.front),
+            // drawer: MainDrawer(front: widget.front),
             body: TabBarView(controller: _tabController, children: [
               HomeBody(
                 front: widget.front,
@@ -103,4 +113,15 @@ class _HomeScreenState extends State<HomeScreen>
     _tabController.dispose();
     super.dispose();
   }
+}
+
+Future<void> _showDialog(context, txt) async {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(txt),
+      );
+    },
+  );
 }

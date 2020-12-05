@@ -4,6 +4,8 @@ import 'package:sparknp/constants.dart';
 import 'package:sparknp/model/frontjson.dart';
 import 'package:sparknp/screens/categories/categoriescomponents/subcatcard.dart';
 
+import 'package:sparknp/screens/home/homecomponent/sectiontitle.dart';
+
 class CategoryBody extends StatelessWidget {
   final Category category;
 
@@ -11,23 +13,19 @@ class CategoryBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(defaultPadding),
-          child: Text(
-            category.name,
-            style: Theme.of(context)
-                .textTheme
-                .headline5
-                .copyWith(fontWeight: FontWeight.bold),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        SubCatCard(subId: category.id),
-        // SwipeBar(category: category),
-      ],
+    return ListView.builder(
+      itemCount: category.subs.length,
+      itemBuilder: (BuildContext context, index) {
+        return Column(
+          children: [
+            TitleWithMoreBtn(
+              name: category.subs[index].name,
+              subId: category.subs[index].id,
+            ),
+            SubCatCard(subId: category.subs[index].id),
+          ],
+        );
+      },
     );
   }
 }
