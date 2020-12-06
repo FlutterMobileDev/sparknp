@@ -13,13 +13,13 @@ class OrdersBody extends StatefulWidget {
 }
 
 class _OrdersBodyState extends State<OrdersBody> {
-  List _trackList;
+  List _ordersList;
 
   @override
   void initState() {
     super.initState();
     setState(() {
-      _trackList = widget.orders.data.tracks;
+      _ordersList = widget.orders.orders;
     });
   }
 
@@ -28,7 +28,7 @@ class _OrdersBodyState extends State<OrdersBody> {
     return Container(
       padding: AppTheme.padding,
       child: SingleChildScrollView(
-        child: (widget.orders.data.tracks.length == 0)
+        child: (widget.orders.orders.length == 0)
             ? Center(
                 child: Text("No Orders"),
               )
@@ -48,9 +48,9 @@ class _OrdersBodyState extends State<OrdersBody> {
       height: 450,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: ListView.separated(
-        itemCount: _trackList.length,
+        itemCount: _ordersList.length,
         itemBuilder: (context, index) {
-          dynamic track = _trackList[index];
+          dynamic order = _ordersList[index];
           return Container(
             width: size.width * 0.8,
             height: 80,
@@ -58,7 +58,7 @@ class _OrdersBodyState extends State<OrdersBody> {
               Expanded(
                 child: ListTile(
                   title: TitleText(
-                    text: "Order ID : ${track.orderId}",
+                    text: "Order ID : ${order.id}",
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
                   ),
@@ -69,11 +69,11 @@ class _OrdersBodyState extends State<OrdersBody> {
                       fontSize: 14,
                     ),
                     TitleText(
-                      text: track.title,
+                      text: order.payAmount,
                       fontSize: 14,
                     ),
                   ]),
-                  trailing: Text("Rs ${widget.orders.data.payAmount}"),
+                  trailing: Text("Rs ${order.payAmount}"),
                 ),
               ),
             ]),

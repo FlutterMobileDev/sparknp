@@ -140,9 +140,41 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildVendorBtn(BuildContext context) {
+  Widget _buildOrdersBtn(BuildContext context) {
     return Positioned(
       top: 430,
+      child: Container(
+        height: 70,
+        width: MediaQuery.of(context).size.width * 1.0,
+        decoration: BoxDecoration(color: LightColor.lightGrey),
+        child: RaisedButton(
+          elevation: 5.0,
+          onPressed: () {
+            Navigator.pushNamed(context, myOrders);
+          },
+          padding: EdgeInsets.all(15.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          color: Colors.blue[300],
+          child: Text(
+            'My Orders',
+            style: TextStyle(
+              color: Colors.white,
+              letterSpacing: 1.5,
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OpenSans',
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildVendorBtn(BuildContext context) {
+    return Positioned(
+      top: 510,
       child: Container(
         height: 70,
         width: MediaQuery.of(context).size.width * 1.0,
@@ -202,6 +234,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     _blueColors(),
                     _getInfo(),
                     _buildInfo(context),
+                    _buildOrdersBtn(context),
                     _buildVendorBtn(context),
                   ],
                 ),

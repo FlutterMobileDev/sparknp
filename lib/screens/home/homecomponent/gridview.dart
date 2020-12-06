@@ -101,7 +101,6 @@ class _GridProductState extends State<GridProduct> {
                               vertical: defaultPadding / 4,
                               horizontal: defaultPadding / 4),
                           child: Text(
-                            // products is out demo list
                             product.name.toUpperCase(),
                             style: TextStyle(color: LightColor.textLightColor),
                             overflow: TextOverflow.ellipsis,

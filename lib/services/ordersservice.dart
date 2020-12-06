@@ -6,8 +6,7 @@ import 'package:sparknp/model/ordersmodel.dart';
 class OrdersService {
   static Future<Orders> list(token) async {
     try {
-      final response = await http.get(
-          'https://www.sparknp.com/api/orders/trackings/OMhE1605280338',
+      final response = await http.get('https://www.sparknp.com/api/orders/',
           headers: {"Authorization": "Bearer $token"}).timeout(
         Duration(
           seconds: 15,

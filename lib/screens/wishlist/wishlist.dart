@@ -23,7 +23,6 @@ class _WishlistScreenState extends State<WishlistScreen> {
     super.initState();
     _loading = true;
     secureStorage.readData('token').then((value) {
-      print("herer");
       _token = value;
       WishlistService.list(_token).then((data) {
         setState(() {

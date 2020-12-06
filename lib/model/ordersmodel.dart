@@ -11,25 +11,25 @@ String ordersToJson(Orders data) => json.encode(data.toJson());
 class Orders {
   Orders({
     this.status,
-    this.data,
+    this.orders,
   });
 
   bool status;
-  Data data;
+  List<Order> orders;
 
   factory Orders.fromJson(Map<String, dynamic> json) => Orders(
         status: json["status"],
-        data: Data.fromJson(json["data"]),
+        orders: List<Order>.from(json["orders"].map((x) => Order.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
-        "data": data.toJson(),
+        "orders": List<dynamic>.from(orders.map((x) => x.toJson())),
       };
 }
 
-class Data {
-  Data({
+class Order {
+  Order({
     this.id,
     this.userId,
     this.cart,
@@ -73,17 +73,16 @@ class Data {
     this.payId,
     this.vendorShippingId,
     this.vendorPackingId,
-    this.tracks,
   });
 
   int id;
-  String userId;
+  int userId;
   String cart;
   String method;
   String shipping;
   String pickupLocation;
   String totalQty;
-  String payAmount;
+  double payAmount;
   dynamic txnid;
   dynamic chargeId;
   String orderNumber;
@@ -96,7 +95,7 @@ class Data {
   String customerCity;
   String customerZip;
   dynamic shippingName;
-  String shippingCountry;
+  dynamic shippingCountry;
   dynamic shippingEmail;
   dynamic shippingPhone;
   dynamic shippingAddress;
@@ -111,17 +110,16 @@ class Data {
   dynamic affilateUser;
   dynamic affilateCharge;
   String currencySign;
-  String currencyValue;
-  String shippingCost;
-  String packingCost;
-  String tax;
-  String dp;
+  double currencyValue;
+  int shippingCost;
+  int packingCost;
+  int tax;
+  int dp;
   dynamic payId;
-  String vendorShippingId;
-  String vendorPackingId;
-  List<Track> tracks;
+  int vendorShippingId;
+  int vendorPackingId;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory Order.fromJson(Map<String, dynamic> json) => Order(
         id: json["id"],
         userId: json["user_id"],
         cart: json["cart"],
@@ -129,7 +127,7 @@ class Data {
         shipping: json["shipping"],
         pickupLocation: json["pickup_location"],
         totalQty: json["totalQty"],
-        payAmount: json["pay_amount"],
+        payAmount: json["pay_amount"].toDouble(),
         txnid: json["txnid"],
         chargeId: json["charge_id"],
         orderNumber: json["order_number"],
@@ -157,7 +155,7 @@ class Data {
         affilateUser: json["affilate_user"],
         affilateCharge: json["affilate_charge"],
         currencySign: json["currency_sign"],
-        currencyValue: json["currency_value"],
+        currencyValue: json["currency_value"].toDouble(),
         shippingCost: json["shipping_cost"],
         packingCost: json["packing_cost"],
         tax: json["tax"],
@@ -165,7 +163,6 @@ class Data {
         payId: json["pay_id"],
         vendorShippingId: json["vendor_shipping_id"],
         vendorPackingId: json["vendor_packing_id"],
-        tracks: List<Track>.from(json["tracks"].map((x) => Track.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -212,42 +209,5 @@ class Data {
         "pay_id": payId,
         "vendor_shipping_id": vendorShippingId,
         "vendor_packing_id": vendorPackingId,
-        "tracks": List<dynamic>.from(tracks.map((x) => x.toJson())),
-      };
-}
-
-class Track {
-  Track({
-    this.id,
-    this.orderId,
-    this.title,
-    this.text,
-    this.createdAt,
-    this.updatedAt,
-  });
-
-  int id;
-  String orderId;
-  String title;
-  String text;
-  DateTime createdAt;
-  DateTime updatedAt;
-
-  factory Track.fromJson(Map<String, dynamic> json) => Track(
-        id: json["id"],
-        orderId: json["order_id"],
-        title: json["title"],
-        text: json["text"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "order_id": orderId,
-        "title": title,
-        "text": text,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
       };
 }
