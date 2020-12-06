@@ -26,7 +26,7 @@ class _ItemCardState extends State<ItemCard> {
 
   String thumbnail;
   List _productList;
-  bool _loading;
+  bool _loading = true;
 
   @override
   void initState() {
@@ -35,38 +35,45 @@ class _ItemCardState extends State<ItemCard> {
       case "Featured Products":
         return setState(() {
           _productList = widget.front.featureProducts;
+          _loading = false;
         });
 
       case "Trending Products":
         return setState(() {
           _productList = widget.front.trendingProducts;
+          _loading = false;
         });
       case "Sale Products":
         return setState(() {
           _productList = widget.front.saleProducts;
+          _loading = false;
         });
       case "Best Products":
         return setState(() {
           _productList = widget.front.bestProducts;
+          _loading = false;
         });
       case "Big Products":
         return setState(() {
           _productList = widget.front.bigProducts;
+          _loading = false;
         });
       case "Latest Products":
         return setState(() {
           _productList = widget.front.latestProducts;
+          _loading = false;
         });
       case "Top Products":
         return setState(() {
           _productList = widget.front.topProducts;
+          _loading = false;
         });
       case "Hot Products":
         return setState(() {
           _productList = widget.front.hotProducts;
+          _loading = false;
         });
       default:
-        _loading = true;
         FrontService.subcat(widget.subId).then((data) {
           setState(() {
             _productList = data.products;

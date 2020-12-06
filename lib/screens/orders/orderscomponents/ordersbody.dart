@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/model/ordersmodel.dart';
-import 'package:sparknp/screens/orders/orderscomponents/title_text.dart';
 
 class OrdersBody extends StatefulWidget {
   final Orders orders;

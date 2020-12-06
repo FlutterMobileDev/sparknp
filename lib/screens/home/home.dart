@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:sparknp/model/frontjson.dart';
 import 'package:sparknp/model/searchmodel.dart';
 
-import 'package:sparknp/widgets/appbar.dart';
 import 'package:sparknp/screens/home/homecomponent/homebody.dart';
 import 'package:sparknp/screens/categories/categoriescomponents/categorybody.dart';
 
@@ -97,7 +96,6 @@ class _HomeScreenState extends State<HomeScreen>
                           }),
                     ],
             ),
-            // drawer: MainDrawer(front: widget.front),
             body: TabBarView(controller: _tabController, children: [
               HomeBody(
                 front: widget.front,

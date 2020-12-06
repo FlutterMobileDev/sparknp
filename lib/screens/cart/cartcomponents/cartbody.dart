@@ -7,7 +7,6 @@ import 'package:sparknp/router.dart';
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/model/cartmodel.dart';
 import 'package:sparknp/model/productmodel.dart';
-import 'package:sparknp/screens/cart/cartcomponents/title_text.dart';
 import 'package:sparknp/services/cartservice.dart';
 import 'package:sparknp/services/productservice.dart';
 

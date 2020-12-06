@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:sparknp/constants.dart';
+import 'package:sparknp/router.dart';
+import 'package:sparknp/screens/categories/categories.dart';
 
 import 'package:sparknp/services/frontservice.dart';
 
@@ -51,9 +53,7 @@ class _SplashScreenState extends State<SplashScreen>
         ? Container(
             color: LightColor.textColor,
             child: Center(child: CircularProgressIndicator()))
-        : (_token != null)
-            ? Bottomnavbar(front: front, token: _token)
-            : HomeScreen(front: front, token: _token);
+        : Bottomnavbar(front: front, token: _token);
   }
 }
 
@@ -81,6 +81,7 @@ class _BottomnavbarState extends State<Bottomnavbar> {
           },
           children: <Widget>[
             HomeScreen(front: widget.front, token: widget.token),
+            Categories(category: widget.front.categories),
             CartScreen(),
             WishlistScreen(),
             ProfilePage()
@@ -98,25 +99,31 @@ class _BottomnavbarState extends State<Bottomnavbar> {
             icon: Icon(Icons.home),
             title: Text("Home"),
             activeColor: LightColor.primaryColor,
-            inactiveColor: Colors.black,
+            inactiveColor: LightColor.darkgrey,
           ),
           BottomNavyBarItem(
-            icon: SvgPicture.asset("assets/Cart Icon.svg"),
+            icon: Icon(Icons.list_alt_rounded),
+            title: Text("Categories"),
+            activeColor: LightColor.primaryColor,
+            inactiveColor: LightColor.darkgrey,
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.shopping_cart_rounded),
             title: Text("Cart"),
             activeColor: LightColor.primaryColor,
-            inactiveColor: Colors.black,
+            inactiveColor: LightColor.darkgrey,
           ),
           BottomNavyBarItem(
             icon: SvgPicture.asset("assets/Heart Icon.svg"),
             title: Text("Wishlist"),
             activeColor: LightColor.primaryColor,
-            inactiveColor: Colors.black,
+            inactiveColor: LightColor.darkgrey,
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.account_circle),
             title: Text("My Account"),
             activeColor: LightColor.primaryColor,
-            inactiveColor: Colors.black,
+            inactiveColor: LightColor.darkgrey,
           ),
         ],
       ),
