@@ -51,7 +51,7 @@ class _GridProductState extends State<GridProduct> {
       height: 400,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: GridView.builder(
-        physics: ScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
         gridDelegate:
             SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemCount: 4,

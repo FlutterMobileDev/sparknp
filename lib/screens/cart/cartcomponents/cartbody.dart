@@ -23,7 +23,11 @@ class CartBody extends StatefulWidget {
 
 class _CartBodyState extends State<CartBody> {
   List _cartList;
+  List _cartList1;
   bool _loading;
+  double price;
+  int x;
+  Cart cart1;
 
   final SecureStorage secureStorage = SecureStorage();
   String _token;
@@ -47,6 +51,7 @@ class _CartBodyState extends State<CartBody> {
       setState(() {
         _token = value;
         _cartList = widget.cart.carts;
+        _cartList1 = widget.cart.carts;
         _loading = false;
       });
       secureStorage.writeData("totalPrice", widget.cart.totalPrice.toString());
@@ -109,7 +114,7 @@ class _CartBodyState extends State<CartBody> {
                 Expanded(
                   child: ListTile(
                     title: Text(
-                      "${_productName[index]}             x${product.quantity}",
+                      "${_productName[index]}",
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                       overflow: TextOverflow.fade,
@@ -125,27 +130,32 @@ class _CartBodyState extends State<CartBody> {
                         fontSize: 14,
                       ),
                     ]),
-                    trailing: FlatButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      color: LightColor.orange,
-                      onPressed: () {
-                        CartService.destroy(_token, product.productId)
-                            .then((removed) {
-                          _showDialog(context, "Revoved this items")
-                              .whenComplete(() {
-                            Navigator.popAndPushNamed(context, cart);
-                          });
-                        });
-                      },
-                      child: Text(
-                        "Remove",
-                        style: TextStyle(color: LightColor.background),
-                      ),
-                    ),
+
+                    // trailing: FlatButton(
+                    //   shape: RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(15)),
+                    //   color: LightColor.orange,
+                    //   onPressed: () {
+                    //     CartService.destroy(_token, product.productId)
+                    //         .then((removed) {
+                    //       _showDialog(context, "Removed this items")
+                    //           .whenComplete(() {
+                    //         Navigator.popAndPushNamed(context, cart);
+                    //       });
+                    //     });
+                    //   },
+                    //   child: Text(
+                    //     "Remove",
+                    //     style: TextStyle(color: LightColor.background),
+                    //   ),
+                    // ),
                   ),
                 ),
+                SizedBox(
+                  height: 10,
+                ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     FlatButton(
                       minWidth: 5,
@@ -155,15 +165,21 @@ class _CartBodyState extends State<CartBody> {
                       onPressed: () {
                         CartService.remove(_token, product.productId)
                             .then((removed) {
-                          _showDialog(context, "One item removed")
-                              .whenComplete(() {
-                            Navigator.popAndPushNamed(context, cart);
-                          });
+                          _addsubtract();
                         });
                       },
                       child: Text(
                         "-",
                         style: TextStyle(color: LightColor.background),
+                      ),
+                    ),
+                    Container(
+                      height: 20,
+                      width: 20,
+                      child: Text(
+                        "x${(_cartList[index].quantity == null) ? product.quantity : _cartList1[index].quantity}",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w700),
                       ),
                     ),
                     FlatButton(
@@ -174,10 +190,7 @@ class _CartBodyState extends State<CartBody> {
                       onPressed: () {
                         CartService.add(_token, product.productId)
                             .then((removed) {
-                          _showDialog(context, "One item added")
-                              .whenComplete(() {
-                            Navigator.popAndPushNamed(context, cart);
-                          });
+                          _addsubtract();
                         });
                       },
                       child: Text(
@@ -216,7 +229,7 @@ class _CartBodyState extends State<CartBody> {
             overflow: TextOverflow.fade,
           ),
           Text(
-            "Total: Rs ${widget.cart.totalPrice}",
+            "Total: Rs ${(price != null) ? price : widget.cart.totalPrice}",
             style: TextStyle(
               fontSize: 18,
             ),
@@ -248,19 +261,21 @@ class _CartBodyState extends State<CartBody> {
         ));
   }
 
+  _addsubtract() {
+    secureStorage.readData('token').then((value) {
+      _token = value;
+      CartService.list(_token).then((data) {
+        setState(() {
+          cart1 = data;
+          _cartList1 = cart1.carts;
+          price = cart1.totalPrice;
+        });
+      });
+    });
+  }
+
   @override
   void dispose() {
     super.dispose();
   }
-}
-
-Future<void> _showDialog(context, txt) async {
-  return showDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(txt),
-      );
-    },
-  );
 }
