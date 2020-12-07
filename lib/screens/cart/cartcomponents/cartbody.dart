@@ -87,7 +87,7 @@ class _CartBodyState extends State<CartBody> {
                           height: 70,
                         ),
                         _price(),
-                        SizedBox(height: 30),
+                        // SizedBox(height: 30),
                         _submitButton(context),
                       ],
                     ),
@@ -216,8 +216,8 @@ class _CartBodyState extends State<CartBody> {
   }
 
   Widget _price() {
-    return Positioned(
-      bottom: 250,
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0, 0, 0, 50),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
