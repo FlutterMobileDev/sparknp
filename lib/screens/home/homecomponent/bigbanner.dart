@@ -6,8 +6,11 @@ import 'package:sparknp/model/frontjson.dart';
 class Bigbanner extends StatefulWidget {
   final ApiFront apiFront;
   final String name;
+  final int x;
+  final int y;
 
-  const Bigbanner({Key key, this.apiFront, this.name}) : super(key: key);
+  const Bigbanner({Key key, this.apiFront, this.name, this.x, this.y})
+      : super(key: key);
 
   @override
   _BigbannerState createState() => _BigbannerState();
@@ -15,6 +18,7 @@ class Bigbanner extends StatefulWidget {
 
 class _BigbannerState extends State<Bigbanner> {
   String imgpath = "https://sparknp.com/assets/images/banners/";
+  String im1 = "https://sparknp.com/assets/images/sliders/";
   List _bannerList;
   @override
   void initState() {
@@ -27,6 +31,10 @@ class _BigbannerState extends State<Bigbanner> {
         return setState(() {
           _bannerList = widget.apiFront.largeBanners;
         });
+      case "sliders":
+        return setState(() {
+          _bannerList = widget.apiFront.sliders;
+        });
     }
     super.initState();
   }
@@ -36,18 +44,23 @@ class _BigbannerState extends State<Bigbanner> {
     Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      height: (widget.name == "smallbanner") ? 180 : 250,
+      height: (widget.x == 1) ? 180 : 250,
       child: CarouselSlider(
         autoPlay: true,
         enlargeCenterPage: true,
         items: _bannerList
-            .map((item) => Container(
-                  width: size.width,
-                  height: (widget.name == "smallbanner") ? 180 : 250,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: NetworkImage(imgpath + item.photo))),
+            .map((item) => Padding(
+                  padding: EdgeInsets.fromLTRB(2, 0, 2, 0),
+                  child: Container(
+                    width: size.width,
+                    height: (widget.x == 1) ? 180 : 250,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: NetworkImage((widget.y == 1)
+                                ? im1 + item.photo
+                                : imgpath + item.photo))),
+                  ),
                 ))
             .toList(),
       ),

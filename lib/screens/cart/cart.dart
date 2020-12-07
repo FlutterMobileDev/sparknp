@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:sparknp/widgets/appbar.dart';
-
 import 'package:sparknp/model/cartmodel.dart';
 import 'package:sparknp/services/cartservice.dart';
 import 'package:sparknp/screens/cart/cartcomponents/cartbody.dart';
 
 import 'package:sparknp/services/storage.dart';
+
+import 'package:sparknp/constants.dart';
 
 class CartScreen extends StatefulWidget {
   @override
@@ -38,7 +38,11 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context),
+      appBar: AppBar(
+        backgroundColor: LightColor.primaryColor,
+        centerTitle: true,
+        title: Text("Cart"),
+      ),
       body: (_loading)
           ? Center(child: CircularProgressIndicator())
           : CartBody(cart: cart),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:sparknp/constants.dart';
 import 'package:sparknp/model/wishlistmodel.dart';
 import 'package:sparknp/services/wishlistservice.dart';
 import 'package:sparknp/services/storage.dart';
 import 'package:sparknp/screens/wishlist/wishlistcomponents/wishlistbody.dart';
-import 'package:sparknp/widgets/appbar.dart';
 
 class WishlistScreen extends StatefulWidget {
   @override
@@ -36,7 +36,11 @@ class _WishlistScreenState extends State<WishlistScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context),
+      appBar: AppBar(
+        backgroundColor: LightColor.primaryColor,
+        centerTitle: true,
+        title: Text("Wishlist"),
+      ),
       body: (_loading)
           ? Center(child: CircularProgressIndicator())
           : WishlistBody(wishlist: wishlist),

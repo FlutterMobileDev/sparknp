@@ -48,7 +48,8 @@ class _HomeBodyState extends State<HomeBody> {
             children: [
               Bigbanner(
                 apiFront: widget.front,
-                name: "bigbanner",
+                name: "sliders",
+                y: 1,
               ),
               TitleWithMoreBtn(
                 name: "Featured Products",
@@ -58,6 +59,9 @@ class _HomeBodyState extends State<HomeBody> {
                 name: "featureProducts",
                 front: widget.front,
               ),
+              SizedBox(
+                height: 8,
+              ),
               TitleWithMoreBtn(
                 name: "Trending Products",
                 front: widget.front,
@@ -66,12 +70,10 @@ class _HomeBodyState extends State<HomeBody> {
                 name: "trendingProducts",
                 front: widget.front,
               ),
-              SizedBox(
-                height: 4,
-              ),
               Bigbanner(
                 apiFront: widget.front,
-                name: "smallbanner",
+                name: "bigbanner",
+                x: 1,
               ),
               TitleWithMoreBtn(
                 name: "Sale Products",
@@ -81,6 +83,9 @@ class _HomeBodyState extends State<HomeBody> {
                 name: "saleProducts",
                 front: widget.front,
               ),
+              SizedBox(
+                height: 8,
+              ),
               TitleWithMoreBtn(
                 name: "Best Products",
                 front: widget.front,
@@ -88,6 +93,11 @@ class _HomeBodyState extends State<HomeBody> {
               DetailImageCard(
                 name: "bestProducts",
                 front: widget.front,
+              ),
+              Bigbanner(
+                apiFront: widget.front,
+                name: "smallbanner",
+                x: 1,
               ),
               TitleWithMoreBtn(
                 name: "Big Products",
@@ -97,6 +107,9 @@ class _HomeBodyState extends State<HomeBody> {
                 name: "bigProducts",
                 front: widget.front,
               ),
+              SizedBox(
+                height: 8,
+              ),
               TitleWithMoreBtn(
                 name: "Latest Products",
                 front: widget.front,
@@ -105,6 +118,11 @@ class _HomeBodyState extends State<HomeBody> {
                 name: "latestProducts",
                 front: widget.front,
               ),
+              Bigbanner(
+                apiFront: widget.front,
+                name: "smallbanner",
+                x: 1,
+              ),
               TitleWithMoreBtn(
                 name: "Top Products",
                 front: widget.front,
@@ -112,6 +130,9 @@ class _HomeBodyState extends State<HomeBody> {
               GridProduct(
                 name: "topProducts",
                 front: widget.front,
+              ),
+              SizedBox(
+                height: 8,
               ),
               TitleWithMoreBtn(
                 name: "Hot Products",

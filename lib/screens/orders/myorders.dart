@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:sparknp/constants.dart';
-
-import 'package:sparknp/model/ordersmodel.dart';
 import 'package:sparknp/services/ordersservice.dart';
 import 'package:sparknp/services/storage.dart';
 import 'package:sparknp/screens/orders/orderscomponents/ordersbody.dart';
@@ -14,7 +11,7 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
-  Orders orders;
+  var orders;
   bool _loading;
 
   final SecureStorage secureStorage = SecureStorage();
@@ -24,14 +21,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
   void initState() {
     super.initState();
     _loading = true;
-    OrdersService.list(_token).then((data) {
-      secureStorage.readData('token').then((value) {
-        _token = value;
-        OrdersService.list(_token).then((data) {
-          setState(() {
-            orders = data;
-            _loading = false;
-          });
+    secureStorage.readData('token').then((value) {
+      _token = value;
+      OrdersService.list(_token).then((data) {
+        setState(() {
+          orders = data;
+          _loading = false;
         });
       });
     });

@@ -1,10 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:sparknp/constants.dart';
-import 'package:sparknp/model/ordersmodel.dart';
 
 class OrdersBody extends StatefulWidget {
-  final Orders orders;
+  final orders;
   const OrdersBody({Key key, this.orders}) : super(key: key);
 
   @override
@@ -18,7 +19,7 @@ class _OrdersBodyState extends State<OrdersBody> {
   void initState() {
     super.initState();
     setState(() {
-      _ordersList = widget.orders.orders;
+      _ordersList = widget.orders["orders"];
     });
   }
 
@@ -27,7 +28,7 @@ class _OrdersBodyState extends State<OrdersBody> {
     return Container(
       padding: AppTheme.padding,
       child: SingleChildScrollView(
-        child: (widget.orders.orders.length == 0)
+        child: (_ordersList.length == 0)
             ? Center(
                 child: Text("No Orders"),
               )
@@ -40,7 +41,7 @@ class _OrdersBodyState extends State<OrdersBody> {
     );
   }
 
-  Widget _item(Orders model) {
+  Widget _item(var model) {
     Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
@@ -50,6 +51,7 @@ class _OrdersBodyState extends State<OrdersBody> {
         itemCount: _ordersList.length,
         itemBuilder: (context, index) {
           dynamic order = _ordersList[index];
+          var cart = jsonDecode(order['cart']);
           return Container(
             width: size.width * 0.8,
             height: 80,
@@ -57,7 +59,7 @@ class _OrdersBodyState extends State<OrdersBody> {
               Expanded(
                 child: ListTile(
                   title: TitleText(
-                    text: "Order ID : ${order.id}",
+                    text: "Order ID : ${order['id'].toString()}",
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
                   ),
@@ -68,11 +70,11 @@ class _OrdersBodyState extends State<OrdersBody> {
                       fontSize: 14,
                     ),
                     TitleText(
-                      text: order.payAmount,
+                      text: cart[0]['status'].toString(),
                       fontSize: 14,
                     ),
                   ]),
-                  trailing: Text("Rs ${order.payAmount}"),
+                  trailing: Text("Rs ${cart[0]['price'].toString()}"),
                 ),
               ),
             ]),

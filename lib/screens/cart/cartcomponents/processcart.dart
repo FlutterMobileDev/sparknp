@@ -346,7 +346,7 @@ class _ProcessScreenState extends State<ProcessScreen> {
             if (data["status"] = true) {
               _showDialog(context, data["message"]).whenComplete(() {
                 Navigator.pop(context);
-                Navigator.popAndPushNamed(context, home);
+                Navigator.popAndPushNamed(context, splash);
               });
             }
           });

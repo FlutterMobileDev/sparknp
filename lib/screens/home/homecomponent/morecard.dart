@@ -114,7 +114,7 @@ class _ItemCardState extends State<ItemCard> {
                       children: <Widget>[
                         Expanded(
                           child: Container(
-                            height: 180,
+                            height: 280,
                             width: 180,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -126,7 +126,7 @@ class _ItemCardState extends State<ItemCard> {
                           ),
                         ),
                         Container(
-                          height: 50,
+                          height: 55,
                           width: 180,
                           decoration: BoxDecoration(
                               color: LightColor.background,
@@ -151,14 +151,17 @@ class _ItemCardState extends State<ItemCard> {
                                 child: Text(
                                   product.name.toUpperCase(),
                                   style: TextStyle(
-                                      color: LightColor.textLightColor),
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                               Text(
                                 "\Rs ${product.price}",
                                 overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                    color: LightColor.textLightColor,
+                                    fontWeight: FontWeight.normal),
                               ),
                             ],
                           ),
