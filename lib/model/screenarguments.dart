@@ -4,5 +4,8 @@ class ScreenArguments {
   final String name;
   final ApiFront front;
   final int id;
-  const ScreenArguments({this.name, this.front, this.id});
+  final Category category;
+  final bool isMulti;
+  const ScreenArguments(
+      {this.name, this.front, this.id, this.category, this.isMulti});
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sparknp/constants.dart';
-import 'package:sparknp/router.dart';
+import 'package:sparknp/screens/account/myaccount.dart';
 import 'package:sparknp/screens/categories/categories.dart';
 
 import 'package:sparknp/services/frontservice.dart';
@@ -11,7 +11,7 @@ import 'package:sparknp/model/frontjson.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:sparknp/screens/account/myaccount.dart';
+import 'package:sparknp/screens/account/profile.dart';
 import 'package:sparknp/screens/cart/cart.dart';
 import 'package:sparknp/screens/home/home.dart';
 import 'package:sparknp/screens/wishlist/wishlist.dart';
@@ -84,7 +84,7 @@ class _BottomnavbarState extends State<Bottomnavbar> {
             Categories(category: widget.front.categories),
             CartScreen(),
             WishlistScreen(),
-            ProfilePage()
+            AccountScreen()
           ],
         ),
       ),

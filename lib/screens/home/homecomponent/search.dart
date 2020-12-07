@@ -54,7 +54,7 @@ class _SearchState extends State<Search> {
                         child: IconButton(
                           icon: Icon(Icons.arrow_back_ios_outlined),
                           onPressed: () {
-                            Navigator.pushNamed(context, home);
+                            Navigator.pop(context);
                           },
                         ),
                       ),

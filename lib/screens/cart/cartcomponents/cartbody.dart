@@ -21,6 +21,7 @@ class CartBody extends StatefulWidget {
 }
 
 class _CartBodyState extends State<CartBody> {
+  String imgpath = "https://sparknp.com/assets/images/thumbnails/";
   List _cartList;
   List _cartList1;
   bool _loading;
@@ -31,6 +32,7 @@ class _CartBodyState extends State<CartBody> {
   final SecureStorage secureStorage = SecureStorage();
   String _token;
   List<String> _productName = [];
+  List _productImage = [];
 
   ProductDetails _product;
 
@@ -44,6 +46,7 @@ class _CartBodyState extends State<CartBody> {
         await ProductService.fetch(widget.cart.carts[i - 1].productId)
             .then((value) {
           _product = value;
+          _productImage.add(_product.product.thumbnail);
           _productName.add(_product.product.name);
         });
       }
@@ -95,23 +98,41 @@ class _CartBodyState extends State<CartBody> {
   Widget _item(Cart model) {
     return Container(
       width: AppTheme.fullWidth(context) - 20,
-      height: AppTheme.fullHeight(context) * 0.5,
+      height: AppTheme.fullHeight(context) * 0.55,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: ListView.separated(
         itemCount: _cartList.length,
         itemBuilder: (context, index) {
           dynamic product = _cartList[index];
-          return GestureDetector(
-            onTap: () {
-              Navigator.popAndPushNamed(context, details,
-                  arguments: _product.product);
+          return Dismissible(
+            key: Key(cart),
+            background: Container(
+              alignment: AlignmentDirectional.centerEnd,
+              color: Colors.red,
+              child: Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
+            ),
+            direction: DismissDirection.endToStart,
+            onDismissed: (direction) {
+              CartService.destroy(_token, product.productId).then((removed) {
+                _addsubtract();
+                Navigator.popAndPushNamed(context, cart);
+              });
             },
             child: Container(
               width: AppTheme.fullWidth(context),
-              height: AppTheme.fullHeight(context) * 0.175,
+              height: 100,
               child: Column(children: [
                 Expanded(
                   child: ListTile(
+                    leading: Image.network(
+                      imgpath + _productImage[index].toString(),
+                      height: 200,
+                      width: 60,
+                      fit: BoxFit.cover,
+                    ),
                     title: Text(
                       "${_productName[index]}",
                       style:
@@ -129,25 +150,6 @@ class _CartBodyState extends State<CartBody> {
                         fontSize: 14,
                       ),
                     ]),
-
-                    // trailing: FlatButton(
-                    //   shape: RoundedRectangleBorder(
-                    //       borderRadius: BorderRadius.circular(15)),
-                    //   color: LightColor.orange,
-                    //   onPressed: () {
-                    //     CartService.destroy(_token, product.productId)
-                    //         .then((removed) {
-                    //       _showDialog(context, "Removed this items")
-                    //           .whenComplete(() {
-                    //         Navigator.popAndPushNamed(context, cart);
-                    //       });
-                    //     });
-                    //   },
-                    //   child: Text(
-                    //     "Remove",
-                    //     style: TextStyle(color: LightColor.background),
-                    //   ),
-                    // ),
                   ),
                 ),
                 SizedBox(
@@ -198,7 +200,7 @@ class _CartBodyState extends State<CartBody> {
                       ),
                     ),
                   ],
-                )
+                ),
               ]),
             ),
           );

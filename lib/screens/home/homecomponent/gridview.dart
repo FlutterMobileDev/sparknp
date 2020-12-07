@@ -73,7 +73,7 @@ class _GridProductState extends State<GridProduct> {
                       Expanded(
                         child: Container(
                           height: 130,
-                          width: 96,
+                          width: size.width * 0.3,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -85,7 +85,7 @@ class _GridProductState extends State<GridProduct> {
                       ),
                       Container(
                         height: 50,
-                        width: 96,
+                        width: size.width * 0.3,
                         decoration: BoxDecoration(
                             color: LightColor.background,
                             borderRadius: BorderRadius.only(
@@ -107,7 +107,6 @@ class _GridProductState extends State<GridProduct> {
                                   vertical: defaultPadding / 4,
                                   horizontal: defaultPadding / 4),
                               child: Text(
-                                // products is out demo list
                                 product.name.toUpperCase(),
                                 style: TextStyle(
                                     color: Colors.black,

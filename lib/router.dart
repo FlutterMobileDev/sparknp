@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sparknp/model/screenarguments.dart';
+import 'package:sparknp/screens/categories/categoriescomponents/categorybody.dart';
 
 import 'package:sparknp/splash.dart';
 
@@ -13,7 +14,6 @@ import 'package:sparknp/screens/orders/myorders.dart';
 
 import 'package:sparknp/screens/account/myaccount.dart';
 
-// import 'package:sparknp/screens/categories/categories.dart';
 import 'package:sparknp/screens/details/details.dart';
 
 import 'package:sparknp/screens/cart/cart.dart';
@@ -44,6 +44,11 @@ class Routing {
         return MaterialPageRoute(builder: (_) => SplashScreen());
       case home:
         return MaterialPageRoute(builder: (_) => HomeScreen());
+      case categories:
+        ScreenArguments args = screen.arguments;
+        return MaterialPageRoute(
+            builder: (_) =>
+                CategoryBody(category: args.category, isMulti: args.isMulti));
       case search:
         return MaterialPageRoute(builder: (_) => Search());
       case more:
@@ -55,7 +60,7 @@ class Routing {
       case myOrders:
         return MaterialPageRoute(builder: (_) => OrdersScreen());
       case myAccount:
-        return MaterialPageRoute(builder: (_) => ProfilePage());
+        return MaterialPageRoute(builder: (_) => AccountScreen());
       case wishlist:
         return MaterialPageRoute(builder: (_) => WishlistScreen());
       case cart:
@@ -67,7 +72,7 @@ class Routing {
           builder: (_) => DetailsScreen(screen.arguments),
         );
       default:
-        return null;
+        return MaterialPageRoute(builder: (_) => Bottomnavbar());
     }
   }
 }

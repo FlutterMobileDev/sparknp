@@ -8,6 +8,7 @@ import 'package:sparknp/model/productmodel.dart';
 
 import 'package:sparknp/services/productservice.dart';
 import 'package:sparknp/services/wishlistservice.dart';
+import 'package:sparknp/services/cartservice.dart';
 import 'package:sparknp/services/storage.dart';
 
 class WishlistBody extends StatefulWidget {
@@ -19,12 +20,14 @@ class WishlistBody extends StatefulWidget {
 }
 
 class _WishlistBodyState extends State<WishlistBody> {
+  String imgpath = "https://sparknp.com/assets/images/thumbnails/";
   List _wishlistList;
   bool _loading;
 
   final SecureStorage secureStorage = SecureStorage();
   String _token;
   List<String> _productName = [];
+  List _productImage = [];
 
   ProductDetails _product;
 
@@ -34,11 +37,13 @@ class _WishlistBodyState extends State<WishlistBody> {
     _loading = true;
     secureStorage.readData('token').then((value) async {
       int n = widget.wishlist.wishlists.length;
+      print(n);
       for (int i = 1; i <= n; i++) {
         await ProductService.fetch(widget.wishlist.wishlists[i - 1].productId)
             .then((value) {
           _product = value;
           print(_product.product.name);
+          _productImage.add(_product.product.thumbnail);
           _productName.add(_product.product.name);
         });
       }
@@ -78,47 +83,69 @@ class _WishlistBodyState extends State<WishlistBody> {
   }
 
   Widget _item(Wishlist model) {
-    Size size = MediaQuery.of(context).size;
     return Container(
-      width: size.width,
-      height: 450,
+      width: AppTheme.fullWidth(context) - 20,
+      height: AppTheme.fullHeight(context) * 0.55,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: ListView.separated(
         itemCount: _wishlistList.length,
         itemBuilder: (context, index) {
           dynamic product = _wishlistList[index];
-          return GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, details,
-                    arguments: _product.product);
+          return Dismissible(
+              key: Key(cart),
+              background: Container(
+                alignment: AlignmentDirectional.centerEnd,
+                color: Colors.red,
+                child: Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
+              ),
+              direction: DismissDirection.endToStart,
+              onDismissed: (direction) {
+                WishlistService.remove(_token, product.id).then((value) {
+                  _showDialog(context, "Removed from Wishlist")
+                      .whenComplete(() {
+                    Navigator.popAndPushNamed(context, wishlist);
+                  });
+                });
               },
               child: Container(
-                width: size.width * 0.8,
-                height: size.height * 0.175,
+                height: 50,
                 child: Column(children: [
-                  ListTile(
-                    title: Text(
-                      "${_wishlistList[index].product.name}",
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
-                      overflow: TextOverflow.clip,
-                    ),
-                    trailing: FlatButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      color: LightColor.orange,
-                      onPressed: () {
-                        WishlistService.remove(_token, product.id)
-                            .then((value) {
-                          _showDialog(context).whenComplete(() {
-                            Navigator.popAndPushNamed(context, wishlist);
-                          });
-                        });
-                      },
-                      child: Text(
-                        "Remove",
-                        style: TextStyle(color: LightColor.background),
+                  Expanded(
+                    child: ListTile(
+                      leading: Image.network(
+                        imgpath + _productImage[index].toString(),
+                        height: 200,
+                        width: 60,
+                        fit: BoxFit.cover,
                       ),
+                      title: Text(
+                        "${_wishlistList[index].product.name}",
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w700),
+                        overflow: TextOverflow.clip,
+                      ),
+                      trailing: IconButton(
+                          icon: Icon(Icons.add_shopping_cart_rounded),
+                          color: Colors.indigo[900],
+                          onPressed: () {
+                            if (_token != null) {
+                              CartService.add(
+                                      _token, _wishlistList[index].product.id)
+                                  .then(
+                                (added) {
+                                  _showDialog(context, "Added to Cart");
+                                },
+                              ).whenComplete(() {
+                                WishlistService.remove(_token, product.id)
+                                    .then((value) {
+                                  Navigator.pushNamed(context, cart);
+                                });
+                              });
+                            }
+                          }),
                     ),
                   ),
                 ]),
@@ -140,13 +167,12 @@ class _WishlistBodyState extends State<WishlistBody> {
   }
 }
 
-Future<void> _showDialog(context) async {
+Future<void> _showDialog(context, txt) async {
   return showDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Removed from Wishlist'),
-      );
-    },
-  );
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(txt),
+        );
+      });
 }
