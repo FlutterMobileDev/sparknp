@@ -34,6 +34,7 @@ const String cart = '/cart';
 const String processCart = '/processCart';
 const String wishlist = '/wishlist';
 const String more = '/more';
+const String bottomnav = "/nav";
 
 class Routing {
   static Route<dynamic> generateRoute(RouteSettings screen) {
@@ -57,6 +58,13 @@ class Routing {
           builder: (_) =>
               MoreScreen(name: args.name, front: args.front, subId: args.id),
         );
+      case bottomnav:
+        ScreenArguments args = screen.arguments;
+        return MaterialPageRoute(
+          builder: (_) =>
+              Bottomnavbar( front: args.front, token: args.token,index: args.index,),
+        );
+
       case myOrders:
         return MaterialPageRoute(builder: (_) => OrdersScreen());
       case myAccount:

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sparknp/model/frontjson.dart';
+import 'package:sparknp/model/screenarguments.dart';
 
 import 'package:sparknp/router.dart';
 
@@ -12,8 +14,10 @@ import 'package:sparknp/services/cartservice.dart';
 import 'package:sparknp/services/storage.dart';
 
 class WishlistBody extends StatefulWidget {
+  final ApiFront front;
+  final String token;
   final Wishlist wishlist;
-  const WishlistBody({Key key, this.wishlist}) : super(key: key);
+  const WishlistBody({Key key, this.wishlist, this.front, this.token}) : super(key: key);
 
   @override
   _WishlistBodyState createState() => _WishlistBodyState();
@@ -23,7 +27,6 @@ class _WishlistBodyState extends State<WishlistBody> {
   String imgpath = "https://sparknp.com/assets/images/thumbnails/";
   List _wishlistList;
   bool _loading;
-
   final SecureStorage secureStorage = SecureStorage();
   String _token;
   List<String> _productName = [];
@@ -59,27 +62,27 @@ class _WishlistBodyState extends State<WishlistBody> {
   Widget build(BuildContext context) {
     return (_loading)
         ? Container(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          )
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
+    )
         : Container(
-            padding: AppTheme.padding,
-            child: SingleChildScrollView(
-              child: (widget.wishlist.wishlists.length == 0)
-                  ? Container(
-                      height: 400,
-                      child: Center(
-                        child: Text("No Items in Wishlist"),
-                      ),
-                    )
-                  : Column(
-                      children: <Widget>[
-                        _item(widget.wishlist),
-                      ],
-                    ),
-            ),
-          );
+      padding: AppTheme.padding,
+      child: SingleChildScrollView(
+        child: (widget.wishlist.wishlists.length == 0)
+            ? Container(
+          height: 400,
+          child: Center(
+            child: Text("No Items in Wishlist"),
+          ),
+        )
+            : Column(
+          children: <Widget>[
+            _item(widget.wishlist),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _item(Wishlist model) {
@@ -106,7 +109,9 @@ class _WishlistBodyState extends State<WishlistBody> {
                 WishlistService.remove(_token, product.id).then((value) {
                   _showDialog(context, "Removed from Wishlist")
                       .whenComplete(() {
-                    Navigator.popAndPushNamed(context, wishlist);
+                    print(index);
+                    Navigator.popAndPushNamed(context, bottomnav,arguments:ScreenArguments(front: widget.front,token: widget.token,index:3));
+
                   });
                 });
               },
@@ -133,9 +138,9 @@ class _WishlistBodyState extends State<WishlistBody> {
                           onPressed: () {
                             if (_token != null) {
                               CartService.add(
-                                      _token, _wishlistList[index].product.id)
+                                  _token, _wishlistList[index].product.id)
                                   .then(
-                                (added) {
+                                    (added) {
                                   _showDialog(context, "Added to Cart");
                                 },
                               ).whenComplete(() {

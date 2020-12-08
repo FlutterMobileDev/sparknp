@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sparknp/model/frontjson.dart';
+import 'package:sparknp/model/screenarguments.dart';
 
 import 'package:sparknp/router.dart';
 
@@ -14,7 +16,9 @@ import 'package:sparknp/services/storage.dart';
 
 class CartBody extends StatefulWidget {
   final Cart cart;
-  const CartBody({Key key, this.cart}) : super(key: key);
+  final ApiFront front;
+  final String token;
+  const CartBody({Key key, this.cart, this.front, this.token}) : super(key: key);
 
   @override
   _CartBodyState createState() => _CartBodyState();
@@ -65,34 +69,34 @@ class _CartBodyState extends State<CartBody> {
   Widget build(BuildContext context) {
     return (_loading)
         ? Container(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          )
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
+    )
         : Container(
-            padding: AppTheme.padding,
-            child: SingleChildScrollView(
-              child: (widget.cart.carts.length == 0)
-                  ? Container(
-                      height: 400,
-                      child: Center(
-                        child: Text("No Items in Cart"),
-                      ),
-                    )
-                  : Column(
-                      children: <Widget>[
-                        _item(widget.cart),
-                        Divider(
-                          thickness: 1,
-                          height: 70,
-                        ),
-                        _price(),
-                        // SizedBox(height: 30),
-                        _submitButton(context),
-                      ],
-                    ),
+      padding: AppTheme.padding,
+      child: SingleChildScrollView(
+        child: (widget.cart.carts.length == 0)
+            ? Container(
+          height: 400,
+          child: Center(
+            child: Text("No Items in Cart"),
+          ),
+        )
+            : Column(
+          children: <Widget>[
+            _item(widget.cart),
+            Divider(
+              thickness: 1,
+              height: 70,
             ),
-          );
+            // _price(),
+            SizedBox(height: 30),
+            _submitButton(context),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _item(Cart model) {
@@ -118,7 +122,7 @@ class _CartBodyState extends State<CartBody> {
             onDismissed: (direction) {
               CartService.destroy(_token, product.productId).then((removed) {
                 _addsubtract();
-                Navigator.popAndPushNamed(context, cart);
+                Navigator.popAndPushNamed(context, bottomnav,arguments:ScreenArguments(front: widget.front,token: widget.token,index:2));
               });
             },
             child: Container(
@@ -136,7 +140,7 @@ class _CartBodyState extends State<CartBody> {
                     title: Text(
                       "${_productName[index]}",
                       style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                      TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                       overflow: TextOverflow.fade,
                     ),
                     subtitle: Row(children: <Widget>[
@@ -216,8 +220,8 @@ class _CartBodyState extends State<CartBody> {
   }
 
   Widget _price() {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(0, 0, 0, 50),
+    return Positioned(
+      bottom: 250,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[

@@ -19,6 +19,9 @@ import 'package:sparknp/screens/wishlist/wishlist.dart';
 import 'package:sparknp/services/storage.dart';
 
 class SplashScreen extends StatefulWidget {
+  final int index;
+
+  const SplashScreen({Key key, this.index}) : super(key: key);
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -51,24 +54,36 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return _loading
         ? Container(
-            color: LightColor.textColor,
-            child: Center(child: CircularProgressIndicator()))
-        : Bottomnavbar(front: front, token: _token);
+        color: LightColor.textColor,
+        child: Center(child: CircularProgressIndicator()))
+        : Bottomnavbar(front: front, token: _token,index: widget.index,);
   }
 }
 
 class Bottomnavbar extends StatefulWidget {
   final ApiFront front;
   final String token;
-  Bottomnavbar({Key key, this.front, this.token}) : super(key: key);
+  final int index;
+  Bottomnavbar({Key key, this.front, this.token, this.index,}) : super(key: key);
   @override
   _BottomnavbarState createState() => _BottomnavbarState();
 }
 
 class _BottomnavbarState extends State<Bottomnavbar> {
   int _currentIndex = 0;
-  PageController _pageController =
-      PageController(initialPage: 0, keepPage: false);
+  PageController _pageController  = PageController(initialPage: 0, keepPage: false);
+  @override
+  void initState() {
+    if(widget.index== 3){
+      _currentIndex = 3;
+      _pageController = PageController(initialPage: 3, keepPage: false);
+    }
+    if(widget.index== 2){
+      _currentIndex = 2;
+      _pageController = PageController(initialPage: 3, keepPage: false);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +97,8 @@ class _BottomnavbarState extends State<Bottomnavbar> {
           children: <Widget>[
             HomeScreen(front: widget.front, token: widget.token),
             Categories(category: widget.front.categories),
-            CartScreen(),
-            WishlistScreen(),
+            CartScreen(front: widget.front,token: widget.token,),
+            WishlistScreen(front: widget.front,token: widget.token,),
             AccountScreen()
           ],
         ),
