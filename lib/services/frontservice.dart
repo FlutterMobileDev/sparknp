@@ -1,11 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:sparknp/model/frontjson.dart';
-import 'package:sparknp/model/subcategorymodel.dart';
 
 class FrontService {
-  static Future<ApiFront> fetch() async {
+  static Future fetch() async {
     try {
       final response =
           await http.get('https://www.sparknp.com/api/front-data').timeout(
@@ -14,7 +13,7 @@ class FrontService {
                 ),
               );
       if (response.statusCode == 200) {
-        final ApiFront frontdata = apiFrontFromJson(response.body);
+        final frontdata = jsonDecode(response.body);
         return frontdata;
       } else {
         throw Exception('error here');
@@ -24,7 +23,7 @@ class FrontService {
     }
   }
 
-  static Future<SubCat> subcat(id) async {
+  static Future subcat(id) async {
     try {
       final response = await http
           .get('https://www.sparknp.com/api/subcategories/$id')
@@ -34,7 +33,7 @@ class FrontService {
             ),
           );
       if (response.statusCode == 200) {
-        final SubCat subcat = subCatFromJson(response.body);
+        final subcat = jsonDecode(response.body);
         return subcat;
       } else {
         throw Exception('error here');

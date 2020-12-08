@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:sparknp/router.dart';
 import 'package:sparknp/constants.dart';
-import 'package:sparknp/model/frontjson.dart';
 import 'package:sparknp/model/screenarguments.dart';
 
 class TitleWithMoreBtn extends StatelessWidget {
   const TitleWithMoreBtn({Key key, this.name, this.front, this.subId})
       : super(key: key);
   final String name;
-  final ApiFront front;
+  final front;
   final int subId;
 
   @override
@@ -70,17 +69,6 @@ class TitleWithCustomUnderline extends StatelessWidget {
               ),
             ),
           ),
-          // Positioned(
-          //   bottom: 0,
-          //   left: 0,
-          //   right: 0,
-          //   child: Container(
-          // width: 400,
-          //     margin: EdgeInsets.only(right: defaultPadding / 4),
-          //     height: 7,
-          //     color: LightColor.primaryColor.withOpacity(0.2),
-          //   ),
-          // )
         ],
       ),
     );

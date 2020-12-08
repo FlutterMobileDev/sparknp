@@ -1,10 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:sparknp/model/productmodel.dart';
 
 class ProductService {
-  static Future<ProductDetails> fetch(id) async {
+  static Future fetch(id) async {
     try {
       print("id");
       print(id);
@@ -15,7 +15,7 @@ class ProductService {
                 ),
               );
       if (response.statusCode == 200) {
-        final ProductDetails product = productDetailsFromJson(response.body);
+        final product = jsonDecode(response.body);
         return product;
       } else {
         throw Exception('error here');

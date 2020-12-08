@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:sparknp/model/frontjson.dart';
-import 'package:sparknp/model/searchmodel.dart';
-
 import 'package:sparknp/screens/home/homecomponent/homebody.dart';
 import 'package:sparknp/screens/categories/categoriescomponents/categorybody.dart';
 
@@ -13,7 +10,7 @@ import 'package:sparknp/constants.dart';
 TabController _tabController;
 
 class HomeScreen extends StatefulWidget {
-  final ApiFront front;
+  final front;
   final String token;
   const HomeScreen({Key key, this.front, this.token}) : super(key: key);
   @override
@@ -21,18 +18,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen>
-    with SingleTickerProviderStateMixin {
-  SearchProducts products;
-
+    with
+        SingleTickerProviderStateMixin,
+        AutomaticKeepAliveClientMixin<HomeScreen> {
+  @override
+  bool get wantKeepAlive => true;
   @override
   void initState() {
     super.initState();
-    _tabController =
-        TabController(vsync: this, length: widget.front.categories.length + 1);
+    _tabController = TabController(
+        vsync: this, length: widget.front["categories"].length + 1);
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -43,8 +43,8 @@ class _HomeScreenState extends State<HomeScreen>
             Tab(
               text: "All",
             ),
-            for (int i = 0; i < widget.front.categories.length; i++)
-              Tab(text: widget.front.categories[i].name),
+            for (int i = 0; i < widget.front["categories"].length; i++)
+              Tab(text: widget.front["categories"][i]["name"]),
           ],
         ),
         backgroundColor: LightColor.primaryColor,
@@ -77,26 +77,14 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           ),
         ),
-        actions: (widget.token != null)
-            ? null
-            : [
-                FlatButton(
-                    child: Text(
-                      "Sign In",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, login);
-                    }),
-              ],
       ),
       body: TabBarView(controller: _tabController, children: [
         HomeBody(
           front: widget.front,
         ),
-        for (int i = 0; i < widget.front.categories.length; i++)
+        for (int i = 0; i < widget.front["categories"].length; i++)
           CategoryBody(
-            category: widget.front.categories[i],
+            category: widget.front["categories"][i],
             isMulti: true,
           )
       ]),

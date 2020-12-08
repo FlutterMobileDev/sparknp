@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sparknp/constants.dart';
 
-import 'package:sparknp/model/wishlistmodel.dart';
 import 'package:sparknp/router.dart';
 import 'package:sparknp/screens/account/profile.dart';
-import 'package:sparknp/services/wishlistservice.dart';
 import 'package:sparknp/services/storage.dart';
-import 'package:sparknp/screens/wishlist/wishlistcomponents/wishlistbody.dart';
 import 'package:sparknp/widgets/appbar.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -15,7 +12,6 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  Wishlist wishlist;
   bool _loading;
   bool _loggedIn;
 

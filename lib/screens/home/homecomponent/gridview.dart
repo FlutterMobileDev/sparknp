@@ -4,12 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:sparknp/router.dart';
 import 'package:sparknp/constants.dart';
 
-import 'package:sparknp/model/frontjson.dart';
-
 class GridProduct extends StatefulWidget {
   final String name;
   final String scale;
-  final ApiFront front;
+  final front;
 
   const GridProduct({Key key, this.name, this.scale, this.front})
       : super(key: key);
@@ -26,20 +24,20 @@ class _GridProductState extends State<GridProduct> {
   @override
   void initState() {
     super.initState();
-    if (widget.name == "bigProducts") {
-      setState(() {
-        _productList = widget.front.bigProducts;
-      });
-    }
-    if (widget.name == "bestProducts") {
-      setState(() {
-        _productList = widget.front.bestProducts;
-      });
-    }
-    if (widget.name == "topProducts") {
-      setState(() {
-        _productList = widget.front.topProducts;
-      });
+
+    switch (widget.name) {
+      case "topProducts":
+        return setState(() {
+          _productList = widget.front["top_products"];
+        });
+      case "bestProducts":
+        return setState(() {
+          _productList = widget.front["best_products"];
+        });
+      case "bigProducts":
+        return setState(() {
+          _productList = widget.front["big_products"];
+        });
     }
   }
 
@@ -78,7 +76,7 @@ class _GridProductState extends State<GridProduct> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Image.network(
-                            imgpath + product.thumbnail,
+                            imgpath + product["thumbnail"],
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -107,7 +105,7 @@ class _GridProductState extends State<GridProduct> {
                                   vertical: defaultPadding / 4,
                                   horizontal: defaultPadding / 4),
                               child: Text(
-                                product.name.toUpperCase(),
+                                product["name"].toUpperCase(),
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -116,7 +114,7 @@ class _GridProductState extends State<GridProduct> {
                               ),
                             ),
                             Text(
-                              "\Rs ${product.price}",
+                              "\Rs ${product["price"]}",
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   color: LightColor.textLightColor,

@@ -1,14 +1,21 @@
-import 'package:sparknp/model/frontjson.dart';
-
 class ScreenArguments {
   final String name;
-  final ApiFront front;
-  final int id;
-  final Category category;
-  final bool isMulti;
+  final front;
+  final category;
+  final cart;
   final String token;
+  final int id;
+  final bool isMulti;
   final int index;
 
-  const ScreenArguments(
-      {this.name, this.front, this.id, this.category, this.isMulti,this.token,this.index,});
+  const ScreenArguments({
+    this.name,
+    this.front,
+    this.category,
+    this.cart,
+    this.token,
+    this.id,
+    this.isMulti,
+    this.index,
+  });
 }

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:sparknp/constants.dart';
-import 'package:sparknp/model/frontjson.dart';
 import 'package:sparknp/screens/categories/categoriescomponents/subcatcard.dart';
 
 class SwipeBar extends StatefulWidget {
-  final List<Category> categories;
+  final List categories;
 
   const SwipeBar({Key key, this.categories}) : super(key: key);
 
@@ -18,7 +17,6 @@ class _SwipeBarState extends State<SwipeBar> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.categories[selectedIndex].name);
     return Container(
       child: Column(
         children: [
@@ -41,7 +39,7 @@ class _SwipeBarState extends State<SwipeBar> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          widget.categories[index].name,
+                          widget.categories[index]["name"],
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: selectedIndex == index
@@ -64,7 +62,7 @@ class _SwipeBarState extends State<SwipeBar> {
               },
             ),
           ),
-          SubCatCard(subId: widget.categories[selectedIndex].id),
+          SubCatCard(subId: widget.categories[selectedIndex]["id"]),
         ],
       ),
     );

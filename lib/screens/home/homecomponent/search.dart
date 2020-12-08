@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:sparknp/constants.dart';
-import 'package:sparknp/model/searchmodel.dart';
 import 'package:sparknp/router.dart';
 import 'package:sparknp/services/searchservice.dart';
 
@@ -99,7 +98,7 @@ class _SearchState extends State<Search> {
                       ? Container(
                           height: size.height,
                           width: size.width,
-                          child: FutureBuilder<SearchProducts>(
+                          child: FutureBuilder(
                             future: SearchService.getlist(searchString),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
@@ -136,10 +135,11 @@ class _SearchState extends State<Search> {
                                       child: CircularProgressIndicator(),
                                     )
                                   : ListView.builder(
-                                      itemCount: snapshot.data.products.length,
+                                      itemCount:
+                                          snapshot.data["products"].length,
                                       itemBuilder: (context, index) {
                                         dynamic product =
-                                            snapshot.data.products[index];
+                                            snapshot.data["products"][index];
                                         return GestureDetector(
                                           onTap: () {
                                             Navigator.pushNamed(
@@ -152,10 +152,11 @@ class _SearchState extends State<Search> {
                                             child: Card(
                                               child: ListTile(
                                                 title: Text(
-                                                  product.name,
+                                                  product["name"],
                                                 ),
                                                 leading: Image.network(
-                                                  imgpath + product.thumbnail,
+                                                  imgpath +
+                                                      product["thumbnail"],
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),

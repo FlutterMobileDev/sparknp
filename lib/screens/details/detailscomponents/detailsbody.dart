@@ -36,7 +36,7 @@ class _DetailsBodyState extends State<DetailsBody> {
             height: 250,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(imgpath + widget.product.thumbnail),
+                image: NetworkImage(imgpath + widget.product["thumbnail"]),
               ),
             ),
           ),
@@ -48,12 +48,12 @@ class _DetailsBodyState extends State<DetailsBody> {
               child: ListTile(
             title: ListTile(
               title: Text(
-                "Rs. ${widget.product.price}",
+                "Rs. ${widget.product["price"]}",
               ),
               subtitle: Row(
                 children: [
                   Text(
-                    "Rs. ${widget.product.previousPrice}",
+                    "Rs. ${widget.product["previous_price"]}",
                     style: TextStyle(decoration: TextDecoration.lineThrough),
                   ),
                 ],
@@ -63,7 +63,7 @@ class _DetailsBodyState extends State<DetailsBody> {
                   color: LightColor.orange,
                   onPressed: () {
                     if (_token != null) {
-                      WishlistService.add(_token, widget.product.id)
+                      WishlistService.add(_token, widget.product["id"])
                           .then((added) {
                         _showDialog(context, true);
                       });
@@ -75,7 +75,7 @@ class _DetailsBodyState extends State<DetailsBody> {
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.product.name),
+                Text(widget.product["name"]),
                 StarRating(
                   rating: rating,
                   onRatingChanged: (rating) => this.rating = rating,

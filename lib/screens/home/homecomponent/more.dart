@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:sparknp/model/frontjson.dart';
-
 import 'package:sparknp/screens/home/homecomponent/morecard.dart';
 
 import 'package:sparknp/widgets/appbar.dart';
 
 class MoreScreen extends StatefulWidget {
   final String name;
-  final ApiFront front;
+  final front;
   final int subId;
 
   const MoreScreen({Key key, this.name, this.front, this.subId})

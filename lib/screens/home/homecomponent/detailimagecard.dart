@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 
 import 'package:sparknp/router.dart';
 import 'package:sparknp/constants.dart';
-import 'package:sparknp/model/frontjson.dart';
 
 class DetailImageCard extends StatefulWidget {
   final String name;
-  final ApiFront front;
+  final front;
 
   const DetailImageCard({Key key, this.name, this.front}) : super(key: key);
 
@@ -24,18 +23,19 @@ class _DetailImageCardState extends State<DetailImageCard> {
   @override
   void initState() {
     super.initState();
-    if (widget.name == "trendingProducts") {
-      setState(() {
-        _productList = widget.front.trendingProducts;
-      });
-    } else if (widget.name == "bestProducts") {
-      setState(() {
-        _productList = widget.front.bestProducts;
-      });
-    } else if (widget.name == "hotProducts") {
-      setState(() {
-        _productList = widget.front.hotProducts;
-      });
+    switch (widget.name) {
+      case "trendingProducts":
+        return setState(() {
+          _productList = widget.front["trending_products"];
+        });
+      case "bestProducts":
+        return setState(() {
+          _productList = widget.front["best_products"];
+        });
+      case "hotProducts":
+        return setState(() {
+          _productList = widget.front["hot_products"];
+        });
     }
   }
 
@@ -47,7 +47,7 @@ class _DetailImageCardState extends State<DetailImageCard> {
       height: 145,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: ListView.separated(
-        itemCount: _productList.length >= 5 ? 5 : _productList.length,
+        itemCount: _productList.length >= 10 ? 10 : _productList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           dynamic product = _productList[index];
@@ -70,7 +70,7 @@ class _DetailImageCardState extends State<DetailImageCard> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Image.network(
-                          imgpath + product.thumbnail,
+                          imgpath + product["thumbnail"],
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -98,8 +98,7 @@ class _DetailImageCardState extends State<DetailImageCard> {
                                 vertical: defaultPadding / 4,
                                 horizontal: defaultPadding / 4),
                             child: Text(
-                              // products is out demo list
-                              product.name.toUpperCase(),
+                              product["name"].toUpperCase(),
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
@@ -108,7 +107,7 @@ class _DetailImageCardState extends State<DetailImageCard> {
                             ),
                           ),
                           Text(
-                            "\Rs ${product.price}",
+                            "\Rs ${product["price"]}",
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: LightColor.textLightColor,

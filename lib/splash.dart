@@ -6,12 +6,9 @@ import 'package:sparknp/screens/categories/categories.dart';
 
 import 'package:sparknp/services/frontservice.dart';
 
-import 'package:sparknp/model/frontjson.dart';
-
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:sparknp/screens/account/profile.dart';
 import 'package:sparknp/screens/cart/cart.dart';
 import 'package:sparknp/screens/home/home.dart';
 import 'package:sparknp/screens/wishlist/wishlist.dart';
@@ -31,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen>
   final SecureStorage secureStorage = SecureStorage();
 
   bool _loading;
-  ApiFront front;
+  var front;
   String _token;
 
   @override
@@ -54,31 +51,40 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return _loading
         ? Container(
-        color: LightColor.textColor,
-        child: Center(child: CircularProgressIndicator()))
-        : Bottomnavbar(front: front, token: _token,index: widget.index,);
+            color: LightColor.textColor,
+            child: Center(child: CircularProgressIndicator()))
+        : Bottomnavbar(
+            front: front,
+            index: widget.index,
+          );
   }
 }
 
 class Bottomnavbar extends StatefulWidget {
-  final ApiFront front;
+  final front;
   final String token;
   final int index;
-  Bottomnavbar({Key key, this.front, this.token, this.index,}) : super(key: key);
+  Bottomnavbar({
+    Key key,
+    this.front,
+    this.token,
+    this.index,
+  }) : super(key: key);
   @override
   _BottomnavbarState createState() => _BottomnavbarState();
 }
 
 class _BottomnavbarState extends State<Bottomnavbar> {
   int _currentIndex = 0;
-  PageController _pageController  = PageController(initialPage: 0, keepPage: false);
+  PageController _pageController =
+      PageController(initialPage: 0, keepPage: false);
   @override
   void initState() {
-    if(widget.index== 3){
+    if (widget.index == 3) {
       _currentIndex = 3;
       _pageController = PageController(initialPage: 3, keepPage: false);
     }
-    if(widget.index== 2){
+    if (widget.index == 2) {
       _currentIndex = 2;
       _pageController = PageController(initialPage: 2, keepPage: false);
     }
@@ -96,9 +102,9 @@ class _BottomnavbarState extends State<Bottomnavbar> {
           },
           children: <Widget>[
             HomeScreen(front: widget.front, token: widget.token),
-            Categories(category: widget.front.categories),
-            CartScreen(front: widget.front,token: widget.token,),
-            WishlistScreen(front: widget.front,token: widget.token,),
+            Categories(category: widget.front["categories"]),
+            CartScreen(front: widget.front),
+            WishlistScreen(front: widget.front),
             AccountScreen()
           ],
         ),

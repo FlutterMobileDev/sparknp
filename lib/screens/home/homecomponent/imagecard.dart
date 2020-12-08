@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:sparknp/router.dart';
 
-import 'package:sparknp/model/frontjson.dart';
-
 class ImageCard extends StatefulWidget {
   final String name;
-  final ApiFront front;
+  final front;
 
   @override
   _ImageCardState createState() => _ImageCardState();
@@ -22,39 +20,39 @@ class _ImageCardState extends State<ImageCard> {
   @override
   void initState() {
     super.initState();
-
-    if (widget.name == "featureProducts") {
-      setState(() {
-        _productList = widget.front.featureProducts;
-      });
-    } else if (widget.name == "trendingProducts") {
-      setState(() {
-        _productList = widget.front.trendingProducts;
-      });
-    } else if (widget.name == "saleProducts") {
-      setState(() {
-        _productList = widget.front.saleProducts;
-      });
-    } else if (widget.name == "bestProducts") {
-      setState(() {
-        _productList = widget.front.bestProducts;
-      });
-    } else if (widget.name == "bigProducts") {
-      setState(() {
-        _productList = widget.front.bigProducts;
-      });
-    } else if (widget.name == "latestProducts") {
-      setState(() {
-        _productList = widget.front.latestProducts;
-      });
-    } else if (widget.name == "topProducts") {
-      setState(() {
-        _productList = widget.front.topProducts;
-      });
-    } else if (widget.name == "hotProducts") {
-      setState(() {
-        _productList = widget.front.hotProducts;
-      });
+    switch (widget.name) {
+      case "featureProducts":
+        return setState(() {
+          _productList = widget.front["feature_products"];
+        });
+      case "trendingProducts":
+        return setState(() {
+          _productList = widget.front["trending_products"];
+        });
+      case "saleProducts":
+        return setState(() {
+          _productList = widget.front["sale_products"];
+        });
+      case "bestProducts":
+        return setState(() {
+          _productList = widget.front["best_products"];
+        });
+      case "bigProducts":
+        return setState(() {
+          _productList = widget.front["big_products"];
+        });
+      case "latestProducts":
+        return setState(() {
+          _productList = widget.front["latest_products"];
+        });
+      case "topProducts":
+        return setState(() {
+          _productList = widget.front["top_products"];
+        });
+      case "hot_products":
+        return setState(() {
+          _productList = widget.front["hot_products"];
+        });
     }
   }
 
@@ -66,7 +64,7 @@ class _ImageCardState extends State<ImageCard> {
       height: 95,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: ListView.separated(
-        itemCount: _productList.length >= 5 ? 5 : _productList.length,
+        itemCount: _productList.length >= 10 ? 10 : _productList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           dynamic product = _productList[index];
@@ -83,7 +81,7 @@ class _ImageCardState extends State<ImageCard> {
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: NetworkImage(imgpath + product.thumbnail),
+                    image: NetworkImage(imgpath + product["thumbnail"]),
                   ),
                 ),
               ),

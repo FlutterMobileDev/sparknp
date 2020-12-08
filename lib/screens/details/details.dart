@@ -46,7 +46,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 child: Icon(Icons.add_shopping_cart_outlined),
                 onPressed: () {
                   (_token != null)
-                      ? CartService.add(_token, widget.product.id).then(
+                      ? CartService.add(_token, widget.product["id"]).then(
                           (added) {
                             _showDialog(context, "Added to Cart");
                           },

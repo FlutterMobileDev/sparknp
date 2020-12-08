@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sparknp/constants.dart';
 
-import 'package:sparknp/model/cartmodel.dart';
-import 'package:sparknp/model/frontjson.dart';
 import 'package:sparknp/router.dart';
 import 'package:sparknp/services/cartservice.dart';
 import 'package:sparknp/screens/cart/cartcomponents/cartbody.dart';
@@ -12,16 +10,15 @@ import 'package:sparknp/services/storage.dart';
 import 'package:sparknp/widgets/appbar.dart';
 
 class CartScreen extends StatefulWidget {
-  final ApiFront front;
-  final String token;
+  final front;
 
-  const CartScreen({Key key, this.front, this.token}) : super(key: key);
+  const CartScreen({Key key, this.front}) : super(key: key);
   @override
   _CartScreenState createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
-  Cart cart;
+  var cart;
   bool _loading;
   bool _loggedIn;
 
@@ -36,16 +33,16 @@ class _CartScreenState extends State<CartScreen> {
       _token = value;
       (_token == null)
           ? setState(() {
-        _loggedIn = false;
-        _loading = false;
-      })
+              _loggedIn = false;
+              _loading = false;
+            })
           : CartService.list(_token).then((data) {
-        setState(() {
-          cart = data;
-          _loggedIn = true;
-          _loading = false;
-        });
-      });
+              setState(() {
+                cart = data;
+                _loggedIn = true;
+                _loading = false;
+              });
+            });
     });
   }
 
@@ -56,8 +53,11 @@ class _CartScreenState extends State<CartScreen> {
         body: (_loading)
             ? Center(child: CircularProgressIndicator())
             : (_loggedIn)
-            ? CartBody(cart: cart,front:widget.front,token:widget.token,)
-            : Center(child: _buildSignInBtn(context)));
+                ? CartBody(
+                    cart: cart,
+                    front: widget.front,
+                  )
+                : Center(child: _buildSignInBtn(context)));
   }
 }
 

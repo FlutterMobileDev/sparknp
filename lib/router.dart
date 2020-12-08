@@ -18,6 +18,7 @@ import 'package:sparknp/screens/details/details.dart';
 
 import 'package:sparknp/screens/cart/cart.dart';
 import 'package:sparknp/screens/cart/cartcomponents/processcart.dart';
+import 'package:sparknp/screens/cart/cartcomponents/cartbody.dart';
 import 'package:sparknp/screens/wishlist/wishlist.dart';
 
 const String splash = '/';
@@ -31,6 +32,7 @@ const String accInfo = '/accinfo';
 const String categories = '/categories';
 const String details = '/details';
 const String cart = '/cart';
+const String cartBody = '/cartBody';
 const String processCart = '/processCart';
 const String wishlist = '/wishlist';
 const String more = '/more';
@@ -45,24 +47,30 @@ class Routing {
         return MaterialPageRoute(builder: (_) => SplashScreen());
       case home:
         return MaterialPageRoute(builder: (_) => HomeScreen());
+
       case categories:
         ScreenArguments args = screen.arguments;
         return MaterialPageRoute(
             builder: (_) =>
                 CategoryBody(category: args.category, isMulti: args.isMulti));
+
       case search:
         return MaterialPageRoute(builder: (_) => Search());
+
       case more:
         ScreenArguments args = screen.arguments;
         return MaterialPageRoute(
           builder: (_) =>
               MoreScreen(name: args.name, front: args.front, subId: args.id),
         );
+
       case bottomnav:
         ScreenArguments args = screen.arguments;
         return MaterialPageRoute(
-          builder: (_) =>
-              Bottomnavbar( front: args.front, token: args.token,index: args.index,),
+          builder: (_) => Bottomnavbar(
+            front: args.front,
+            index: args.index,
+          ),
         );
 
       case myOrders:
@@ -73,6 +81,8 @@ class Routing {
         return MaterialPageRoute(builder: (_) => WishlistScreen());
       case cart:
         return MaterialPageRoute(builder: (_) => CartScreen());
+      case cartBody:
+        return MaterialPageRoute(builder: (_) => CartBody());
       case processCart:
         return MaterialPageRoute(builder: (_) => ProcessScreen());
       case details:

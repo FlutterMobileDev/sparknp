@@ -2,10 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:sparknp/model/cartmodel.dart';
 
 class CartService {
-  static Future<Cart> list(token) async {
+  static Future list(token) async {
     try {
       final response = await http.get('https://www.sparknp.com/api/carts',
           headers: {"Authorization": "Bearer $token"}).timeout(
@@ -14,7 +13,7 @@ class CartService {
         ),
       );
       if (response.statusCode == 200) {
-        final Cart cart = cartFromJson(response.body);
+        final cart = jsonDecode(response.body);
         return cart;
       } else {
         throw Exception('error here');
@@ -103,7 +102,6 @@ class CartService {
         var data = jsonDecode(response.body);
         return data;
       } else {
-        print(response.body);
         throw Exception('error here');
       }
     } catch (e) {

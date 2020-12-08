@@ -2,7 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
+import 'package:sparknp/router.dart';
 import 'package:sparknp/constants.dart';
+
+import 'package:sparknp/model/screenarguments.dart';
 
 class OrdersBody extends StatefulWidget {
   final orders;
@@ -53,8 +56,8 @@ class _OrdersBodyState extends State<OrdersBody> {
           dynamic order = _ordersList[index];
           var cart = jsonDecode(order['cart']);
           return Container(
-            width: size.width * 0.8,
-            height: 80,
+            width: size.width * 0.9,
+            height: 60,
             child: Column(children: [
               Expanded(
                 child: ListTile(
@@ -74,7 +77,10 @@ class _OrdersBodyState extends State<OrdersBody> {
                       fontSize: 14,
                     ),
                   ]),
-                  trailing: Text("Rs ${cart[0]['price'].toString()}"),
+                  onTap: () {
+                    Navigator.pushNamed(context, cartBody,
+                        arguments: ScreenArguments(cart: cart));
+                  },
                 ),
               ),
             ]),
@@ -83,7 +89,6 @@ class _OrdersBodyState extends State<OrdersBody> {
         separatorBuilder: (BuildContext context, int index) {
           return Divider(
             thickness: 1,
-            height: 70,
           );
         },
       ),

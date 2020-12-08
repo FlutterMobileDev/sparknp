@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:sparknp/model/frontjson.dart';
 import 'package:sparknp/screens/categories/categoriescomponents/subcatcard.dart';
 
 import 'package:sparknp/screens/home/homecomponent/sectiontitle.dart';
 import 'package:sparknp/widgets/appbar.dart';
 
 class CategoryBody extends StatelessWidget {
-  final Category category;
+  final category;
   final bool isMulti;
 
   const CategoryBody({Key key, this.category, this.isMulti}) : super(key: key);
@@ -19,15 +18,15 @@ class CategoryBody extends StatelessWidget {
         ? Container(
             height: size.height,
             child: ListView.builder(
-              itemCount: category.subs.length,
+              itemCount: category["subs"].length,
               itemBuilder: (BuildContext context, index) {
                 return Column(
                   children: [
                     TitleWithMoreBtn(
-                      name: category.subs[index].name,
-                      subId: category.subs[index].id,
+                      name: category["subs"][index]["name"],
+                      subId: category["subs"][index]["id"],
                     ),
-                    SubCatCard(subId: category.subs[index].id),
+                    SubCatCard(subId: category["subs"][index]["id"]),
                   ],
                 );
               },
@@ -38,15 +37,15 @@ class CategoryBody extends StatelessWidget {
             body: Container(
               height: size.height,
               child: ListView.builder(
-                itemCount: category.subs.length,
+                itemCount: category["subs"].length,
                 itemBuilder: (BuildContext context, index) {
                   return Column(
                     children: [
                       TitleWithMoreBtn(
-                        name: category.subs[index].name,
-                        subId: category.subs[index].id,
+                        name: category["subs"][index]["name"],
+                        subId: category["subs"][index]["id"],
                       ),
-                      SubCatCard(subId: category.subs[index].id),
+                      SubCatCard(subId: category["subs"][index]["id"]),
                     ],
                   );
                 },

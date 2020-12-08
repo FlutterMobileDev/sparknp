@@ -1,10 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:sparknp/model/wishlistmodel.dart';
 
 class WishlistService {
-  static Future<Wishlist> list(token) async {
+  static Future list(token) async {
     try {
       final response = await http.get('https://www.sparknp.com/api/wishlists',
           headers: {"Authorization": "Bearer $token"}).timeout(
@@ -13,7 +13,8 @@ class WishlistService {
         ),
       );
       if (response.statusCode == 200) {
-        final Wishlist wishlist = wishlistFromJson(response.body);
+        final wishlist = jsonDecode(response.body);
+        // print(wishlist);
         return wishlist;
       } else {
         throw Exception('error here');

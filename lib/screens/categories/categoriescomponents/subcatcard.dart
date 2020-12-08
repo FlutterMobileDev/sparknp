@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sparknp/model/subcategorymodel.dart';
 
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/router.dart';
@@ -15,13 +14,17 @@ class SubCatCard extends StatefulWidget {
   _SubCatCardState createState() => _SubCatCardState();
 }
 
-class _SubCatCardState extends State<SubCatCard> {
+class _SubCatCardState extends State<SubCatCard>
+    with AutomaticKeepAliveClientMixin<SubCatCard> {
+  @override
+  bool get wantKeepAlive => true;
+
   String imgpath = "https://sparknp.com/assets/images/thumbnails/";
 
   String thumbnail;
 
   bool _loading;
-  SubCat _subCatList;
+  var _subCatList;
 
   @override
   void initState() {
@@ -37,13 +40,14 @@ class _SubCatCardState extends State<SubCatCard> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     Size size = MediaQuery.of(context).size;
     return (_loading)
         ? Container(
             height: 150,
             child: Center(child: CircularProgressIndicator()),
           )
-        : (_subCatList.products.length == 0)
+        : (_subCatList["products"].length == 0)
             ? Container(
                 height: 30,
                 child: Center(
@@ -52,18 +56,18 @@ class _SubCatCardState extends State<SubCatCard> {
               )
             : Container(
                 width: size.width,
-                height: (_subCatList.products.length > 4) ? 380 : 200,
+                height: (_subCatList["products"].length > 4) ? 380 : 200,
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 child: GridView.builder(
                   physics: new NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2),
-                  itemCount: (_subCatList.products.length > 4)
+                  itemCount: (_subCatList["products"].length > 4)
                       ? 4
-                      : _subCatList.products.length,
+                      : _subCatList["products"].length,
                   itemBuilder: (context, index) {
-                    dynamic product = _subCatList.products[index];
+                    dynamic product = _subCatList["products"][index];
                     return GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(context, details,
@@ -82,7 +86,7 @@ class _SubCatCardState extends State<SubCatCard> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Image.network(
-                                  imgpath + product.thumbnail,
+                                  imgpath + product["thumbnail"],
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -111,14 +115,14 @@ class _SubCatCardState extends State<SubCatCard> {
                                         vertical: defaultPadding / 4,
                                         horizontal: defaultPadding / 4),
                                     child: Text(
-                                      product.name.toUpperCase(),
+                                      product["name"].toUpperCase(),
                                       style: TextStyle(
                                           color: LightColor.textLightColor),
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                   Text(
-                                    "\Rs ${product.price}",
+                                    "\Rs ${product["price"]}",
                                     overflow: TextOverflow.ellipsis,
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
