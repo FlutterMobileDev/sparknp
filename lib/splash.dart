@@ -80,7 +80,7 @@ class _BottomnavbarState extends State<Bottomnavbar> {
     }
     if(widget.index== 2){
       _currentIndex = 2;
-      _pageController = PageController(initialPage: 3, keepPage: false);
+      _pageController = PageController(initialPage: 2, keepPage: false);
     }
     super.initState();
   }

@@ -146,7 +146,7 @@ class _WishlistBodyState extends State<WishlistBody> {
                               ).whenComplete(() {
                                 WishlistService.remove(_token, product.id)
                                     .then((value) {
-                                  Navigator.pushNamed(context, cart);
+                                  Navigator.popAndPushNamed(context, bottomnav,arguments:ScreenArguments(front: widget.front,token: widget.token,index:2));
                                 });
                               });
                             }

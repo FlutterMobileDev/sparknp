@@ -89,6 +89,7 @@ class _CartBodyState extends State<CartBody> {
             Divider(
               thickness: 1,
               height: 70,
+
             ),
             // _price(),
             SizedBox(height: 30),
