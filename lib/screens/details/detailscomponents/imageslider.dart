@@ -2,29 +2,18 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class ImageSlideScreen extends StatefulWidget {
-  final product;
-  const ImageSlideScreen({Key key, this.product}) : super(key: key);
+  final String thumbnail;
+  const ImageSlideScreen(this.thumbnail);
   @override
   _ImageSlideScreenState createState() => _ImageSlideScreenState();
 }
 
 class _ImageSlideScreenState extends State<ImageSlideScreen> {
-  String imgpath = "www.sparknp.com/assets/images/galleries/";
+  String imgpath = "www.sparknp.com/assets/images/thumbnails/";
   int _current = 0;
-  List imgList;
-
-  @override
-  void initState() {
-    super.initState();
-    print(widget.product["thumbnail"]);
-    (widget.product["galleries"] == null)
-        ? setState(() {
-            imgList.add(widget.product["thumbnail"]);
-          })
-        : setState(() {
-            imgList.add(widget.product["galleries"]);
-          });
-  }
+  List imgList = [
+    "www.sparknp.com/assets/images/thumbnails/",
+  ];
 
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];

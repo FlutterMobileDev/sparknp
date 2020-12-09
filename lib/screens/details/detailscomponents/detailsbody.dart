@@ -1,16 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:flutter_html/flutter_html.dart';
 import 'package:sparknp/constants.dart';
-import 'package:sparknp/screens/details/detailscomponents/imageslider.dart';
 import 'package:sparknp/services/wishlistservice.dart';
-import 'package:sparknp/services/productservice.dart';
 import 'package:sparknp/services/storage.dart';
 
 class DetailsBody extends StatefulWidget {
-  final int productId;
-  const DetailsBody(this.productId);
+  final dynamic product;
+  const DetailsBody(this.product);
   @override
   _DetailsBodyState createState() => _DetailsBodyState();
 }
@@ -18,24 +14,14 @@ class DetailsBody extends StatefulWidget {
 class _DetailsBodyState extends State<DetailsBody> {
   final SecureStorage secureStorage = SecureStorage();
   String _token;
-  bool _loading;
-  var _product;
   double rating = 3.5;
 
   @override
   void initState() {
     super.initState();
-    _loading = true;
-
     secureStorage.readData('token').then((value) {
       setState(() {
         _token = value;
-      });
-      ProductService.fetch(widget.productId).then((value) {
-        setState(() {
-          _product = value;
-          _loading = false;
-        });
       });
     });
   }
@@ -43,72 +29,63 @@ class _DetailsBodyState extends State<DetailsBody> {
   @override
   Widget build(BuildContext context) {
     String imgpath = "https://sparknp.com/assets/images/thumbnails/";
-    // print(_product["product"]["details"]);
-    var htmlData = _product["product"]["details"];
-    print(htmlData);
-
-    return (_loading)
-        ? Center(child: CircularProgressIndicator())
-        : SingleChildScrollView(
-            child: Column(
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            height: 250,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(imgpath + widget.product["thumbnail"]),
+              ),
+            ),
+          ),
+          // ImageSlideScreen(widget.product.thumbnail),
+          SizedBox(
+            height: 0.1,
+          ),
+          Container(
+              child: ListTile(
+            title: ListTile(
+              title: Text(
+                "Rs. ${widget.product["price"]}",
+              ),
+              subtitle: Row(
+                children: [
+                  Text(
+                    "Rs. ${widget.product["previous_price"]}",
+                    style: TextStyle(decoration: TextDecoration.lineThrough),
+                  ),
+                ],
+              ),
+              trailing: IconButton(
+                  icon: Icon(CupertinoIcons.heart),
+                  color: LightColor.orange,
+                  onPressed: () {
+                    if (_token != null) {
+                      WishlistService.add(_token, widget.product["id"])
+                          .then((added) {
+                        _showDialog(context, true);
+                      });
+                    } else {
+                      _showDialog(context, false);
+                    }
+                  }),
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  height: 250,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                          imgpath + _product["product"]["thumbnail"]),
-                    ),
-                  ),
+                Text(widget.product["name"]),
+                StarRating(
+                  rating: rating,
+                  onRatingChanged: (rating) => this.rating = rating,
                 ),
-                // ImageSlideScreen(product: _product["product"]),
-                SizedBox(
-                  height: 0.1,
-                ),
-                Container(
-                    child: ListTile(
-                  title: ListTile(
-                    title: Text(
-                      "Rs. ${_product["product"]["price"]}",
-                    ),
-                    subtitle: Row(
-                      children: [
-                        Text(
-                          "Rs. ${_product["product"]["previous_price"]}",
-                          style:
-                              TextStyle(decoration: TextDecoration.lineThrough),
-                        ),
-                      ],
-                    ),
-                    trailing: IconButton(
-                        icon: Icon(CupertinoIcons.heart),
-                        color: LightColor.orange,
-                        onPressed: () {
-                          if (_token != null) {
-                            WishlistService.add(
-                                    _token, _product["product"]["id"])
-                                .then((added) {
-                              _showDialog(context, true);
-                            });
-                          } else {
-                            _showDialog(context, false);
-                          }
-                        }),
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(_product["product"]["name"]),
-                      StarRating(
-                        rating: rating,
-                        onRatingChanged: (rating) => this.rating = rating,
-                      ),
-                    ],
-                  ),
-                )),
               ],
             ),
-          );
+          )),
+        ],
+      ),
+    );
   }
 }
 

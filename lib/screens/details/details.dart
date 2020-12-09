@@ -53,7 +53,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         )
                       : _showDialog(context, "Please Log In");
                 }),
-            body: DetailsBody(widget.product["id"]),
+            body: DetailsBody(widget.product),
           );
   }
 }
