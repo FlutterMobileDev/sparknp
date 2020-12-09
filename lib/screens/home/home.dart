@@ -37,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen>
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        leading: Image.network("https://sparknp.com/assets/images/16014328921599821893sparek-logo.png"),
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,
