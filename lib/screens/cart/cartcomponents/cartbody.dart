@@ -15,7 +15,8 @@ class CartBody extends StatefulWidget {
   final cart;
   final front;
   final double currency;
-  const CartBody({Key key, this.cart, this.front, this.currency}) : super(key: key);
+  const CartBody({Key key, this.cart, this.front, this.currency})
+      : super(key: key);
 
   @override
   _CartBodyState createState() => _CartBodyState();
@@ -26,7 +27,7 @@ class _CartBodyState extends State<CartBody> {
   List _cartList;
   List _cartList1;
   bool _loading;
-  double price;
+  String price;
   int x;
   var cart1;
 
@@ -68,34 +69,34 @@ class _CartBodyState extends State<CartBody> {
   Widget build(BuildContext context) {
     return (_loading)
         ? Container(
-      child: Center(
-        child: CircularProgressIndicator(),
-      ),
-    )
-        : Container(
-      padding: AppTheme.padding,
-      child: SingleChildScrollView(
-        child: (widget.cart["carts"].length == 0)
-            ? Container(
-          height: 400,
-          child: Center(
-            child: Text("No Items in Cart"),
-          ),
-        )
-            : Column(
-          children: <Widget>[
-            _item(widget.cart),
-            Divider(
-              thickness: 1,
-              height: 70,
+            child: Center(
+              child: CircularProgressIndicator(),
             ),
-            _price(),
-            SizedBox(height: 30),
-            _submitButton(context),
-          ],
-        ),
-      ),
-    );
+          )
+        : Container(
+            padding: AppTheme.padding,
+            child: SingleChildScrollView(
+              child: (widget.cart["carts"].length == 0)
+                  ? Container(
+                      height: 400,
+                      child: Center(
+                        child: Text("No Items in Cart"),
+                      ),
+                    )
+                  : Column(
+                      children: <Widget>[
+                        _item(widget.cart),
+                        Divider(
+                          thickness: 1,
+                          height: 70,
+                        ),
+                        _price(),
+                        SizedBox(height: 30),
+                        _submitButton(context),
+                      ],
+                    ),
+            ),
+          );
   }
 
   Widget _item(var model) {
@@ -123,7 +124,10 @@ class _CartBodyState extends State<CartBody> {
                   .then((removed) {
                 Navigator.popAndPushNamed(context, bottomnav,
                     arguments: ScreenArguments(
-                        front: widget.front, token: _token, index: 2,currency: widget.currency));
+                        front: widget.front,
+                        token: _token,
+                        index: 2,
+                        currency: widget.currency));
               });
             },
             child: Container(
@@ -149,7 +153,8 @@ class _CartBodyState extends State<CartBody> {
                       fontSize: 14,
                     ),
                     TitleText(
-                      text: ((product["price"]*widget.currency).toStringAsFixed(0)).toString(),
+                      text: ((product["price"] * widget.currency)
+                          .toStringAsFixed(0)),
                       fontSize: 14,
                     ),
                   ]),
@@ -229,7 +234,7 @@ class _CartBodyState extends State<CartBody> {
           overflow: TextOverflow.fade,
         ),
         Text(
-          "Total: Rs ${(price != null) ? price : (widget.cart["total_price"]*widget.currency).toStringAsFixed(0)}",
+          "Total: Rs ${(price != null) ? price : (widget.cart["total_price"] * widget.currency).toStringAsFixed(0)}",
           style: TextStyle(
             fontSize: 18,
           ),
@@ -267,7 +272,7 @@ class _CartBodyState extends State<CartBody> {
         setState(() {
           cart1 = data;
           _cartList1 = cart1["carts"];
-          price = (cart1["total_price"]*widget.currency).toStringAsFixed(0);
+          price = (cart1["total_price"] * widget.currency).toStringAsFixed(0);
         });
       });
     });

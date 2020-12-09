@@ -14,7 +14,8 @@ class WishlistBody extends StatefulWidget {
   final front;
   final wishlist;
   final double currency;
-  const WishlistBody({Key key, this.wishlist, this.front, this.currency}) : super(key: key);
+  const WishlistBody({Key key, this.wishlist, this.front, this.currency})
+      : super(key: key);
 
   @override
   _WishlistBodyState createState() => _WishlistBodyState();
@@ -39,7 +40,7 @@ class _WishlistBodyState extends State<WishlistBody> {
       int n = widget.wishlist["wishlists"].length;
       for (int i = 1; i <= n; i++) {
         await ProductService.fetch(
-            widget.wishlist["wishlists"][i - 1]["product_id"])
+                widget.wishlist["wishlists"][i - 1]["product_id"])
             .then((value) {
           _product = value;
           print(_product["product"]["name"]);
@@ -59,27 +60,27 @@ class _WishlistBodyState extends State<WishlistBody> {
   Widget build(BuildContext context) {
     return (_loading)
         ? Container(
-      child: Center(
-        child: CircularProgressIndicator(),
-      ),
-    )
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          )
         : Container(
-      padding: AppTheme.padding,
-      child: SingleChildScrollView(
-        child: (widget.wishlist["wishlists"].length == 0)
-            ? Container(
-          height: 400,
-          child: Center(
-            child: Text("No Items in Wishlist"),
-          ),
-        )
-            : Column(
-          children: <Widget>[
-            _item(widget.wishlist),
-          ],
-        ),
-      ),
-    );
+            padding: AppTheme.padding,
+            child: SingleChildScrollView(
+              child: (widget.wishlist["wishlists"].length == 0)
+                  ? Container(
+                      height: 400,
+                      child: Center(
+                        child: Text("No Items in Wishlist"),
+                      ),
+                    )
+                  : Column(
+                      children: <Widget>[
+                        _item(widget.wishlist),
+                      ],
+                    ),
+            ),
+          );
   }
 
   Widget _item(var model) {
@@ -107,7 +108,11 @@ class _WishlistBodyState extends State<WishlistBody> {
                   _showDialog(context, "Removed from Wishlist")
                       .whenComplete(() {
                     print(index);
-                    Navigator.popAndPushNamed(context, bottomnav,arguments:ScreenArguments(front: widget.front,index:3,currency: widget.currency));
+                    Navigator.popAndPushNamed(context, bottomnav,
+                        arguments: ScreenArguments(
+                            front: widget.front,
+                            index: 3,
+                            currency: widget.currency));
                   });
                 });
               },
@@ -124,7 +129,7 @@ class _WishlistBodyState extends State<WishlistBody> {
                     title: Text(
                       "${_wishlistList[index]["product"]["name"]}",
                       style:
-                      TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                       overflow: TextOverflow.clip,
                     ),
                     trailing: IconButton(
@@ -132,9 +137,9 @@ class _WishlistBodyState extends State<WishlistBody> {
                         color: Colors.indigo[900],
                         onPressed: () {
                           CartService.add(
-                              _token, _wishlistList[index]["product"]["id"])
+                                  _token, _wishlistList[index]["product"]["id"])
                               .then(
-                                (added) {
+                            (added) {
                               _showDialog(context, "Added to Cart");
                             },
                           ).whenComplete(() {
@@ -143,6 +148,7 @@ class _WishlistBodyState extends State<WishlistBody> {
                               Navigator.popAndPushNamed(context, bottomnav,
                                   arguments: ScreenArguments(
                                       front: widget.front,
+                                      currency: widget.currency,
                                       token: _token,
                                       index: 2));
                             });
