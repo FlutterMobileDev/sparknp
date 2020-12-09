@@ -7,6 +7,7 @@ class ScreenArguments {
   final int id;
   final bool isMulti;
   final int index;
+  final double currency;
 
   const ScreenArguments({
     this.name,
@@ -17,5 +18,6 @@ class ScreenArguments {
     this.id,
     this.isMulti,
     this.index,
+    this.currency
   });
 }
