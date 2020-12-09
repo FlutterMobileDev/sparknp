@@ -9,6 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sparknp/router.dart';
 import 'package:sparknp/constants.dart';
 import 'package:sparknp/screens/login/createacc.dart';
+import 'package:sparknp/screens/login/forgetpw.dart';
 import 'package:sparknp/services/loginservice.dart';
 import 'package:http/http.dart' as http;
 
@@ -137,20 +138,20 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // Widget _buildForgotPasswordBtn(BuildContext context) {
-  //   return Container(
-  //     alignment: Alignment.centerRight,
-  //     child: FlatButton(
-  //       onPressed: () => Navigator.of(context)
-  //           .push(MaterialPageRoute(builder: (context) => ForgetPwdScreen())),
-  //       padding: EdgeInsets.only(right: 0.0),
-  //       child: Text(
-  //         'Forgot Password?',
-  //         style: labelStyle,
-  //       ),
-  //     ),
-  //   );
-  // }
+  Widget _buildForgotPasswordBtn(BuildContext context) {
+    return Container(
+      alignment: Alignment.centerRight,
+      child: FlatButton(
+        onPressed: () => Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => ForgetPwdScreen())),
+        padding: EdgeInsets.only(right: 0.0),
+        child: Text(
+          'Forgot Password?',
+          style: labelStyle,
+        ),
+      ),
+    );
+  }
 
   Widget _buildLoginBtn(BuildContext context) {
     return Container(
@@ -309,7 +310,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: 30.0,
                             ),
                             _buildPasswordTF(),
-                            // _buildForgotPasswordBtn(context),
+                            _buildForgotPasswordBtn(context),
                             _buildLoginBtn(context),
                             _buildFBLoginBtn(context),
                             SizedBox(height: 10.0),
