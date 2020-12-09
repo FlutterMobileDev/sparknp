@@ -14,7 +14,6 @@ class OrdersService {
       );
       if (response.statusCode == 200) {
         final orders = jsonDecode(response.body);
-        print(orders["orders"][0]["cart"]);
         return orders;
       } else {
         throw Exception('error here');

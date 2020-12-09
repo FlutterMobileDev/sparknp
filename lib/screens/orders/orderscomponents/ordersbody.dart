@@ -73,12 +73,16 @@ class _OrdersBodyState extends State<OrdersBody> {
                       fontSize: 14,
                     ),
                     TitleText(
-                      text: cart[0]['status'].toString(),
+                      text: order['status'].toString(),
                       fontSize: 14,
                     ),
                   ]),
+                  trailing: TitleText(
+                    text: "Rs. ${order['pay_amount'].toString()}",
+                    fontSize: 14,
+                  ),
                   onTap: () {
-                    Navigator.pushNamed(context, cartBody,
+                    Navigator.pushNamed(context, orderCartBody,
                         arguments: ScreenArguments(cart: cart));
                   },
                 ),

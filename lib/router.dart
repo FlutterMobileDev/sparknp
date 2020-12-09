@@ -11,6 +11,7 @@ import 'package:sparknp/screens/home/homecomponent/more.dart';
 import 'package:sparknp/screens/home/homecomponent/search.dart';
 
 import 'package:sparknp/screens/orders/myorders.dart';
+import 'package:sparknp/screens/orders/orderscomponents/orderscart.dart';
 
 import 'package:sparknp/screens/account/myaccount.dart';
 
@@ -18,7 +19,6 @@ import 'package:sparknp/screens/details/details.dart';
 
 import 'package:sparknp/screens/cart/cart.dart';
 import 'package:sparknp/screens/cart/cartcomponents/processcart.dart';
-import 'package:sparknp/screens/cart/cartcomponents/cartbody.dart';
 import 'package:sparknp/screens/wishlist/wishlist.dart';
 
 const String splash = '/';
@@ -27,12 +27,12 @@ const String search = '/search';
 const String login = '/login';
 const String register = '/register';
 const String myOrders = '/myorders';
+const String orderCartBody = '/orderCartBody';
 const String myAccount = '/account';
 const String accInfo = '/accinfo';
 const String categories = '/categories';
 const String details = '/details';
 const String cart = '/cart';
-const String cartBody = '/cartBody';
 const String processCart = '/processCart';
 const String wishlist = '/wishlist';
 const String more = '/more';
@@ -81,8 +81,10 @@ class Routing {
         return MaterialPageRoute(builder: (_) => WishlistScreen());
       case cart:
         return MaterialPageRoute(builder: (_) => CartScreen());
-      case cartBody:
-        return MaterialPageRoute(builder: (_) => CartBody());
+      case orderCartBody:
+        ScreenArguments args = screen.arguments;
+
+        return MaterialPageRoute(builder: (_) => OrdersCart(cart: args.cart));
       case processCart:
         return MaterialPageRoute(builder: (_) => ProcessScreen());
       case details:
