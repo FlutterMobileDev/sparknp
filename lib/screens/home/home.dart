@@ -12,7 +12,8 @@ TabController _tabController;
 class HomeScreen extends StatefulWidget {
   final front;
   final String token;
-  const HomeScreen({Key key, this.front, this.token}) : super(key: key);
+  final double currency;
+  const HomeScreen({Key key, this.front, this.token, this.currency}) : super(key: key);
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -36,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen>
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        leading: Image.network("https://sparknp.com/assets/images/16014328921599821893sparek-logo.png"),
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,
@@ -81,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen>
       body: TabBarView(controller: _tabController, children: [
         HomeBody(
           front: widget.front,
+          currency: widget.currency,
         ),
         for (int i = 0; i < widget.front["categories"].length; i++)
           CategoryBody(

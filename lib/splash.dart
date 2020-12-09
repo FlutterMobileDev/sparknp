@@ -16,6 +16,7 @@ import 'package:sparknp/screens/wishlist/wishlist.dart';
 import 'package:sparknp/services/storage.dart';
 
 class SplashScreen extends StatefulWidget {
+
   final int index;
 
   const SplashScreen({Key key, this.index}) : super(key: key);
@@ -30,7 +31,23 @@ class _SplashScreenState extends State<SplashScreen>
   bool _loading;
   var front;
   String _token;
-
+  double currency;
+  f1(){
+    try{
+      FrontService.converter().then((value){
+        if(value!=null) {
+          setState(() {
+            currency = value;
+            print(currency);
+            _loading = false;
+          });
+        }
+      });
+    }
+    catch(e){
+      throw Exception('loading');
+    }
+  }
   @override
   void initState() {
     super.initState();
@@ -41,7 +58,8 @@ class _SplashScreenState extends State<SplashScreen>
         setState(() {
           front = data;
           _token = value;
-          _loading = false;
+          f1();
+
         });
       });
     });
@@ -51,12 +69,12 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return _loading
         ? Container(
-            color: LightColor.textColor,
-            child: Center(child: CircularProgressIndicator()))
+        color: LightColor.textColor,
+        child: Center(child: CircularProgressIndicator()))
         : Bottomnavbar(
-            front: front,
-            index: widget.index,
-          );
+      front: front,
+      currency: currency,
+    );
   }
 }
 
@@ -64,20 +82,22 @@ class Bottomnavbar extends StatefulWidget {
   final front;
   final String token;
   final int index;
+  final double currency;
   Bottomnavbar({
     Key key,
     this.front,
     this.token,
     this.index,
+    this.currency,
   }) : super(key: key);
   @override
   _BottomnavbarState createState() => _BottomnavbarState();
 }
 
 class _BottomnavbarState extends State<Bottomnavbar> {
-  int _currentIndex = 0;
+  int _currentIndex=0;
   PageController _pageController =
-      PageController(initialPage: 0, keepPage: false);
+  PageController(initialPage: 0, keepPage: false);
   @override
   void initState() {
     if (widget.index == 3) {
@@ -88,6 +108,7 @@ class _BottomnavbarState extends State<Bottomnavbar> {
       _currentIndex = 2;
       _pageController = PageController(initialPage: 2, keepPage: false);
     }
+
     super.initState();
   }
 
@@ -101,10 +122,10 @@ class _BottomnavbarState extends State<Bottomnavbar> {
             setState(() => _currentIndex = index);
           },
           children: <Widget>[
-            HomeScreen(front: widget.front, token: widget.token),
+            HomeScreen(front: widget.front, token: widget.token,currency: widget.currency,),
             Categories(category: widget.front["categories"]),
-            CartScreen(front: widget.front),
-            WishlistScreen(front: widget.front),
+            CartScreen(front: widget.front,currency: widget.currency,),
+            WishlistScreen(front: widget.front,currency: widget.currency,),
             AccountScreen()
           ],
         ),

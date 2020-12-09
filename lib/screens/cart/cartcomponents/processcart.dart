@@ -8,6 +8,10 @@ import 'package:sparknp/services/cartservice.dart';
 import 'package:sparknp/services/storage.dart';
 
 class ProcessScreen extends StatefulWidget {
+  final double currency;
+
+  const ProcessScreen({Key key, this.currency}) : super(key: key);
+
   @override
   _ProcessScreenState createState() => _ProcessScreenState();
 }
@@ -30,7 +34,7 @@ class _ProcessScreenState extends State<ProcessScreen> {
       _token = value;
     });
     secureStorage.readData('totalPrice').then((value) {
-      _totalPrice = value;
+      _totalPrice = value*widget.currency;
     });
   }
 
@@ -381,16 +385,16 @@ class _ProcessScreenState extends State<ProcessScreen> {
               width: double.infinity,
               decoration: BoxDecoration(
                   gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFF73AEF5),
-                  Color(0xFF61A4F1),
-                  Color(0xFF478DE0),
-                  Color(0xFF398AE5),
-                ],
-                stops: [0.1, 0.4, 0.7, 0.9],
-              )),
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFF73AEF5),
+                      Color(0xFF61A4F1),
+                      Color(0xFF478DE0),
+                      Color(0xFF398AE5),
+                    ],
+                    stops: [0.1, 0.4, 0.7, 0.9],
+                  )),
             ),
             Container(
               height: double.infinity,

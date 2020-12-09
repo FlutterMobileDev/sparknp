@@ -7,8 +7,9 @@ import 'package:sparknp/constants.dart';
 class DetailImageCard extends StatefulWidget {
   final String name;
   final front;
+  final double currency;
 
-  const DetailImageCard({Key key, this.name, this.front}) : super(key: key);
+  const DetailImageCard({Key key, this.name, this.front, this.currency}) : super(key: key);
 
   @override
   _DetailImageCardState createState() => _DetailImageCardState();
@@ -107,7 +108,7 @@ class _DetailImageCardState extends State<DetailImageCard> {
                             ),
                           ),
                           Text(
-                            "\Rs ${product["price"]}",
+                            "\Rs ${(product["price"]*widget.currency).toStringAsFixed(0)}",
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: LightColor.textLightColor,

@@ -11,6 +11,7 @@ AppBar buildAppBar(context) {
     elevation: 0,
     iconTheme: IconThemeData(color: LightColor.textLightColor),
     centerTitle: true,
+    leading: Image.network("https://sparknp.com/assets/images/16014328921599821893sparek-logo.png"),
     title: Container(
       width: size.width * 0.8,
       height: 40,

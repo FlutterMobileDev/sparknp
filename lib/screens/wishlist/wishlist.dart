@@ -9,8 +9,9 @@ import 'package:sparknp/widgets/appbar.dart';
 
 class WishlistScreen extends StatefulWidget {
   final front;
+  final double currency;
 
-  const WishlistScreen({Key key, this.front}) : super(key: key);
+  const WishlistScreen({Key key, this.front, this.currency}) : super(key: key);
   @override
   _WishlistScreenState createState() => _WishlistScreenState();
 }
@@ -31,16 +32,16 @@ class _WishlistScreenState extends State<WishlistScreen> {
       _token = value;
       (_token == null)
           ? setState(() {
-              _loggedIn = false;
-              _loading = false;
-            })
+        _loggedIn = false;
+        _loading = false;
+      })
           : WishlistService.list(_token).then((data) {
-              setState(() {
-                wishlist = data;
-                _loggedIn = true;
-                _loading = false;
-              });
-            });
+        setState(() {
+          wishlist = data;
+          _loggedIn = true;
+          _loading = false;
+        });
+      });
     });
   }
 
@@ -51,11 +52,12 @@ class _WishlistScreenState extends State<WishlistScreen> {
       body: (_loading)
           ? Center(child: CircularProgressIndicator())
           : (!_loggedIn)
-              ? Center(child: _buildSignInBtn(context))
-              : WishlistBody(
-                  front: widget.front,
-                  wishlist: wishlist,
-                ),
+          ? Center(child: _buildSignInBtn(context))
+          : WishlistBody(
+        front: widget.front,
+        wishlist: wishlist,
+        currency: widget.currency,
+      ),
     );
   }
 }

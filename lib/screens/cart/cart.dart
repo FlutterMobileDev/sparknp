@@ -11,8 +11,9 @@ import 'package:sparknp/widgets/appbar.dart';
 
 class CartScreen extends StatefulWidget {
   final front;
+  final double currency;
 
-  const CartScreen({Key key, this.front}) : super(key: key);
+  const CartScreen({Key key, this.front, this.currency}) : super(key: key);
   @override
   _CartScreenState createState() => _CartScreenState();
 }
@@ -33,16 +34,16 @@ class _CartScreenState extends State<CartScreen> {
       _token = value;
       (_token == null)
           ? setState(() {
-              _loggedIn = false;
-              _loading = false;
-            })
+        _loggedIn = false;
+        _loading = false;
+      })
           : CartService.list(_token).then((data) {
-              setState(() {
-                cart = data;
-                _loggedIn = true;
-                _loading = false;
-              });
-            });
+        setState(() {
+          cart = data;
+          _loggedIn = true;
+          _loading = false;
+        });
+      });
     });
   }
 
@@ -53,11 +54,12 @@ class _CartScreenState extends State<CartScreen> {
         body: (_loading)
             ? Center(child: CircularProgressIndicator())
             : (_loggedIn)
-                ? CartBody(
-                    cart: cart,
-                    front: widget.front,
-                  )
-                : Center(child: _buildSignInBtn(context)));
+            ? CartBody(
+          cart: cart,
+          front: widget.front,
+          currency: widget.currency,
+        )
+            : Center(child: _buildSignInBtn(context)));
   }
 }
 

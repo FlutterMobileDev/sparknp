@@ -8,8 +8,9 @@ class GridProduct extends StatefulWidget {
   final String name;
   final String scale;
   final front;
+  final double currency;
 
-  const GridProduct({Key key, this.name, this.scale, this.front})
+  const GridProduct({Key key, this.name, this.scale, this.front, this.currency})
       : super(key: key);
   @override
   _GridProductState createState() => _GridProductState();
@@ -95,7 +96,7 @@ class _GridProductState extends State<GridProduct> {
                                 offset: Offset(0, 10),
                                 blurRadius: 50,
                                 color:
-                                    LightColor.primaryColor.withOpacity(0.23),
+                                LightColor.primaryColor.withOpacity(0.23),
                               ),
                             ]),
                         child: Column(
@@ -114,7 +115,7 @@ class _GridProductState extends State<GridProduct> {
                               ),
                             ),
                             Text(
-                              "\Rs ${product["price"]}",
+                              "\Rs ${(product["price"]*widget.currency).toStringAsFixed(0)}",
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   color: LightColor.textLightColor,
