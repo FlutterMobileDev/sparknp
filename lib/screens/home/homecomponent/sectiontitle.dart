@@ -14,7 +14,7 @@ class TitleWithMoreBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Row(
         children: <Widget>[
           TitleWithCustomUnderline(text: name),

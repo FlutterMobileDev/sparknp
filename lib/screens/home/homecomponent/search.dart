@@ -153,6 +153,9 @@ class _SearchState extends State<Search> {
                                               child: ListTile(
                                                 title: Text(
                                                   product["name"],
+                                                  maxLines: 3,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                                 leading: Image.network(
                                                   imgpath +

@@ -9,7 +9,8 @@ class DetailImageCard extends StatefulWidget {
   final front;
   final double currency;
 
-  const DetailImageCard({Key key, this.name, this.front, this.currency}) : super(key: key);
+  const DetailImageCard({Key key, this.name, this.front, this.currency})
+      : super(key: key);
 
   @override
   _DetailImageCardState createState() => _DetailImageCardState();
@@ -45,7 +46,7 @@ class _DetailImageCardState extends State<DetailImageCard> {
     Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      height: 145,
+      height: size.height * 0.2,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: ListView.separated(
         itemCount: _productList.length >= 10 ? 10 : _productList.length,
@@ -77,7 +78,7 @@ class _DetailImageCardState extends State<DetailImageCard> {
                       ),
                     ),
                     Container(
-                      height: 30,
+                      height: size.height * 0.06,
                       width: 96,
                       decoration: BoxDecoration(
                           color: LightColor.background,
@@ -108,7 +109,7 @@ class _DetailImageCardState extends State<DetailImageCard> {
                             ),
                           ),
                           Text(
-                            "\Rs ${(product["price"]*widget.currency).toStringAsFixed(0)}",
+                            "\Rs ${(product["price"] * widget.currency).toStringAsFixed(0)}",
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: LightColor.textLightColor,

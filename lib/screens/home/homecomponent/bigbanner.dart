@@ -48,7 +48,7 @@ class _BigbannerState extends State<Bigbanner> {
     Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      height: (widget.x == 1) ? 180 : 250,
+      height: (widget.x == 1) ? size.width * 0.3 : size.width * 0.5,
       child: CarouselSlider(
         autoPlay: true,
         enlargeCenterPage: true,
@@ -69,7 +69,8 @@ class _BigbannerState extends State<Bigbanner> {
                     padding: EdgeInsets.fromLTRB(2, 0, 2, 0),
                     child: Container(
                       width: size.width,
-                      height: (widget.x == 1) ? 180 : 250,
+                      height:
+                          (widget.x == 1) ? size.width * 0.3 : size.width * 0.5,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               fit: BoxFit.fill,

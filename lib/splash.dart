@@ -44,14 +44,12 @@ class _SplashScreenState extends State<SplashScreen>
           _token = value;
         });
       });
-    });
-    FrontService.converter().then((value) {
-      if (value != null) {
+      FrontService.converter().then((value) {
         setState(() {
           currency = value;
           _loading = false;
         });
-      }
+      });
     });
   }
 

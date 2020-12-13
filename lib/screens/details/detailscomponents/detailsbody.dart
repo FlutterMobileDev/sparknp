@@ -79,7 +79,7 @@ class _DetailsBodyState extends State<DetailsBody>
                     title: Text(
                       "Rs. ${(_product["price"] * currency).toStringAsFixed(0)}",
                       style: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'OpenSans',
                       ),
@@ -111,7 +111,7 @@ class _DetailsBodyState extends State<DetailsBody>
                       Text(
                         _product["name"],
                         style: TextStyle(
-                          fontSize: 18.0,
+                          fontSize: 16.0,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'OpenSans',
                         ),
@@ -137,27 +137,19 @@ class _DetailsBodyState extends State<DetailsBody>
                     controller: _tabController,
                     tabs: [
                       new Tab(
-                        icon: Icon(Icons.line_style),
                         child: Text(
                           'Details',
                           style: TextStyle(
                             color: Colors.white,
-                            letterSpacing: 1.5,
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.bold,
                             fontFamily: 'OpenSans',
                           ),
                         ),
                       ),
                       new Tab(
-                        icon: Icon(Icons.comment),
                         child: Text(
                           'Comments',
                           style: TextStyle(
                             color: Colors.white,
-                            letterSpacing: 1.5,
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.bold,
                             fontFamily: 'OpenSans',
                           ),
                         ),

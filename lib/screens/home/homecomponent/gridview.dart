@@ -51,7 +51,7 @@ class _GridProductState extends State<GridProduct> {
         padding: EdgeInsets.fromLTRB(10, 4, 0, 4),
         child: Container(
           width: size.width,
-          height: 255,
+          height: size.height * 0.35,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: GridView.builder(
             physics: NeverScrollableScrollPhysics(),
@@ -96,7 +96,7 @@ class _GridProductState extends State<GridProduct> {
                                 offset: Offset(0, 10),
                                 blurRadius: 50,
                                 color:
-                                LightColor.primaryColor.withOpacity(0.23),
+                                    LightColor.primaryColor.withOpacity(0.23),
                               ),
                             ]),
                         child: Column(
@@ -115,7 +115,7 @@ class _GridProductState extends State<GridProduct> {
                               ),
                             ),
                             Text(
-                              "\Rs ${(product["price"]*widget.currency).toStringAsFixed(0)}",
+                              "\Rs ${(product["price"] * widget.currency).toStringAsFixed(0)}",
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   color: LightColor.textLightColor,

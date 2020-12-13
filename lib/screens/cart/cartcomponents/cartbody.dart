@@ -102,7 +102,7 @@ class _CartBodyState extends State<CartBody> {
   Widget _item(var model) {
     return Container(
       width: AppTheme.fullWidth(context) - 20,
-      height: AppTheme.fullHeight(context) * 0.5,
+      height: AppTheme.fullHeight(context) * 0.47,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: ListView.separated(
         itemCount: _cartList.length,
@@ -137,14 +137,15 @@ class _CartBodyState extends State<CartBody> {
                 ListTile(
                   leading: Image.network(
                     imgpath + _productImage[index].toString(),
-                    height: 200,
+                    height: AppTheme.fullWidth(context) * 0.2,
                     width: 60,
                     fit: BoxFit.cover,
                   ),
                   title: Text(
                     "${_productName[index]}",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                    overflow: TextOverflow.fade,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   subtitle: Row(children: <Widget>[
                     TitleText(

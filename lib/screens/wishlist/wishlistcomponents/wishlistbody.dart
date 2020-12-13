@@ -104,24 +104,20 @@ class _WishlistBodyState extends State<WishlistBody> {
               direction: DismissDirection.endToStart,
               onDismissed: (direction) {
                 WishlistService.remove(_token, product["id"]).then((value) {
-                  _showDialog(context, "Removed from Wishlist")
-                      .whenComplete(() {
-                    print(index);
-                    Navigator.popAndPushNamed(context, bottomnav,
-                        arguments: ScreenArguments(
-                            front: widget.front,
-                            index: 3,
-                            currency: widget.currency));
-                  });
+                  Navigator.popAndPushNamed(context, bottomnav,
+                      arguments: ScreenArguments(
+                          front: widget.front,
+                          index: 3,
+                          currency: widget.currency));
                 });
               },
               child: Container(
-                height: AppTheme.fullHeight(context) * 0.11,
+                height: AppTheme.fullHeight(context) * 0.125,
                 child: Column(children: [
                   ListTile(
                     leading: Image.network(
                       imgpath + _productImage[index].toString(),
-                      height: 200,
+                      height: AppTheme.fullHeight(context) * 0.125,
                       width: 60,
                       fit: BoxFit.cover,
                     ),
@@ -129,7 +125,8 @@ class _WishlistBodyState extends State<WishlistBody> {
                       "${_wishlistList[index]["product"]["name"]}",
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
-                      overflow: TextOverflow.clip,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     trailing: IconButton(
                         icon: Icon(Icons.add_shopping_cart_rounded),

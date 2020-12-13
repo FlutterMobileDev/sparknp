@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:sparknp/constants.dart';
 
 class ImageSlideScreen extends StatefulWidget {
   final product;
@@ -22,9 +23,13 @@ class _ImageSlideScreenState extends State<ImageSlideScreen> {
     for (int i = 0; i < widget.product["galleries"].length; i++) {
       imgList.add(widget.product["galleries"][i]["photo"]);
     }
-    (widget.product["galleries"] == null)
-        ? hasGallery = true
-        : hasGallery = false;
+    (widget.product["galleries"].length != 0)
+        ? setState(() {
+            hasGallery = true;
+          })
+        : setState(() {
+            hasGallery = false;
+          });
   }
 
   List<T> map<T>(List list, Function handler) {
@@ -39,7 +44,7 @@ class _ImageSlideScreenState extends State<ImageSlideScreen> {
   Widget build(BuildContext context) {
     return (!hasGallery)
         ? Container(
-            height: 250,
+            height: AppTheme.fullHeight(context) * 0.3,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(thumbPath + widget.product["thumbnail"]),
@@ -47,11 +52,12 @@ class _ImageSlideScreenState extends State<ImageSlideScreen> {
             ),
           )
         : Container(
+            height: AppTheme.fullHeight(context) * 0.3,
             child: Stack(
               children: [
                 CarouselSlider(
                   initialPage: 0,
-                  height: 300,
+                  height: AppTheme.fullHeight(context) * 0.3,
                   onPageChanged: (index) {
                     setState(() {
                       _current = index;
@@ -61,7 +67,8 @@ class _ImageSlideScreenState extends State<ImageSlideScreen> {
                     return Builder(
                       builder: (BuildContext context) {
                         return Container(
-                          width: MediaQuery.of(context).size.width,
+                          height: AppTheme.fullHeight(context) * 0.3,
+                          width: AppTheme.fullWidth(context),
                           margin: EdgeInsets.symmetric(horizontal: 1.0),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
