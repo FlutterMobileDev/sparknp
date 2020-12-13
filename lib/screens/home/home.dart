@@ -13,7 +13,8 @@ class HomeScreen extends StatefulWidget {
   final front;
   final String token;
   final double currency;
-  const HomeScreen({Key key, this.front, this.token, this.currency}) : super(key: key);
+  const HomeScreen({Key key, this.front, this.token, this.currency})
+      : super(key: key);
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -37,7 +38,8 @@ class _HomeScreenState extends State<HomeScreen>
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        leading: Image.network("https://sparknp.com/assets/images/16014328921599821893sparek-logo.png"),
+        leading: Image.network(
+            "https://sparknp.com/assets/images/16014328921599821893sparek-logo.png"),
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,

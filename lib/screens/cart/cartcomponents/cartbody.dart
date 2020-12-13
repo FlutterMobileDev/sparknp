@@ -48,8 +48,8 @@ class _CartBodyState extends State<CartBody> {
         await ProductService.fetch(widget.cart["carts"][i - 1]["product_id"])
             .then((value) {
           _product = value;
-          _productImage.add(_product["product"]["thumbnail"]);
-          _productName.add(_product["product"]["name"]);
+          _productImage.add(_product["thumbnail"]);
+          _productName.add(_product["name"]);
         });
       }
       setState(() {

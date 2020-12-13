@@ -43,9 +43,8 @@ class _WishlistBodyState extends State<WishlistBody> {
                 widget.wishlist["wishlists"][i - 1]["product_id"])
             .then((value) {
           _product = value;
-          print(_product["product"]["name"]);
-          _productImage.add(_product["product"]["thumbnail"]);
-          _productName.add(_product["product"]["name"]);
+          _productImage.add(_product["thumbnail"]);
+          _productName.add(_product["name"]);
         });
       }
       setState(() {
@@ -86,7 +85,7 @@ class _WishlistBodyState extends State<WishlistBody> {
   Widget _item(var model) {
     return Container(
       width: AppTheme.fullWidth(context) - 20,
-      height: AppTheme.fullHeight(context) * 0.55,
+      height: AppTheme.fullHeight(context) * 0.8,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: ListView.separated(
         itemCount: _wishlistList.length,
