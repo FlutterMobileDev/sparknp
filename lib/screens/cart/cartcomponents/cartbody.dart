@@ -43,8 +43,7 @@ class _CartBodyState extends State<CartBody> {
     super.initState();
     _loading = true;
     secureStorage.readData('token').then((value) async {
-      int n = widget.cart["carts"].length;
-      for (int i = 1; i <= n; i++) {
+      for (int i = 1; i <= widget.cart["carts"].length; i++) {
         await ProductService.fetch(widget.cart["carts"][i - 1]["product_id"])
             .then((value) {
           _product = value;

@@ -14,7 +14,7 @@ class WishlistService {
       );
       if (response.statusCode == 200) {
         final wishlist = jsonDecode(response.body);
-        return wishlist;
+        return wishlist["wishlists"];
       } else {
         throw Exception('error here');
       }

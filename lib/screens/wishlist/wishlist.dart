@@ -35,12 +35,9 @@ class _WishlistScreenState extends State<WishlistScreen> {
               _loggedIn = false;
               _loading = false;
             })
-          : WishlistService.list(_token).then((data) {
-              setState(() {
-                wishlist = data;
-                _loggedIn = true;
-                _loading = false;
-              });
+          : setState(() {
+              _loggedIn = true;
+              _loading = false;
             });
     });
   }
@@ -53,10 +50,29 @@ class _WishlistScreenState extends State<WishlistScreen> {
           ? Center(child: CircularProgressIndicator())
           : (!_loggedIn)
               ? Center(child: _buildSignInBtn(context))
-              : WishlistBody(
-                  front: widget.front,
-                  wishlist: wishlist,
-                  currency: widget.currency,
+              : FutureBuilder(
+                  future: WishlistService.list(_token),
+                  // ignore: missing_return
+                  builder: (BuildContext context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return Center(child: CircularProgressIndicator());
+                      case ConnectionState.done:
+                        return (snapshot.hasError)
+                            ? Center(
+                                child: Text(
+                                  "Connect to the Internet",
+                                  style: AppTheme.h1Style,
+                                ),
+                              )
+                            : WishlistBody(
+                                front: widget.front,
+                                wishlist: snapshot.data,
+                                currency: widget.currency,
+                              );
+                      default:
+                    }
+                  },
                 ),
     );
   }

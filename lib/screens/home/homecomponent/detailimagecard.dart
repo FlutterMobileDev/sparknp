@@ -38,6 +38,10 @@ class _DetailImageCardState extends State<DetailImageCard> {
         return setState(() {
           _productList = widget.front["hot_products"];
         });
+      case "relatedProducts":
+        return setState(() {
+          _productList = widget.front["products"];
+        });
     }
   }
 

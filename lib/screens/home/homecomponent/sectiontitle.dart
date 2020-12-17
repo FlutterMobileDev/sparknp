@@ -56,20 +56,14 @@ class TitleWithCustomUnderline extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       height: 24,
-      child: Stack(
-        children: <Widget>[
-          Container(
-            width: size.width * 0.65,
-            child: Padding(
-              padding: const EdgeInsets.only(left: defaultPadding / 4),
-              child: Text(
-                text,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ),
-        ],
+      width: size.width * 0.65,
+      child: Padding(
+        padding: const EdgeInsets.only(left: defaultPadding / 4),
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
     );
   }

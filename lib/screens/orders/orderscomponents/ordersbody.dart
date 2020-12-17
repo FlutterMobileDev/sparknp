@@ -32,8 +32,14 @@ class _OrdersBodyState extends State<OrdersBody> {
       padding: AppTheme.padding,
       child: SingleChildScrollView(
         child: (_ordersList.length == 0)
-            ? Center(
-                child: Text("No Orders"),
+            ? Container(
+                height: 400,
+                child: Center(
+                  child: Text(
+                    "You don't have any Orders.",
+                    style: AppTheme.h1Style,
+                  ),
+                ),
               )
             : Column(
                 children: <Widget>[

@@ -78,4 +78,61 @@ class ProductService {
       throw Exception('There was a problem connecting to the internet');
     }
   }
+
+  static Future addReply(token, data) async {
+    try {
+      final response = await http
+          .post(
+            'https://www.sparknp.com/api/products/reply',
+            headers: {
+              "Authorization": "Bearer $token",
+              'Content-type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: jsonEncode(data),
+          )
+          .timeout(
+            Duration(
+              seconds: 15,
+            ),
+          );
+      print(response.body);
+
+      if (response.statusCode == 200) {
+        final product = jsonDecode(response.body);
+        return product["status"];
+      } else {
+        throw Exception('error here');
+      }
+    } catch (e) {
+      throw Exception('There was a problem connecting to the internet');
+    }
+  }
+
+  static Future delReply(token, id) async {
+    print(id);
+    try {
+      final response = await http.delete(
+        'https://www.sparknp.com/api/products/reply/$id',
+        headers: {
+          "Authorization": "Bearer $token",
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        },
+      ).timeout(
+        Duration(
+          seconds: 15,
+        ),
+      );
+      print(response.body);
+      if (response.statusCode == 200) {
+        final product = jsonDecode(response.body);
+        return product["status"];
+      } else {
+        throw Exception('error here');
+      }
+    } catch (e) {
+      throw Exception('There was a problem connecting to the internet');
+    }
+  }
 }

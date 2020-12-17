@@ -37,12 +37,9 @@ class _CartScreenState extends State<CartScreen> {
               _loggedIn = false;
               _loading = false;
             })
-          : CartService.list(_token).then((data) {
-              setState(() {
-                cart = data;
-                _loggedIn = true;
-                _loading = false;
-              });
+          : setState(() {
+              _loggedIn = true;
+              _loading = false;
             });
     });
   }
@@ -50,16 +47,36 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: buildAppBar(context),
-        body: (_loading)
-            ? Center(child: CircularProgressIndicator())
-            : (_loggedIn)
-                ? CartBody(
-                    cart: cart,
-                    front: widget.front,
-                    currency: widget.currency,
-                  )
-                : Center(child: _buildSignInBtn(context)));
+      appBar: buildAppBar(context),
+      body: (_loading)
+          ? Center(child: CircularProgressIndicator())
+          : (!_loggedIn)
+              ? Center(child: _buildSignInBtn(context))
+              : FutureBuilder(
+                  future: CartService.list(_token),
+                  // ignore: missing_return
+                  builder: (BuildContext context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return Center(child: CircularProgressIndicator());
+                      case ConnectionState.done:
+                        return (snapshot.hasError)
+                            ? Center(
+                                child: Text(
+                                  "Connect to the Internet",
+                                  style: AppTheme.h1Style,
+                                ),
+                              )
+                            : CartBody(
+                                cart: snapshot.data,
+                                front: widget.front,
+                                currency: widget.currency,
+                              );
+                      default:
+                    }
+                  },
+                ),
+    );
   }
 }
 

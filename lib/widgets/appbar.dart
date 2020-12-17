@@ -4,32 +4,32 @@ import 'package:sparknp/constants.dart';
 import 'package:sparknp/router.dart';
 
 AppBar buildAppBar(context) {
-  Size size = MediaQuery.of(context).size;
-
   return AppBar(
     backgroundColor: LightColor.primaryColor,
     elevation: 0,
     iconTheme: IconThemeData(color: LightColor.textLightColor),
     centerTitle: true,
-    leading: Image.network("https://sparknp.com/assets/images/16014328921599821893sparek-logo.png"),
     title: Container(
-      width: size.width * 0.8,
+      width: AppTheme.fullWidth(context) * 0.8,
       height: 40,
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(1),
         borderRadius: BorderRadius.circular(15),
       ),
-      child: TextField(
-        decoration: InputDecoration(
-            enabledBorder: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            hintText: "Search",
-            prefixIcon: Icon(Icons.search),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 5,
-              vertical: 5,
-            )),
-        onTap: () {
+      child: FlatButton(
+        textColor: LightColor.iconColor,
+        child: Padding(
+          padding:
+              EdgeInsets.only(right: ((AppTheme.fullWidth(context) * 0.4))),
+          child: Row(
+            children: [
+              Icon(Icons.search),
+              SizedBox(width: 10),
+              Text("Search"),
+            ],
+          ),
+        ),
+        onPressed: () {
           Navigator.pushNamed(
             context,
             search,

@@ -337,6 +337,7 @@ class _LoginScreenState extends State<LoginScreen> {
     var body = json.decode(res.body);
 
     if (body["status"] == true) {
+      secureStorage.writeData("id", body["user"]["id"].toString());
       secureStorage.writeData("name", body["user"]["name"]);
       secureStorage.writeData("address", body["user"]["address"]);
       secureStorage.writeData("phone", body["user"]["phone"]);
@@ -354,15 +355,10 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _loginWithGoogle() async {
-    await _googleSignIn.signOut(); //optional
+    await _googleSignIn.signOut();
     GoogleSignInAccount user = await _googleSignIn.signIn();
 
     GoogleSignInAuthentication googleauth = await user.authentication;
-
-    print(user.id);
-    print(googleauth.accessToken);
-    print(user.email);
-    print(user.displayName);
 
     var data = {
       "credential_type": "google",
@@ -375,9 +371,8 @@ class _LoginScreenState extends State<LoginScreen> {
     var res = await CallApi().login(data, 'app-login');
     var body = json.decode(res.body);
 
-    print(body);
-
     if (body["status"] == true) {
+      secureStorage.writeData("id", body["user"]["id"].toString());
       secureStorage.writeData("name", _googleSignIn.currentUser.displayName);
       secureStorage.writeData("email", _googleSignIn.currentUser.email);
       secureStorage.writeData("token", body["user"]["user_token"]);
@@ -412,12 +407,10 @@ class _LoginScreenState extends State<LoginScreen> {
         var res = await CallApi().login(data, 'app-login');
         var body = json.decode(res.body);
 
-        print(body);
-
         if (body["status"] == true) {
+          secureStorage.writeData("id", body["user"]["id"].toString());
           secureStorage.writeData("name", profile["name"]);
           secureStorage.writeData("email", profile["email"]);
-          secureStorage.writeData("id", profile["id"]);
           secureStorage.writeData("photo", profile["picture"]["data"]["url"]);
           secureStorage.writeData("token", body["user"]["user_token"]);
           setState(() {

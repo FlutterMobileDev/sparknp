@@ -28,8 +28,6 @@ class _SplashScreenState extends State<SplashScreen>
   final SecureStorage secureStorage = SecureStorage();
 
   bool _loading;
-  var front;
-  String _token;
   double currency;
 
   @override
@@ -37,18 +35,10 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     _loading = true;
 
-    FrontService.fetch().then((data) {
-      secureStorage.readData('token').then((value) {
-        setState(() {
-          front = data;
-          _token = value;
-        });
-      });
-      FrontService.converter().then((value) {
-        setState(() {
-          currency = value;
-          _loading = false;
-        });
+    FrontService.converter().then((value) {
+      setState(() {
+        currency = value;
+        _loading = false;
       });
     });
   }
@@ -58,8 +48,35 @@ class _SplashScreenState extends State<SplashScreen>
     return _loading
         ? Container(
             color: LightColor.textColor,
-            child: Center(child: CircularProgressIndicator()))
-        : Bottomnavbar(front: front, currency: currency);
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          )
+        : FutureBuilder(
+            future: FrontService.fetch(),
+            // ignore: missing_return
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return Container(
+                    color: LightColor.textColor,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                case ConnectionState.done:
+                  return (snapshot.hasError)
+                      ? Center(
+                          child: Text(
+                            "Connect To the Internet",
+                            style: AppTheme.h1Style,
+                          ),
+                        )
+                      : Bottomnavbar(front: snapshot.data, currency: currency);
+                default:
+              }
+              Bottomnavbar(front: snapshot.data, currency: currency);
+            });
   }
 }
 
@@ -85,15 +102,15 @@ class _BottomnavbarState extends State<Bottomnavbar> {
       PageController(initialPage: 0, keepPage: false);
   @override
   void initState() {
-    if (widget.index == 3) {
-      _currentIndex = 3;
-      _pageController = PageController(initialPage: 3, keepPage: false);
-    }
     if (widget.index == 2) {
       _currentIndex = 2;
       _pageController = PageController(initialPage: 2, keepPage: false);
     }
 
+    if (widget.index == 3) {
+      _currentIndex = 3;
+      _pageController = PageController(initialPage: 3, keepPage: false);
+    }
     super.initState();
   }
 

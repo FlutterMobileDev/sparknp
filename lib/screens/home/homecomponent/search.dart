@@ -15,15 +15,14 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
           child: Stack(
             children: [
               Container(
-                height: size.height,
-                width: size.width,
+                height: AppTheme.fullHeight(context),
+                width: AppTheme.fullWidth(context),
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                   begin: Alignment.topCenter,
@@ -61,7 +60,7 @@ class _SearchState extends State<Search> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(16, 10, 0, 0),
                       child: Container(
-                        width: size.width * 0.7,
+                        width: AppTheme.fullWidth(context) * 0.7,
                         height: 40,
                         decoration: BoxDecoration(
                           color: LightColor.primaryColor.withOpacity(0.02),
@@ -96,79 +95,70 @@ class _SearchState extends State<Search> {
                   ),
                   (searchString != '' && searchString != null)
                       ? Container(
-                          height: size.height,
-                          width: size.width,
+                          height: AppTheme.fullHeight(context),
+                          width: AppTheme.fullWidth(context),
                           child: FutureBuilder(
-                            future: SearchService.getlist(searchString),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                      ConnectionState.none &&
-                                  snapshot.hasData == null &&
-                                  snapshot.hasData) {
-                                return Container(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                              if (snapshot.connectionState ==
-                                      ConnectionState.done &&
-                                  snapshot.hasData == null) {
-                                return Container(
-                                  child: Text("No such Products"),
-                                );
-                              }
-                              if (snapshot.hasData == null) {
-                                return Container(
-                                  child: Text("No Such products"),
-                                );
-                              }
-                              if (snapshot.data == null) {
-                                return Padding(
-                                  padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
-                                  child: Container(
-                                    child: Text("No such product"),
-                                  ),
-                                );
-                              }
-                              return (snapshot.connectionState ==
-                                      ConnectionState.waiting)
-                                  ? Center(
+                              future: SearchService.getlist(searchString),
+                              // ignore: missing_return
+                              builder: (context, snapshot) {
+                                switch (snapshot.connectionState) {
+                                  case ConnectionState.waiting:
+                                    return Center(
                                       child: CircularProgressIndicator(),
-                                    )
-                                  : ListView.builder(
-                                      itemCount:
-                                          snapshot.data["products"].length,
-                                      itemBuilder: (context, index) {
-                                        dynamic product =
-                                            snapshot.data["products"][index];
-                                        return GestureDetector(
-                                          onTap: () {
-                                            Navigator.pushNamed(
-                                                context, details,
-                                                arguments: product);
-                                          },
-                                          child: Container(
-                                            width: size.width,
-                                            height: 90,
-                                            child: Card(
-                                              child: ListTile(
-                                                title: Text(
-                                                  product["name"],
-                                                  maxLines: 3,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
+                                    );
+                                  case ConnectionState.done:
+                                    return (snapshot.hasError)
+                                        ? Center(child: Text("No Connection"))
+                                        : (snapshot.data["products"].length ==
+                                                0)
+                                            ? Container(
+                                                height: AppTheme.fullHeight(
+                                                        context) *
+                                                    0.4,
+                                                child: Center(
+                                                  child: Text("No Products"),
                                                 ),
-                                                leading: Image.network(
-                                                  imgpath +
-                                                      product["thumbnail"],
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      });
-                            },
-                          ),
+                                              )
+                                            : ListView.builder(
+                                                itemCount: snapshot
+                                                    .data["products"].length,
+                                                itemBuilder: (context, index) {
+                                                  dynamic product = snapshot
+                                                      .data["products"][index];
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.pushNamed(
+                                                          context, details,
+                                                          arguments: product);
+                                                    },
+                                                    child: Container(
+                                                      width: AppTheme.fullWidth(
+                                                          context),
+                                                      height: 90,
+                                                      child: Card(
+                                                        child: ListTile(
+                                                          title: Text(
+                                                            product["name"],
+                                                            maxLines: 3,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                          ),
+                                                          leading:
+                                                              Image.network(
+                                                            imgpath +
+                                                                product[
+                                                                    "thumbnail"],
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                });
+                                  default:
+                                }
+                              }),
                         )
                       : Container(
                           child: Text("What are you looking for?"),

@@ -37,10 +37,8 @@ class _WishlistBodyState extends State<WishlistBody> {
     super.initState();
     _loading = true;
     secureStorage.readData('token').then((value) async {
-      int n = widget.wishlist["wishlists"].length;
-      for (int i = 1; i <= n; i++) {
-        await ProductService.fetch(
-                widget.wishlist["wishlists"][i - 1]["product_id"])
+      for (int i = 1; i <= widget.wishlist.length; i++) {
+        await ProductService.fetch(widget.wishlist[i - 1]["product_id"])
             .then((value) {
           _product = value;
           _productImage.add(_product["thumbnail"]);
@@ -49,7 +47,7 @@ class _WishlistBodyState extends State<WishlistBody> {
       }
       setState(() {
         _token = value;
-        _wishlistList = widget.wishlist["wishlists"];
+        _wishlistList = widget.wishlist;
         _loading = false;
       });
     });
@@ -66,23 +64,26 @@ class _WishlistBodyState extends State<WishlistBody> {
         : Container(
             padding: AppTheme.padding,
             child: SingleChildScrollView(
-              child: (widget.wishlist["wishlists"].length == 0)
+              child: (widget.wishlist.length == 0)
                   ? Container(
                       height: 400,
                       child: Center(
-                        child: Text("No Items in Wishlist"),
+                        child: Text(
+                          "No Items in Wishlist",
+                          style: AppTheme.h1Style,
+                        ),
                       ),
                     )
                   : Column(
                       children: <Widget>[
-                        _item(widget.wishlist),
+                        _item(),
                       ],
                     ),
             ),
           );
   }
 
-  Widget _item(var model) {
+  Widget _item() {
     return Container(
       width: AppTheme.fullWidth(context) - 20,
       height: AppTheme.fullHeight(context) * 0.8,

@@ -33,7 +33,6 @@ class _ItemCardState extends State<ItemCard> {
         if (value != null) {
           setState(() {
             currency = value;
-            print(currency);
             _loading = false;
           });
         }
@@ -53,7 +52,6 @@ class _ItemCardState extends State<ItemCard> {
           _productList = widget.front["feature_products"];
           f1();
         });
-
       case "Trending Products":
         return setState(() {
           _productList = widget.front["trending_products"];
@@ -63,7 +61,6 @@ class _ItemCardState extends State<ItemCard> {
         return setState(() {
           _productList = widget.front["sale_products"];
           f1();
-          _loading = false;
         });
       case "Best Products":
         return setState(() {

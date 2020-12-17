@@ -50,8 +50,19 @@ class _BigbannerState extends State<Bigbanner> {
       width: size.width,
       height: (widget.x == 1) ? size.width * 0.3 : size.width * 0.5,
       child: CarouselSlider(
-        autoPlay: true,
-        enlargeCenterPage: true,
+        options: CarouselOptions(
+          aspectRatio: 16 / 9,
+          viewportFraction: 0.8,
+          initialPage: 0,
+          enableInfiniteScroll: true,
+          reverse: false,
+          autoPlay: true,
+          autoPlayInterval: Duration(seconds: 3),
+          autoPlayAnimationDuration: Duration(milliseconds: 800),
+          autoPlayCurve: Curves.fastOutSlowIn,
+          enlargeCenterPage: true,
+          scrollDirection: Axis.horizontal,
+        ),
         items: _bannerList
             .map((item) => GestureDetector(
                   onTap: () {
