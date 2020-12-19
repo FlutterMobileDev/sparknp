@@ -66,10 +66,14 @@ class _SplashScreenState extends State<SplashScreen>
                   );
                 case ConnectionState.done:
                   return (snapshot.hasError)
-                      ? Center(
-                          child: Text(
-                            "Connect To the Internet",
-                            style: AppTheme.h1Style,
+                      ? Scaffold(
+                          body: Container(
+                            child: Center(
+                              child: Text(
+                                "Connect To the Internet",
+                                style: AppTheme.h1Style,
+                              ),
+                            ),
                           ),
                         )
                       : Bottomnavbar(front: snapshot.data, currency: currency);
