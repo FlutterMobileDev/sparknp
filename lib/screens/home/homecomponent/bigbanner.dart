@@ -52,7 +52,7 @@ class _BigbannerState extends State<Bigbanner> {
       child: CarouselSlider(
         options: CarouselOptions(
           aspectRatio: 16 / 9,
-          viewportFraction: 0.8,
+          viewportFraction: 1,
           initialPage: 0,
           enableInfiniteScroll: true,
           reverse: false,
@@ -78,16 +78,20 @@ class _BigbannerState extends State<Bigbanner> {
                   },
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(2, 0, 2, 0),
-                    child: Container(
-                      width: size.width,
-                      height:
-                          (widget.x == 1) ? size.width * 0.3 : size.width * 0.5,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.fill,
-                              image: NetworkImage((widget.y == 1)
-                                  ? im1 + item["photo"]
-                                  : imgpath + item["photo"]))),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      child: Container(
+                        width: size.width,
+                        height: (widget.x == 1)
+                            ? size.width * 0.3
+                            : size.width * 0.5,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: NetworkImage((widget.y == 1)
+                                    ? im1 + item["photo"]
+                                    : imgpath + item["photo"]))),
+                      ),
                     ),
                   ),
                 ))

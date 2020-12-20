@@ -52,11 +52,14 @@ class _HomeBodyState extends State<HomeBody> {
         Container(
           child: Column(
             children: [
-              Bigbanner(
-                front: widget.front,
-                name: "sliders",
-                name1: "Discount Product",
-                y: 1,
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Bigbanner(
+                  front: widget.front,
+                  name: "sliders",
+                  name1: "Discount Product",
+                  y: 1,
+                ),
               ),
               TitleWithMoreBtn(
                 name: "Featured Products",
