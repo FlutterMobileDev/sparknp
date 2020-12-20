@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sparknp/router.dart';
+import 'package:sparknp/constants.dart';
 
 class ImageCard extends StatefulWidget {
   final String name;
@@ -75,8 +76,8 @@ class _ImageCardState extends State<ImageCard> {
                 Navigator.pushNamed(context, details, arguments: product);
               },
               child: Container(
-                height: 90,
-                width: 98,
+                height: AppTheme.fullWidth(context) * 0.4,
+                width: AppTheme.fullWidth(context) * 0.3,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(

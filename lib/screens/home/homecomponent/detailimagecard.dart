@@ -70,8 +70,8 @@ class _DetailImageCardState extends State<DetailImageCard> {
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        height: 130,
-                        width: 96,
+                        height: AppTheme.fullWidth(context) * 0.4,
+                        width: AppTheme.fullWidth(context) * 0.3,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -83,7 +83,7 @@ class _DetailImageCardState extends State<DetailImageCard> {
                     ),
                     Container(
                       height: size.height * 0.06,
-                      width: 96,
+                      width: AppTheme.fullWidth(context) * 0.3,
                       decoration: BoxDecoration(
                           color: LightColor.background,
                           borderRadius: BorderRadius.only(
