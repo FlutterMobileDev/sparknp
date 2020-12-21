@@ -117,7 +117,7 @@ class _ItemCardState extends State<ItemCard> {
             child: GridView.builder(
               physics: ScrollPhysics(),
               gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
               itemCount: _productList.length,
               itemBuilder: (context, index) {
                 dynamic product = _productList[index];
@@ -132,8 +132,8 @@ class _ItemCardState extends State<ItemCard> {
                       children: <Widget>[
                         Expanded(
                           child: Container(
-                            height: AppTheme.fullHeight(context) * 0.2,
-                            width: 180,
+                            height: AppTheme.fullWidth(context) * 0.4,
+                            width: AppTheme.fullWidth(context) * 0.3,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -144,8 +144,8 @@ class _ItemCardState extends State<ItemCard> {
                           ),
                         ),
                         Container(
-                          height: AppTheme.fullHeight(context) * 0.08,
-                          width: 180,
+                          height: AppTheme.fullHeight(context) * 0.06,
+                          width: AppTheme.fullWidth(context) * 0.3,
                           decoration: BoxDecoration(
                               color: LightColor.background,
                               borderRadius: BorderRadius.only(

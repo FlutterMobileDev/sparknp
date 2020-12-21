@@ -62,7 +62,7 @@ class _ImageCardState extends State<ImageCard> {
     Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      height: 95,
+      height: size.height * 0.2,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: ListView.separated(
         itemCount: _productList.length >= 10 ? 10 : _productList.length,

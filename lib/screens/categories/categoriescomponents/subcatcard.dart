@@ -71,15 +71,15 @@ class _SubCatCardState extends State<SubCatCard>
               )
             : Container(
                 width: AppTheme.fullWidth(context),
-                height: (_subCatList["products"].length >= 3)
-                    ? AppTheme.fullHeight(context) * 0.56
-                    : AppTheme.fullHeight(context) * 0.28,
+                height: (_subCatList["products"].length >= 4)
+                    ? AppTheme.fullWidth(context) * 0.8
+                    : AppTheme.fullWidth(context) * 0.4,
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 child: GridView.builder(
                   physics: new NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
+                      crossAxisCount: 3),
                   itemCount: (_subCatList["products"].length > 4)
                       ? 4
                       : _subCatList["products"].length,
@@ -97,8 +97,8 @@ class _SubCatCardState extends State<SubCatCard>
                           children: <Widget>[
                             Expanded(
                               child: Container(
-                                height: 180,
-                                width: 180,
+                                height: AppTheme.fullWidth(context) * 0.4,
+                                width: AppTheme.fullWidth(context) * 0.3,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
@@ -109,8 +109,8 @@ class _SubCatCardState extends State<SubCatCard>
                               ),
                             ),
                             Container(
-                              height: 50,
-                              width: 180,
+                              height: AppTheme.fullHeight(context) * 0.06,
+                              width: AppTheme.fullWidth(context) * 0.3,
                               decoration: BoxDecoration(
                                   color: LightColor.background,
                                   borderRadius: BorderRadius.only(

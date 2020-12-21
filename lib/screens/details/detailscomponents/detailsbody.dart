@@ -155,9 +155,11 @@ class _DetailsBodyState extends State<DetailsBody>
                                                 ? WishlistService.add(_token,
                                                         snapshot.data["id"])
                                                     .then((added) {
-                                                    _showDialog(context, true);
+                                                    _showDialog(context,
+                                                        "Added to Wishlist");
                                                   })
-                                                : _showDialog(context, false);
+                                                : _showDialog(
+                                                    context, "Please Sign In");
                                           }),
                                     ],
                                   ),
@@ -367,13 +369,11 @@ class StarRating extends StatelessWidget {
   }
 }
 
-Future<void> _showDialog(context, removed) async {
+Future<void> _showDialog(context, txt) async {
   return showDialog<void>(
     context: context,
     builder: (BuildContext context) {
-      return removed
-          ? AlertDialog(title: Text('Added to wishlist'))
-          : AlertDialog(title: Text('Please Log In'));
+      return AlertDialog(title: Text(txt));
     },
   );
 }

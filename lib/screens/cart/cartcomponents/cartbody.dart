@@ -131,12 +131,12 @@ class _CartBodyState extends State<CartBody> {
             },
             child: Container(
               width: AppTheme.fullWidth(context),
-              height: AppTheme.fullWidth(context) * 0.4,
+              height: AppTheme.fullHeight(context) * 0.25,
               child: Column(children: [
                 ListTile(
                   leading: Image.network(
                     imgpath + _productImage[index].toString(),
-                    height: AppTheme.fullWidth(context) * 0.2,
+                    height: AppTheme.fullHeight(context) * 0.2,
                     width: 60,
                     fit: BoxFit.cover,
                   ),

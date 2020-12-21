@@ -82,7 +82,7 @@ class _DetailImageCardState extends State<DetailImageCard> {
                       ),
                     ),
                     Container(
-                      height: size.height * 0.06,
+                      height: AppTheme.fullHeight(context) * 0.06,
                       width: AppTheme.fullWidth(context) * 0.3,
                       decoration: BoxDecoration(
                           color: LightColor.background,

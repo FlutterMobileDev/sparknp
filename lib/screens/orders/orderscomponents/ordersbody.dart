@@ -54,7 +54,7 @@ class _OrdersBodyState extends State<OrdersBody> {
     Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      height: 450,
+      height: size.height * 0.8,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: ListView.separated(
         itemCount: _ordersList.length,
@@ -63,7 +63,7 @@ class _OrdersBodyState extends State<OrdersBody> {
           var cart = jsonDecode(order['cart']);
           return Container(
             width: size.width * 0.9,
-            height: 60,
+            height: size.height * 0.3,
             child: Column(children: [
               Expanded(
                 child: ListTile(
