@@ -1,4 +1,4 @@
-package com.example.sparknp
+package sparknp.SparkNP
 
 import io.flutter.embedding.android.FlutterActivity
 
