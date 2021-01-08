@@ -29,37 +29,43 @@ class _CategoriesState extends State<Categories>
       appBar: buildAppBar(context),
       body: Container(
         height: size.height,
-        child: ListView.builder(
-            itemCount: widget.category.length,
-            itemBuilder: (BuildContext context, index) {
-              return ListTile(
-                leading: Container(
-                  width: size.width * 0.125,
-                  height: 185,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(
-                          imgpath + widget.category[index]["photo"]),
-                    ),
+        child: ListView.separated(
+          itemCount: widget.category.length,
+          itemBuilder: (BuildContext context, index) {
+            return ListTile(
+              leading: Container(
+                width: size.width * 0.115,
+                height: 185,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image:
+                        NetworkImage(imgpath + widget.category[index]["photo"]),
                   ),
                 ),
-                title: TitleText(
-                  text: widget.category[index]["name"],
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, categories,
-                      arguments:
-                          ScreenArguments(category: widget.category[index]));
-                  CategoryBody(
-                    category: widget.category[index],
-                  );
-                },
-              );
-            }),
+              ),
+              title: TitleText(
+                text: widget.category[index]["name"],
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, categories,
+                    arguments:
+                        ScreenArguments(category: widget.category[index]));
+                CategoryBody(
+                  category: widget.category[index],
+                );
+              },
+            );
+          },
+          separatorBuilder: (context, index) {
+            return Divider(
+              thickness: 1,
+            );
+          },
+        ),
       ),
     );
   }

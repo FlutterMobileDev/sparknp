@@ -71,6 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 CircleAvatar(
+                  backgroundColor: Colors.white,
                   radius: 60,
                   child: Icon(
                     Icons.account_circle,
@@ -156,7 +157,7 @@ class _ProfilePageState extends State<ProfilePage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color: Colors.blue[300],
+          color: Colors.orange[600],
           child: Text(
             'My Orders',
             style: TextStyle(
@@ -188,7 +189,7 @@ class _ProfilePageState extends State<ProfilePage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color: Colors.blue[300],
+          color: Colors.orange[600],
           child: Text(
             'Become a Vendor',
             style: TextStyle(
@@ -234,7 +235,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: RaisedButton(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0)),
-              color: Colors.blue[300],
+              color: Colors.orange[600],
               textColor: Colors.white,
               child: Text(
                 "Logout",

@@ -44,7 +44,8 @@ const double defaultPadding = 20.0;
 // Colors that we use in our app
 class LightColor {
   static const Color mainColor = Color(0xff2470c7);
-  static const Color primaryColor = Color(0xFF0D47A1);
+  // static const Color primaryColor = Color(0xFF0D47A1);
+  static const Color primaryColor = Color(0xffE65829);
 
   static const Color textColor = Color(0xFF3C4046);
   static const Color textLightColor = Color(0xFFACACAC);

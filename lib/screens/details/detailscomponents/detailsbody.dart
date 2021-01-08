@@ -149,7 +149,7 @@ class _DetailsBodyState extends State<DetailsBody>
                                           }),
                                       IconButton(
                                           icon: Icon(CupertinoIcons.heart),
-                                          color: LightColor.orange,
+                                          color: LightColor.primaryColor,
                                           onPressed: () {
                                             (_token != null)
                                                 ? WishlistService.add(_token,
@@ -219,7 +219,7 @@ class _DetailsBodyState extends State<DetailsBody>
                                     color: LightColor.primaryColor),
                                 child: new TabBar(
                                   indicatorWeight: 4,
-                                  indicatorColor: LightColor.lightBlue,
+                                  indicatorColor: Colors.orange[600],
                                   controller: _tabController,
                                   tabs: [
                                     new Tab(
@@ -246,7 +246,7 @@ class _DetailsBodyState extends State<DetailsBody>
                               new Container(
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: LightColor.lightBlue, width: 3)),
+                                        color: Colors.orange[600], width: 3)),
                                 height: AppTheme.fullHeight(context) * 0.5,
                                 child: new TabBarView(
                                   controller: _tabController,
