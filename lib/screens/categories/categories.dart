@@ -34,8 +34,8 @@ class _CategoriesState extends State<Categories>
           itemBuilder: (BuildContext context, index) {
             return ListTile(
               leading: Container(
-                width: size.width * 0.115,
-                height: 185,
+                width: size.width * 0.1,
+                height: size.width * 0.1,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
