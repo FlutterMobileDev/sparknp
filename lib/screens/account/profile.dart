@@ -36,12 +36,12 @@ class _ProfilePageState extends State<ProfilePage> {
     });
     secureStorage.readData('phone').then((value) {
       setState(() {
-        if (value != null) _phone = value;
+        (value != null) ? _phone = value : _phone = null;
       });
     });
     secureStorage.readData('address').then((value) {
       setState(() {
-        if (value != null) _address = value;
+        (value != null) ? _address = value : _address = null;
       });
     });
     _loading = false;
@@ -106,36 +106,43 @@ class _ProfilePageState extends State<ProfilePage> {
         color: LightColor.lightGrey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
-            Card(
-              elevation: 0,
-              child: ListTile(
-                title: Text('Mobile'),
-                trailing: Text(_phone),
-                onTap: () {},
-              ),
-            ),
-            Card(
-              elevation: 0,
-              child: ListTile(
-                title: Text('Email'),
-                trailing: Text(_email),
-                onTap: () {},
-              ),
-            ),
-            Card(
-              elevation: 0,
-              child: ListTile(
-                title: Text('Address'),
-                trailing: Text(_address),
-                onTap: () {},
-              ),
-            ),
-            Divider(
-              color: Colors.transparent,
-              thickness: 5,
-            ),
-          ],
+          children: (_phone == null)
+              ? [
+                  Card(
+                    elevation: 0,
+                    child: ListTile(
+                      title: Text('Email'),
+                      trailing: Text(_email),
+                    ),
+                  ),
+                ]
+              : [
+                  Card(
+                    elevation: 0,
+                    child: ListTile(
+                      title: Text('Email'),
+                      trailing: Text(_email),
+                    ),
+                  ),
+                  Card(
+                    elevation: 0,
+                    child: ListTile(
+                      title: Text('Mobile'),
+                      trailing: Text(_phone),
+                    ),
+                  ),
+                  Card(
+                    elevation: 0,
+                    child: ListTile(
+                      title: Text('Address'),
+                      trailing: Text(_address),
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.transparent,
+                    thickness: 5,
+                  ),
+                ],
         ),
       ),
     );
@@ -143,7 +150,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _buildOrdersBtn(BuildContext context) {
     return Positioned(
-      top: 430,
+      top: (_phone != null) ? 430 : 300,
       child: Container(
         height: 70,
         width: MediaQuery.of(context).size.width * 1.0,
@@ -175,7 +182,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _buildVendorBtn(BuildContext context) {
     return Positioned(
-      top: 510,
+      top: (_phone != null) ? 510 : 380,
       child: Container(
         height: 70,
         width: MediaQuery.of(context).size.width * 1.0,
