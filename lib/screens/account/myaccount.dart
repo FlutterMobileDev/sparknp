@@ -3,6 +3,7 @@ import 'package:sparknp/constants.dart';
 
 import 'package:sparknp/router.dart';
 import 'package:sparknp/screens/account/profile.dart';
+import 'package:sparknp/screens/login/login.dart';
 import 'package:sparknp/services/storage.dart';
 import 'package:sparknp/widgets/appbar.dart';
 
@@ -43,7 +44,7 @@ class _AccountScreenState extends State<AccountScreen> {
       body: (_loading)
           ? Center(child: CircularProgressIndicator())
           : (!_loggedIn)
-              ? Center(child: _buildSignInBtn(context))
+              ? Container(child: LoginScreen())
               : ProfilePage(),
     );
   }

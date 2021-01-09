@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sparknp/constants.dart';
 
 import 'package:sparknp/router.dart';
+import 'package:sparknp/screens/login/login.dart';
 import 'package:sparknp/services/cartservice.dart';
 import 'package:sparknp/screens/cart/cartcomponents/cartbody.dart';
 
@@ -51,7 +52,7 @@ class _CartScreenState extends State<CartScreen> {
       body: (_loading)
           ? Center(child: CircularProgressIndicator())
           : (!_loggedIn)
-              ? Center(child: _buildSignInBtn(context))
+              ? Container(child: LoginScreen())
               : FutureBuilder(
                   future: CartService.list(_token),
                   // ignore: missing_return

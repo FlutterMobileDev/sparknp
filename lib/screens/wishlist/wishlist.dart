@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sparknp/constants.dart';
 
 import 'package:sparknp/router.dart';
+import 'package:sparknp/screens/login/login.dart';
 import 'package:sparknp/services/wishlistservice.dart';
 import 'package:sparknp/services/storage.dart';
 import 'package:sparknp/screens/wishlist/wishlistcomponents/wishlistbody.dart';
@@ -49,7 +50,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
       body: (_loading)
           ? Center(child: CircularProgressIndicator())
           : (!_loggedIn)
-              ? Center(child: _buildSignInBtn(context))
+              ? Container(child: LoginScreen())
               : FutureBuilder(
                   future: WishlistService.list(_token),
                   // ignore: missing_return
