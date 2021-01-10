@@ -53,7 +53,17 @@ class _LoginScreenState extends State<LoginScreen> {
         SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
-          decoration: boxDecorationStyle,
+          decoration: BoxDecoration(
+            color: LightColor.background,
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 6.0,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
           height: 60.0,
           child: TextFormField(
             controller: emailController,
@@ -75,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.email,
-                color: LightColor.lightGrey,
+                color: LightColor.iconColor,
               ),
               hintText: 'Enter your Email',
               hintStyle: hintTextStyle,
@@ -97,7 +107,17 @@ class _LoginScreenState extends State<LoginScreen> {
         SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
-          decoration: boxDecorationStyle,
+          decoration: BoxDecoration(
+            color: LightColor.background,
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 6.0,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
           height: 60.0,
           child: TextFormField(
             controller: passwordController,
@@ -119,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.lock,
-                color: LightColor.lightGrey,
+                color: LightColor.iconColor,
               ),
               hintText: 'Enter your Password',
               hintStyle: hintTextStyle,
@@ -216,110 +236,109 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
         body: Stack(
-          children: <Widget>[
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFF73AEF5),
-                  Color(0xFF61A4F1),
-                  Color(0xFF478DE0),
-                  Color(0xFF398AE5),
-                ],
-                stops: [0.1, 0.4, 0.7, 0.9],
-              )),
-            ),
-            (_isLogged)
-                ? Container(
-                    child: Center(
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(defaultPadding),
-                            child: Text(
-                              "Already Logged In",
-                              style: TextStyle(
-                                  fontSize: 32, color: LightColor.lightGrey),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(defaultPadding),
-                            child: RaisedButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0)),
-                              color: Colors.blue[300],
-                              textColor: Colors.white,
-                              child: Text(
-                                "Logout",
-                                style: TextStyle(fontWeight: FontWeight.normal),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 16.0,
-                                horizontal: 32.0,
-                              ),
-                              onPressed: () {
-                                secureStorage.deleteData("name");
-                                secureStorage.deleteData("address");
-                                secureStorage.deleteData("phone");
-                                secureStorage.deleteData("email");
-                                secureStorage.deleteData("token");
-                                setState(() {
-                                  _isLogged = false;
-                                });
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                : Container(
-                    height: double.infinity,
-                    child: SingleChildScrollView(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 40.0,
-                        vertical: 120.0,
-                      ),
-                      child: Form(
-                        key: _formkey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              'Sign In',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'OpenSans',
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 30.0),
-                            _buildEmailTF(),
-                            SizedBox(
-                              height: 30.0,
-                            ),
-                            _buildPasswordTF(),
-                            _buildForgotPasswordBtn(context),
-                            _buildLoginBtn(context),
-                            _buildFBLoginBtn(context),
-                            SizedBox(height: 10.0),
-                            _buildGoogleLoginBtn(context),
-                            _buildSignupBtn(context),
-                          ],
+      children: <Widget>[
+        Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.orange[600],
+              Colors.orange[700],
+              Colors.orange[800],
+              Colors.orange[900],
+            ],
+            stops: [0.1, 0.4, 0.7, 0.9],
+          )),
+        ),
+        (_isLogged)
+            ? Container(
+                child: Center(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(defaultPadding),
+                        child: Text(
+                          "Already Logged In",
+                          style: TextStyle(
+                              fontSize: 32, color: LightColor.lightGrey),
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.all(defaultPadding),
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0)),
+                          color: Colors.deepOrangeAccent,
+                          textColor: Colors.white,
+                          child: Text(
+                            "Logout",
+                            style: TextStyle(fontWeight: FontWeight.normal),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 16.0,
+                            horizontal: 32.0,
+                          ),
+                          onPressed: () {
+                            secureStorage.deleteData("name");
+                            secureStorage.deleteData("address");
+                            secureStorage.deleteData("phone");
+                            secureStorage.deleteData("email");
+                            secureStorage.deleteData("token");
+                            setState(() {
+                              _isLogged = false;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            : Container(
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 40.0,
+                    vertical: 120.0,
+                  ),
+                  child: Form(
+                    key: _formkey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Sign In',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'OpenSans',
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 30.0),
+                        _buildEmailTF(),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        _buildPasswordTF(),
+                        _buildForgotPasswordBtn(context),
+                        _buildLoginBtn(context),
+                        _buildFBLoginBtn(context),
+                        SizedBox(height: 10.0),
+                        _buildGoogleLoginBtn(context),
+                        _buildSignupBtn(context),
+                      ],
                     ),
                   ),
-          ],
-        ));
+                ),
+              ),
+      ],
+    ));
   }
 
   void _handleLogin() async {
